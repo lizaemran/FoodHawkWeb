@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import '../styles/nav.css';
 import {useSelector} from 'react-redux';
-
+import {Link} from 'react-router-dom';
 const Nav = ({setSearch, search}) => {
     const {total } = useSelector((state)=> state.cart);
     // useEffect(()=> {
@@ -17,7 +17,7 @@ const Nav = ({setSearch, search}) => {
             onChange={(e)=> {
                 setSearch(e.target.value||"");
             }}/>
-            <div className = "cart-icon"><i className="fas fa-shopping-basket"></i>
+            <div className = "cart-icon"><Link to='/Cart'><i className="fas fa-shopping-basket"></i></Link>
                 <div className="cart-number"><p>{total}</p></div>
             </div>
         </div>
