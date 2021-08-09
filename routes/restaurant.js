@@ -4,7 +4,7 @@ const {Restaurant} = require('../models/restaurants');
 const router = express.Router();
 
 router.get('/', async (req,res) => {
-    const restaurants = await Restaurant.find().select("-products").sort({"rating": -1 });
+    const restaurants = await Restaurant.find().sort({"rating": -1 });
     if (!restaurants) return res.status(404).send("RESTAURANT NOT FOUND");
     res.send(restaurants);
 });

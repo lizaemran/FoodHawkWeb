@@ -1,17 +1,47 @@
 import React from 'react';
 import {deleteProductAsync} from '../redux/ProductSlice';
-import {useDispatch} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import {addCart} from '../redux/CartSlice';
 const PopUpDetail = ({id, image, name, price, discount, category, setPId, setIsEditP}) => {
+    const {cartItems, total} = useSelector((state)=> state.cart);
+    const restaurants = useSelector((state)=> state.restaurants);
     const dispatch = useDispatch();
+    let rId = 0;
+    let newrId = 0;
     const handleDeletedClick = () => {
 		dispatch(deleteProductAsync({ id:id }));
 	};
     const AddtoCart = () => {
+        if(total > 0){
+            rId = restaurants.filter((r)=> 
+            r.products.filter((p)=> p === cartItems[0].id).length > 0 );
+            console.log("Restaurant",rId[0]._id);
+            newrId = restaurants.filter((r)=> 
+            r.products.filter((p)=> p === id).length > 0 );
+            if(rId[0]._id === newrId[0]._id){
+                dispatch(addCart({
+                    id: id,
+                    countItems: 1,
+                    restaurant: newrId._id,
+                }))
+            }
+            else{
+                alert("Select Product from One Restaurant.");
+            }
+        }
+        else{
+        newrId = restaurants.filter((r)=> 
+        r.products.filter((p)=> p === id).length > 0 );
         dispatch(addCart({
             id: id,
-            countItems: "1",
+            countItems: 1,
+            restaurant: newrId._id,
         }))
+
+        console.log("New",newrId[0]._id);
+        }
+ 
+      
     };
     return (
 <>

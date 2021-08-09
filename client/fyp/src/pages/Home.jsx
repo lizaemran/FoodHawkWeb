@@ -50,10 +50,10 @@ const Home = () => {
         <>
             <Nav search={search} setSearch={setSearch} />
             <i onClick={()=>{setIsAddR(true)}} id="addRestaurant"className="fas fa-plus"></i>
-            <img id="pizza"src={pizza} alt="pizza"/>
+            {/* <img id="pizza"src={pizza} alt="pizza"/>
             <img id="burger" src={burger} alt="burger"/>
             <img id="fries" src={fries} alt="fries"/>
-            <img id="soda" src={soda} alt="soda"/>
+            <img id="soda" src={soda} alt="soda"/> */}
             <div  className="container home-container">
             {searched?.map((restaurant) => (
 				<Card  
