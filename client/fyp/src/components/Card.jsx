@@ -4,7 +4,7 @@ import {popup} from '../animations';
 import {motion} from 'framer-motion';
 import { deleteRestaurantAsync } from '../redux/Slice';
 import {useDispatch} from 'react-redux';
-const Card = ({id, image, stars, name, location, setRId, setPId, setIsAdd, setIsEdit, setIsEditP}) => {
+const Card = ({id, image, stars, name, location, setRId, setPId, setIsAdd, setIsEdit, setIsEditP, isOnline, setIsEditStatus}) => {
     const dispatch = useDispatch();
     const [isPopUp, setIsPopUp] = useState(false);
 
@@ -29,11 +29,12 @@ const Card = ({id, image, stars, name, location, setRId, setPId, setIsAdd, setIs
 }
             <motion.div className="row r-card" variants={popup} initial='hidden' animate='show' onClick={()=> {setRId(id)}}>
                 <div className="col-2">
-                    <div id="status"></div>
+                    <div id="status" className = {isOnline ? "active-status": "inactive-status"}></div>
                     <img class="p-image" src={image} alt="restaurant"/>
                 </div>
                 <div className="col-10">
                 <div className="admin-button">
+                <a onClick={()=> {setIsEditStatus(true)}}>Status</a>  
                 <a onClick={()=> {setIsAdd(true)}}>Add</a>
                 <a onClick={()=> {setIsEdit(true)}}>Edit</a>
                 </div>

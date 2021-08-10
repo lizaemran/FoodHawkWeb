@@ -62,6 +62,20 @@ async(payload) => {
         return {id: payload.id};
     }
 });
+export const patchRestaurantAsync = createAsyncThunk('restaurants/patchRestaurantAsync',
+async(payload) => {
+    const response = await fetch(`http://localhost:7000/api/restaurant/${payload.id}`, {
+        method: 'PATCH',
+        headers: {
+            "Content-Type": 'application/json',
+        },
+        body: JSON.stringify({status: payload.status})
+    });
+    if(response.ok){
+        const restaurants = await response.json();
+        return {status: payload.status};
+    }
+});
 const Slice = createSlice({
     name: "restaurants",
     initialState:
@@ -85,10 +99,11 @@ const Slice = createSlice({
         },
         [deleteRestaurantAsync.fulfilled]: (state,action) => {
             return state.filter((restaurant) => restaurant._id !== action.payload.id);
-            
-        
+        },
+        [patchRestaurantAsync.fulfilled]: (state, action) => {
+            const index = state.findIndex((restaurant)=> restaurant.id === action.payload.id);
+            state[index].status = action.payload.status;
         }
-
     },
 });
 export default Slice.reducer;

@@ -20,7 +20,8 @@ router.post('/', async(req,res) => {
         name : req.body.name,
         image: req.body.image,
         location: req.body.location,
-        rating: req.body.rating
+        rating: req.body.rating,
+        status: false
     });
     await restaurant.save();
     res.send(restaurant);
@@ -32,7 +33,8 @@ router.put('/:id', async(req, res) => {
         name : req.body.name,
         image: req.body.image,
         location: req.body.location,
-        rating: req.body.rating
+        rating: req.body.rating,
+        status: false,
     }, {new: true});
 }
 catch(e){}
@@ -43,6 +45,22 @@ router.delete('/:id', async(req, res) => {
  const restaurant = await Restaurant. findByIdAndDelete(req.params.id);
  if(!restaurant) return res.status(404).send("RESTAURANT WITH ID NOT FOUND")
  res.send(restaurant);
+});
+router.patch('/:id', async(req,res) => {
+    let restaurant;
+    try { restaurant = await Restaurant.findOne({_id:req.params.id});
+    if (req.body.status) {
+        restaurant.status = req.body.status
+    }
+    await restaurant.save();
+    res.send(restaurant);
+}
+    catch{
+        if (!restaurant) return res.status(404).send("RESTAURANT WITH ID NOT FOUND");
+    }
+       
+    
+
 });
 
 module.exports = router;

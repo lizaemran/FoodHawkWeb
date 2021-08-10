@@ -10,7 +10,7 @@ const Nav = ({setSearch, search}) => {
     const [isCart, setIsCart] = useState(false);
     const [cart, setCart] = useState([]);
     useEffect(()=> {
-         setCart(cartItems.map((cI)=> ( {item: products.filter((p) => cI.id == p._id), count: cI.countItems})));
+         setCart(cartItems.map((cI)=> ( {item: products.filter((p) => cI.id === p._id), count: cI.countItems})));
     },[cartItems])
     const handleDeleted = (cId) => {
 		dispatch(deleteCart({ 
@@ -35,18 +35,18 @@ const Nav = ({setSearch, search}) => {
             </div>
             {isCart && 
                     <div className="cart-drop-menu">
-                        {total == 0? <h1>No Products In Cart Yet</h1> :
-                        cart !== undefined && cart.map((c) => 
+                        {total === 0? <h1 style={{fontSize: "1.25rem"}}>No Products In Cart Yet</h1> :
+                        cartItems !== undefined && cartItems.map((c) => 
                             <div className="cart-menu">
-                                <img src={c.item[0].image}/>
-                                <h1>{c.item[0].name}</h1>
-                                <h1>x{c.count}</h1>
-                                <h1>{c.item[0].price}</h1>
-                                <span onClick={()=> handleDeleted(c.item[0]._id)} ><i className="fas fa-times"></i></span>
+                                <img src={c.image} alt="cart-image"/>
+                                <h1>{c.name}</h1>
+                                <h1>x{c.countItems}</h1>
+                                <h1>{c.price}</h1>
+                                <span onClick={()=> handleDeleted(c.id)} ><i className="fas fa-times"></i></span>
                             </div>
                         )
                     }
-                        {total!=0 && <Link to="/Cart"><button>View Cart</button></Link>}
+                        {total!==0 && <Link to="/Cart"><button>View Cart</button></Link>}
                        
                     </div>}
                     </div>

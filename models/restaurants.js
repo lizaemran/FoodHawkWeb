@@ -22,6 +22,10 @@ const restaurantSchema = new mongoose.Schema({
         type: Number,
         required: true
         
+    }, 
+    status: {
+        type: Boolean,
+        required: false
     }
 })
 

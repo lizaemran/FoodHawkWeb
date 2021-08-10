@@ -22,6 +22,11 @@ const PopUpDetail = ({id, image, name, price, discount, category, setPId, setIsE
                 dispatch(addCart({
                     id: id,
                     countItems: 1,
+                    name: name,
+                    price: price,
+                    image: image,
+                    discount: discount,
+                    category: category,
                     restaurant: newrId._id,
                 }))
             }
@@ -35,6 +40,11 @@ const PopUpDetail = ({id, image, name, price, discount, category, setPId, setIsE
         dispatch(addCart({
             id: id,
             countItems: 1,
+            name: name,
+            price: price,
+            image: image,
+            discount: discount,
+            category: category,
             restaurant: newrId._id,
         }))
 
