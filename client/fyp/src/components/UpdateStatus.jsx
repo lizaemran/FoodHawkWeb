@@ -1,25 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import { patchRestaurantAsync} from '../redux/Slice';
-
-const UpdateStatus = ({rId}) => {
+const UpdateStatus = ({rId, status}) => {
 	const restaurants = useSelector((state)=> state.restaurants);
     const [imageValue, setImageValue] = useState('');
-	const [statusValue, setStatusValue] = useState();
+	const[statusValue, setStatusValue] = useState(status);
 
 	let restaurant = {}
 	useEffect(()=>{
 		restaurant = restaurants.filter((r) => r._id == rId);
 		restaurant = restaurant[0];
 		setImageValue(restaurant.image);
-		setStatusValue(restaurant.location);
+		setStatusValue(restaurant.status);
 	},[restaurants]);
 
 	const dispatch = useDispatch();
-	const onSubmit = (event) => {
+	const onSubmit = (statusValue) => {
 		dispatch(patchRestaurantAsync({
 			id: rId,
-            status: event.target.checked,
+            status: statusValue,
 		}));
 	};
 
@@ -35,12 +34,11 @@ const UpdateStatus = ({rId}) => {
 				type='checkbox'
 				className='form-check-input'
                 id="flexSwitchCheckDefault"
-				value={statusValue}
-				onChange={(event) => {
-                    setStatusValue(event.target.checked);
-                    onSubmit(event)}}
+				checked={statusValue}
+				onChange={(e)=> {onSubmit(e.target.checked)} }
 			>
             </input>
+			<h1>{restaurant.status}</h1>
             <label id="status-toggle" class="form-check-label" for="flexSwitchCheckDefault">Status</label>
             </div>
             <br />

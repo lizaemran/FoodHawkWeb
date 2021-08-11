@@ -49,9 +49,7 @@ router.delete('/:id', async(req, res) => {
 router.patch('/:id', async(req,res) => {
     let restaurant;
     try { restaurant = await Restaurant.findOne({_id:req.params.id});
-    if (req.body.status) {
         restaurant.status = req.body.status
-    }
     await restaurant.save();
     res.send(restaurant);
 }

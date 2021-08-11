@@ -72,15 +72,15 @@ async(payload) => {
         body: JSON.stringify({status: payload.status})
     });
     if(response.ok){
-        const restaurants = await response.json();
-        return {status: payload.status};
+        const restaurant = await response.json();
+        return {id: restaurant.id, status: payload.status};
     }
 });
 const Slice = createSlice({
     name: "restaurants",
     initialState:
     [
-        { name:"KFC", image:"https://i.ibb.co/g6PDrG5/kfc.jpg", rating: 5, location: "E-11",
+        { name:"KFC", image:"https://i.ibb.co/g6PDrG5/kfc.jpg", rating: 5, location: "E-11", status: false,
         }
     ],
     extraReducers: {

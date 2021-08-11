@@ -32,10 +32,14 @@ const Home = () => {
 		dispatch(getRestaurantsAsync());
 	},[dispatch]);
     useEffect(() => {
-         if(cartItems.length > 0){
+        if(total === 0){
+            localStorage.setItem("cart",[]);
+        }
+        if(cartItems.length > 0){
             console.log("local storage");
             localStorage.setItem("cart",JSON.stringify(cart));
         }
+        
     }, [cartItems])
     useEffect(() => {
         if(localStorage.getItem("cart")){
@@ -94,7 +98,7 @@ const Home = () => {
                 {isEdit && <FormPopUp title="Update Restaurant" setIsOpen={setIsEdit}><UpdateRestaurant rId={rId} /></FormPopUp>}
                 {isAdd && <FormPopUp title="Add Product" setIsOpen={setIsAdd}><AddProduct rId={rId}/></FormPopUp> }
                 {isEditP && <FormPopUp title="UpdateProduct" setIsOpen={setIsEditP}><UpdateProduct pId={pId} setPId={setPId}/></FormPopUp>}
-                {isEditStatus && <FormPopUp title="Update Status" setIsOpen={setIsEditStatus}><UpdateStatus rId={rId} /></FormPopUp>}
+                {isEditStatus && <FormPopUp title="Update Status" setIsOpen={setIsEditStatus}><UpdateStatus rId={rId} status={restaurants.status}/></FormPopUp>}
         </>
     )
 }

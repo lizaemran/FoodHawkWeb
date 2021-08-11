@@ -18,7 +18,7 @@ const Cart = () => {
         getTotal();
     }, [cartItems]);
     useEffect(() => {
-        if(cartItems.length > 0){
+        if(cartItems.length >= 0){
            localStorage.setItem("cart",JSON.stringify(cart));
        }
    }, [cartItems])
