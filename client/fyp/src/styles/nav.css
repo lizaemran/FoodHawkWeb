@@ -135,7 +135,7 @@ svg{
     z-index:60!important;
     left:10%;
     height:auto;
-    width:250px;
+    width:75px;
     top: 5%;
     animation: pizzaAnimation 2s ease-out infinite;
 
@@ -151,7 +151,7 @@ svg{
     z-index:60!important;
     right:10%;
     height:auto;
-    width:250px;
+    width:75px;
     bottom: 5%;
     animation: burgerAnimation 2s ease-out infinite;
 }
@@ -160,7 +160,7 @@ svg{
     z-index:60!important;
     right:10%;
     height:auto;
-    width:200px;
+    width:75px;
     top: 5%;
     animation: friesAnimation 2s 1s ease-out infinite;
 }
@@ -169,7 +169,7 @@ svg{
     z-index:60!important;
     left:10%;
     height:auto;
-    width:250px;
+    width:75px;
     bottom: 5%;
     animation: sodaAnimation 2s 1s ease-out infinite;
 }
