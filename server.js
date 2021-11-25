@@ -9,7 +9,7 @@ app.use(express.json())
 app.use(cors())
 app.use('/api/restaurant',restaurant);
 app.use('/api/product',product);
-mongoose.connect('mongodb://localhost:27017/Restaurant?readPreference=primary&appname=MongoDB%20Compass&ssl=false')
+mongoose.connect('mongodb+srv://liza:lizfiz1@foodhawk.uitlt.mongodb.net/data?retryWrites=true&w=majority')
     .then(()=>{console.log('Connected')})
     .catch(
         () => {
