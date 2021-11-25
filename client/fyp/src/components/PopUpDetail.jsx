@@ -50,7 +50,7 @@ const PopUpDetail = ({id, image, name, price, discount, category, setPId, setIsE
 
         console.log("New",newrId[0]._id);
         }
- 
+  
       
     };
     return (
