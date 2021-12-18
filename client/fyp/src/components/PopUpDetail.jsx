@@ -66,7 +66,7 @@ const PopUpDetail = ({id, image, name, price, discount, category, setPId, setIsE
                     <h1>{name}</h1>
                     <button id="btn" onClick={AddtoCart}>ADD TO CART</button>
                     <div id="rating">
-                      <p className="price">${price}</p>
+                      <p className="price">PKR{price}</p>
                     </div>
                     <div id="close" onClick={handleDeletedClick}><i class="fas fa-times"></i></div>
                     <p class="description">
