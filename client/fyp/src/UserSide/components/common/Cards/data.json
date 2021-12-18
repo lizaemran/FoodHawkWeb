@@ -1,0 +1,28 @@
+
+[
+    {
+      "id": 1,
+      "name": "Chicago Pizza",
+      "image":"https://pizza.az/upload/resize_cache/iblock/375/482_482_240cd750bba9870f18aada2478b24840a/3751189edb1ce8e53c2e5f837d269ad3.png",
+      "price": 9
+    },
+    {
+      "id": 2,
+      "name": "Neapolitan Pizza",
+      "image":"https://pizza.az/upload/resize_cache/iblock/375/482_482_240cd750bba9870f18aada2478b24840a/3751189edb1ce8e53c2e5f837d269ad3.png",
+      "price": 7
+    },
+    {
+      "id": 3,
+      "name": "New York Pizza",
+      "image": "https://pizza.az/upload/resize_cache/iblock/375/482_482_240cd750bba9870f18aada2478b24840a/3751189edb1ce8e53c2e5f837d269ad3.png",
+      "price": 8
+    },
+    {
+      "id": 4,
+      "name": "Sicilian Pizza",
+      "image": "https://pizza.az/upload/resize_cache/iblock/375/482_482_240cd750bba9870f18aada2478b24840a/3751189edb1ce8e53c2e5f837d269ad3.png",
+      "price": 9
+    }
+    
+  ]

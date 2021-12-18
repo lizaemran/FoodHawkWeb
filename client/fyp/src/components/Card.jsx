@@ -1,10 +1,9 @@
 import React, {useState} from 'react';
 import ProductPopUp from './ProductPopUp';
 import {popup} from '../animations';
-// import {motion} from 'framer-motion';
+import {motion} from 'framer-motion';
 import { deleteRestaurantAsync } from '../redux/Slice';
 import {useDispatch} from 'react-redux';
-import {Row, Col, Image} from 'react-bootstrap';
 const Card = ({id, image, stars, name, location, setRId, setPId, setIsAdd, setIsEdit, setIsEditP, isOnline, setIsEditStatus}) => {
     const dispatch = useDispatch();
     const [isPopUp, setIsPopUp] = useState(false);
@@ -28,34 +27,34 @@ const Card = ({id, image, stars, name, location, setRId, setPId, setIsAdd, setIs
 <>
 {isPopUp && <ProductPopUp id={id} image={image} name={name} location={location} setIsPopUp={setIsPopUp} setPId={setPId} setIsEditP={setIsEditP}/>
 }
-            <Row className="r-card mt-5" variants={popup} initial='hidden' animate='show' onClick={()=> {setRId(id)}}>
-                <Col className="" xl={2} lg={2} md={2} sm={2} xs={2}>
+            <motion.div className="row r-card" variants={popup} initial='hidden' animate='show' onClick={()=> {setRId(id)}}>
+                <div className="col-2">
                     <div id="status" className = {isOnline ? "active-status": "inactive-status"}></div>
-                    <Image class="p-image" src={image} fluid alt="restaurant"/>
-                </Col>
-                <Col className="" xl={10} lg={10} md={10} sm={10} xs={10}>
-                <div className="admin-button d-flex">
-                <div className="shadow-lg" onClick={()=> {setIsEditStatus(true)}}>Status</div>  
-                <div onClick={()=> {setIsAdd(true)}}>Add</div>
-                <div onClick={()=> {setIsEdit(true)}}>Edit</div>
+                    <img class="p-image" src={image} alt="restaurant"/>
+                </div>
+                <div className="col-10">
+                <div className="admin-button">
+                <a onClick={()=> {setIsEditStatus(true)}}>Status</a>  
+                <a onClick={()=> {setIsAdd(true)}}>Add</a>
+                <a onClick={()=> {setIsEdit(true)}}>Edit</a>
                 </div>
                     <h1>{name}</h1>
-                    <button id="btn" className="fs-3 py-2 px-3" onClick={()=> {setIsPopUp(true)}} >ORDER</button>
+                    <button id="btn" onClick={()=> {setIsPopUp(true)}} >ORDER</button>
                     <div id="rating">
                         {
                             renderStars(stars)
                         }
                     </div>
-                    <div id="close" onClick={handleDeletedClick}><i className="fas fa-times"></i></div>
-                    <p className="description fs-4">
+                    <div id="close" onClick={handleDeletedClick}><i class="fas fa-times"></i></div>
+                    <p class="description">
                     Delivery Time: 40min<br />
                     Delivery Fee: Rs. 50<br />
                     Location: {location}
                     </p>
                     
-                </Col>
+                </div>
  
-            </Row>
+            </motion.div>
 </>           
     )
    

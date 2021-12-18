@@ -1,0 +1,23 @@
+
+.square {
+    margin-left: 380px;
+    border-radius: 25px;
+    background:black;
+    padding: 20px; 
+    width: 800px;
+    height: 500px; 
+    margin-bottom:5px;
+  } 
+  .square h1{
+    color:white;
+    font-size:3rem;
+    text-align: center;
+    
+  }
+  .square p{
+    color:white;
+    
+    text-align: center;
+    
+  }
+ 

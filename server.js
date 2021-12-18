@@ -8,11 +8,11 @@ const app = express();
 app.use(express.json())
 app.use(cors())
 app.use('/api/restaurant',restaurant);
-app.use('/api/product',product); 
-mongoose.connect('mongodb+srv://liza:lizfiz1@foodhawk.uitlt.mongodb.net/FoodHawk?retryWrites=true&w=majority')
+app.use('/api/product',product);
+mongoose.connect('mongodb+srv://liza:lizfiz1@foodhawk.uitlt.mongodb.net/data?retryWrites=true&w=majority')
     .then(()=>{console.log('Connected')})
-    .catch((e) => {
-        console.log(e);
+    .catch(
+        () => {
             console.log("Not Connected");
         }
     )

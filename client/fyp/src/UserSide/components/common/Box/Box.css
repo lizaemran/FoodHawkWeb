@@ -1,0 +1,9 @@
+.mainbox {
+  width: 100%;
+  height: 45vh;
+}
+
+.curve {
+  border-bottom-left-radius:250px ;
+  border-bottom-right-radius:250px ; 
+}

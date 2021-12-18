@@ -50,7 +50,7 @@ const PopUpDetail = ({id, image, name, price, discount, category, setPId, setIsE
 
         console.log("New",newrId[0]._id);
         }
-  
+ 
       
     };
     return (
@@ -61,10 +61,10 @@ const PopUpDetail = ({id, image, name, price, discount, category, setPId, setIsE
                 </div>
                 <div className="col-10">
                 <div className="admin-button">
-                <div onClick={()=> {setIsEditP(true)}}>Edit</div>
+                <a onClick={()=> {setIsEditP(true)}}>Edit</a>
                 </div>
                     <h1>{name}</h1>
-                    <button className="fs-3 py-2 px-3" id="btn" onClick={AddtoCart}>ADD TO CART</button>
+                    <button id="btn" onClick={AddtoCart}>ADD TO CART</button>
                     <div id="rating">
                       <p className="price">${price}</p>
                     </div>

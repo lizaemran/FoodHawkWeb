@@ -1,0 +1,27 @@
+.main-footer {
+    color:gray;
+    background-color: black;
+    padding-top: 3em;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+  }
+  .margin1 
+  {
+   
+    margin-left:500px; 
+  }
+  .margin2 
+  {
+      margin-left:400px; 
+  }
+  .margin3 
+  {
+    margin-left:300px; 
+  }
+  
+  .col-md-2
+  {
+    margin-left:38px; 
+  }
+

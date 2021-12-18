@@ -75,7 +75,7 @@ const Home = () => {
             <img id="burger" src={burger} alt="burger"/>
             <img id="fries" src={fries} alt="fries"/>
             <img id="soda" src={soda} alt="soda"/>
-            <div  className="container home-container my-3">
+            <div  className="container home-container">
             {searched?.map((restaurant) => (
 				<Card  
                 key={restaurant._id} 

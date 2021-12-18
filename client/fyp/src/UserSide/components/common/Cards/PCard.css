@@ -1,0 +1,19 @@
+.btn {
+  background-color: black;
+}
+.black {
+  background-color: black !important;
+}
+.white-c {
+  color: white !important;
+}
+.black-c {
+  color: black !important;
+}
+/* .card-up{
+  transform: translateY(-40px);
+} */
+/* .image-up{
+  transform: scale();
+  z-index: 9999999px;
+} */

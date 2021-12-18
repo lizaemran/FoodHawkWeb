@@ -21,7 +21,7 @@ const Nav = ({setSearch, search}) => {
     return (
         <>
         <div className="center">
-            <input 
+            <input className='searchinput' 
             type="text" 
             placeholder="Search ..." 
             value={search}
