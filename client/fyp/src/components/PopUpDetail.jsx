@@ -64,7 +64,7 @@ const PopUpDetail = ({id, image, name, price, discount, category, setPId, setIsE
                 <div onClick={()=> {setIsEditP(true)}}>Edit</div>
                 </div>
                     <h1>{name}</h1>
-                    <button id="btn" onClick={AddtoCart}>ADD TO CART</button>
+                    <button className="fs-3 py-2 px-3" id="btn" onClick={AddtoCart}>ADD TO CART</button>
                     <div id="rating">
                       <p className="price">${price}</p>
                     </div>
