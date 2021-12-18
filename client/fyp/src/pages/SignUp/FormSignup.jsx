@@ -1,102 +1,77 @@
 import React from 'react';
-import validate from './validateInfo';
-import useForm from './useForm';
 import './Form.css';
+import { Button, Container, Form } from 'react-bootstrap';
 
-const FormSignup = ({ submitForm }) => {
-  const { handleChange, handleSubmit, values, errors } = useForm(
-    submitForm,
-    validate
-  );
-
+const FormSignup = () => {
   return (
-    <div className='form-content-right '>
-      <form onSubmit={handleSubmit} className='form' noValidate>
-        <h1>
+    <Container className='p-5 '>
+      <Form  className='' noValidate>
+        <h1 className='text-white'>
           Create Account
         </h1>
-        <div className='form-inputs'>
-          <label className='form-label'>Username</label>
+        <div className='d-flex flex-column'>
+          <label className='text-white'>Username</label>
           <input
-            className='form-input'
+            className='w-75 mb-3 input1 fs-6 rounded-3 mt-0 border-0 text-muted'
             type='text'
             name='username'
             placeholder='Enter your username'
-            value={values.username}
-            onChange={handleChange}
           />
-          {errors.username && <p>{errors.username}</p>}
         </div>
-        <div className='form-inputs'>
-          <label className='form-label'>Email</label>
+        <div className='d-flex flex-column'>
+          <label className='text-white'>Email</label>
           <input
-            className='form-input'
+            className='input1 w-75 mb-3 fs-6 p-3 rounded-3 mt-0 border-0 text-muted'
             type='email'
             name='email'
             placeholder='Enter your email'
-            value={values.email}
-            onChange={handleChange}
           />
-          {errors.email && <p>{errors.email}</p>}
         </div>
-        <div className='form-inputs'>
-          <label className='form-label'>Password</label>
+        <div className='d-flex flex-column'>
+          <label className='text-white'>Password</label>
           <input
-            className='form-input'
+            className='input1 w-75 mb-3 fs-6 p-3 rounded-3 mt-0 border-0 text-muted'
             type='password'
             name='password'
             placeholder='Enter your password'
-            value={values.password}
-            onChange={handleChange}
           />
-          {errors.password && <p>{errors.password}</p>}
         </div>
-        <div className='form-inputs'>
-          <label className='form-label'>Confirm Password</label>
+        <div className='d-flex flex-column'>
+          <label className='text-white'>Confirm Password</label>
           <input
-            className='form-input'
+            className='input1 w-75 mb-3 fs-6 p-3 rounded-3 mt-0 border-0 text-muted'
             type='password'
             name='password2'
             placeholder='Confirm your password'
-            value={values.password2}
-            onChange={handleChange}
           />
-          {errors.password2 && <p>{errors.password2}</p>}
         </div>
-        <div className='form-inputs'>
-          <label className='form-label'>Phone Number</label>
+        <div className='d-flex flex-column'>
+          <label className='text-white'>Phone Number</label>
           <input
-            className='form-input'
+            className='input1 w-75 mb-3 fs-6 p-3 rounded-3 mt-0 border-0 text-muted'
             type='phone'
             name='phone'
             placeholder='Enter Phone Number'
-            value={values.phone}
-            onChange={handleChange}
           />
-          {errors.phone && <p>{errors.phone}</p>}
         </div>
-        <div className='form-inputs'>
-          <label className='form-label'>Address</label>
+        <div className='d-flex flex-column'>
+          <label className='text-white'>Address</label>
           <input
-            className='form-input'
+            className='input1 w-75 mb-3 fs-6 rounded-3 mt-0 border-0 text-muted'
             type='text'
             name='address'
             placeholder='Enter Address'
-            value={values.address}
-            onChange={handleChange}
           />
-          {errors.address && <p>{errors.address}</p>}
         </div>
-        <button className='form-input-btn' type='submit'>
-          Sign up
-        </button>
-        <span className='form-input-login'>
-          Already have an account? Login <a href='#'>here</a>
-        </span>
-
         
-      </form>
-    </div>
+        <Button className='py-2 px-5 fs-6' style={{background:"#EF5023", border:"none"}} type='submit'>
+          Sign up
+        </Button>
+        <span className='text-white fs-6'>
+          <br />Already have an account? Login <a href='/SignIn'>here</a>
+        </span>
+      </Form>
+    </Container>
   );
 };
 

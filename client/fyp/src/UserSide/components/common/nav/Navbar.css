@@ -1,4 +1,21 @@
-.NavBtn {
-  background-color: rgba(255, 255, 255, 0.459);
-  color:white;
+
+.navbar-toggler-icon {
+  color: white !important;
 }
+
+.navbar-toggler {
+  border: 3px solid white !important;
+  background-color: white !important;
+}
+.navbar-toggler:focus {
+  box-shadow: none !important;
+}
+.NavBtn:hover{
+background-color: rgba(128, 128, 128, 0.363);
+color: white!important;
+font-weight: 500!important;
+}
+.NavLogo:hover{
+  background-color: rgba(128, 128, 128, 0.363);
+
+  }

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import "../InputPhone/Phone.css";
-import PhoneIphoneIcon from '@material-ui/icons/PhoneIphone';
 import { Form } from 'react-bootstrap';
 class Phone extends Component {
  constructor() {
@@ -26,12 +25,7 @@ class Phone extends Component {
     return (
       <div>
        <form   onSubmit={this.handleSubmit}>
-        <Form.Control type="text"
-        className="input1 text-black"
-        style={{border:"none"}}
-            value={this.state.number} 
-            onChange={this.handleChange} 
-            placeholder='+92 XXXX XXX XXX'/>
+       
             {/* <PhoneIphoneIcon className='icon'/> */}
         </form>
      

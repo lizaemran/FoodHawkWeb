@@ -2,15 +2,17 @@ import React,{useState} from 'react'
 import "../styles/mainPage.css";
 import burger from'../img/e3c16df9.png';
 import {PCard} from '../UserSide/components/common/Cards/PCard';
-import { Container, Row, Col, CarouselItem } from 'react-bootstrap';
-import { Confirmation } from '../UserSide/components/common/Cards/Confirmation';
+import { Container, Row, Col,  } from 'react-bootstrap';
+// import { Confirmation } from '../UserSide/components/common/Cards/Confirmation';
 import pizzas from '../UserSide/components/common/Cards/data.json';
-import Carousel from "react-grid-carousel";
+// import Carousel from "react-grid-carousel";
+import { Swiper, SwiperSlide } from "swiper/react";
+import 'swiper/swiper-bundle.min.css'
+import 'swiper/swiper.min.css'
 import Footer from '../UserSide/components/common/Footer/Footer';
 import Box from '../UserSide/components/common/Box/Box';
 import Promo from '../UserSide/components/common/Promo/Promo';
 import Feedback from '../UserSide/components/common/CustomerFeedback/Feedback';
-import { ListItemSecondaryAction } from '@material-ui/core';
 const MainPage = () => {
     const [ordered, setOrdered] = useState(false);
 
@@ -30,21 +32,18 @@ const MainPage = () => {
           <Row><p className='text-center text-muted pb-5' style={{fontSize:"12px"}}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt<br /> ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud</p></Row>
                {/* {ordered && <Confirmation toggle={setOrdered} />}  */}
                   <Row style={{marginLeft:"50px", height:"20rem"}}  >
-                   < Carousel cols={3} rows={1} gap={2} hideArrow={true} autoplay={1500} loop={true} className="" >
-                 
+                  <Swiper className="mySwiper " slidesPerView={3} spaceBetween={10}  breakpoints = {{ 300 : {slidesPerView : 1} ,499 : {slidesPerView : 1} , 800 : {slidesPerView : 2}, 1024: {slidesPerView : 3}}}>
                     { pizzas.map(data => (
-                      <Carousel.Item>
+                     <SwiperSlide  style={{width: "426px", height:"410px"}}>
                         <Col key={'${data.id}'}>
                           <PCard data={data} setOrdered={displayConfirmation} price={data.price} />
                         </Col>
-                        </Carousel.Item>
+                        </SwiperSlide>
                         )) }
-                       </Carousel> 
-                     
-                 
+        </Swiper>
                        </Row>  
- </Container>
- <Promo/>
+          </Container>
+          <Promo/>
           <Feedback/>
          <Footer/>
          </div>

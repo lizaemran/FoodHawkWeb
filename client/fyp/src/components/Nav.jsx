@@ -18,22 +18,28 @@ const Nav = ({setSearch, search}) => {
 
          }));
 	};
+   
+    const d = new Date();
+    const month = d.toLocaleString('default', { month: 'long' });
+    const date = d.getDate() + " " + month + ", " + d.getFullYear();
+
     return (
         <>
         <div className="center">
-            <input className='searchinput' 
+            <input className='' 
             type="text" 
-            placeholder="Search ..." 
+            placeholder="Search for restaurants" 
             value={search}
             onChange={(e)=> {
                 setSearch(e.target.value||"");
             }}/>
+         <div className='d-flex'>
+            <p className='nav-date fs-5'>{date}</p>
             <div onMouseLeave={()=> setIsCart(false)} >
             <div onMouseEnter={()=> setIsCart(true)}  className = {isCart ?  `cart-icon-activate  cart-icon`: `cart-icon`}><i className="fas fa-shopping-basket"></i>
                 <div className="cart-number"><p>{total}</p></div>
-                
             </div>
-            {isCart && 
+            {isCart &&
                     <div className="cart-drop-menu">
                         {total === 0? <h1 style={{fontSize: "1.25rem"}}>No Products In Cart Yet</h1> :
                         cartItems !== undefined && cartItems.map((c) => 
@@ -49,6 +55,7 @@ const Nav = ({setSearch, search}) => {
                         {total!==0 && <Link to="/Cart"><button>View Cart</button></Link>}
                        
                     </div>}
+                    </div>
                     </div>
         </div>
         

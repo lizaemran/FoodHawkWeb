@@ -1,37 +1,35 @@
 import React from 'react'
 import 'bootstrap/dist/css/bootstrap.css'
 import { Image, Container, NavDropdown, Form , FormControl,Button, Nav, Navbar} from 'react-bootstrap';
-import Burger from "../../../../img/burger.svg";
+// import logo from "../../../../img/logored.PNG"
 import "../nav/Navbar.css";
 import logo from "../../../../img/burger.svg";
+import { Link } from 'react-router-dom';
 const NavBar = () => {
     return (
-      <Navbar bg="transparent" expand="lg" style={{paddingLeft:"75px", paddingRight:"75px"}}>
+      <Navbar className="" bg="" expand="lg" style={{background:"black"}}>
       <Container fluid>
-        <Navbar.Brand href="#"><Image className="" src={logo} alt="logo" style={{height:"70px", width:"70px"}}/></Navbar.Brand>
+        <Navbar.Brand href="/User" className='NavLogo d-flex justify-content-center align-items-end'><Image className="" src={logo} alt="logo" style={{color:"#EF5023", height:"auto", width:"70px"}}/><p className='text-white fs-4'>Food Hawk</p></Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
-        <nav>
+        <nav className="mr-auto" style={{ maxHeight: '100px' }} navbarScroll>
         <Navbar.Collapse id="navbarScroll">
-          <Nav
-            className="me-auto"
-            style={{ maxHeight: '100px' }}
-            navbarScroll
-          >
-            <Nav.Link href="#action1" className="text-muted px-5">Home</Nav.Link>
-            <Nav.Link href="#action2" className="text-muted px-5">About Us</Nav.Link>
-            <Nav.Link href="#" className="text-muted px-5">
-              Booking
-            </Nav.Link>
-            <Nav.Link href="#" className="text-muted px-5">
-              Get Apps
-            </Nav.Link>
-          </Nav>
+            <Link to="#" className="fw-bold text-muted">
+            <Button variant="" className="NavBtn fw-bold text-muted">About Us</Button>
+            </Link>
+            <Link to="#" className="fw-bold text-muted">
+            <Button variant="" className="NavBtn fw-bold text-muted">Booking</Button>
+            </Link>
+            <Link to="#" className="fw-bold text-muted">
+            <Button variant="" className="NavBtn fw-bold text-muted">Get App</Button>
+            </Link>
+            <Link to="/SignUp">
+              <Button variant="" className="NavBtn fw-bold text-muted">Register</Button>
+            </Link>
+            <Link to="/SignIn">
+              <Button variant="" className="NavBtn fw-bold text-muted">Sign in</Button>
+            </Link>
           </Navbar.Collapse>
-          </nav>
-          <nav>
-            <Button variant="" className="NavBtn">Sign in</Button>
-          </nav>
-       
+          </nav>      
       </Container>
     </Navbar>
     )

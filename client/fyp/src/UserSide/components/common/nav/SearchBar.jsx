@@ -21,16 +21,16 @@ function Searchbar(props) {
     }
   }
 return (
-    <div className="text-center1">
-        <input className='searchinput'
+    <div className="d-flex justify-content-center align-items-center">
+        <input className=''
           onChange={handleInput}
           onKeyPress={handleEnterKeyPressed}
           type="text"
           value={searchText}
-          placeholder="eg:Cheese Burger"
-          className=" p-3 position-relative"
-          style={{fontSize:"14px",borderRadius:"10px", border:"none", height:"55px", width:"25rem"}}/>
-          <Button className="text-white position-absolute " style={{backgroundColor:"#ef5023" , border:"none", left:"57.5%", top:"48%", fontSize:"14px"}}>Search</Button>
+          placeholder="Search restaurants, food items..."
+          className="p-3"
+          style={{fontSize:"14px",borderRadius:"10px 0px 0px 10px", border:"none",marginTop:"0px"}}/>
+          <Button className="text-white p-3" style={{height:"fit-content", backgroundColor:"#ef5023" , border:"none", fontSize:"14px", borderRadius:"0px 10px 10px 0px"}}>Search</Button>
       </div>
     
   );

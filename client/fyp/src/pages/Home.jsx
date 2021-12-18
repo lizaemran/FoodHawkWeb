@@ -14,6 +14,8 @@ import UpdateProduct from '../components/UpdateProduct';
 import UpdateStatus from '../components/UpdateStatus';
 import FormPopUp from '../components/FormPopUp';
 import {setCart} from '../redux/CartSlice';
+import { Col, Container, Row } from 'react-bootstrap';
+import SideNav from '../components/SideNav/SideNav';
 const Home = () => {
     const {cartItems, total} = useSelector((state)=> state.cart);
     const cart = useSelector((state)=> state.cart);
@@ -69,14 +71,21 @@ const Home = () => {
 
     return (
         <>
+            <Row>
+            <Col xl={1} lg={1} md={1} sm={12} xs={12} >
+            <SideNav />
+            </Col>
+            <Col xl={11} lg={11} md={11} sm={12} xs={12}>
             <Nav search={search} setSearch={setSearch} />
             <i onClick={()=>{setIsAddR(true)}} id="addRestaurant"className="fas fa-plus"></i>
             <img id="pizza"src={pizza} alt="pizza"/>
             <img id="burger" src={burger} alt="burger"/>
             <img id="fries" src={fries} alt="fries"/>
             <img id="soda" src={soda} alt="soda"/>
-            <div  className="container home-container">
+            <Container  className="home-container">
+            <Row>
             {searched?.map((restaurant) => (
+                <Col xl={6} lg={6} md={6} sm={12} xs={12} key={restaurant._id}>
 				<Card  
                 key={restaurant._id} 
                 id={restaurant._id} 
@@ -92,14 +101,19 @@ const Home = () => {
                 setIsEditP={setIsEditP}
                 setIsEditStatus={setIsEditStatus}
                 />
+                </Col>
 			))}
-            </div>
+            </Row>
+            </Container>
                 {isAddR && <FormPopUp title="Add Restaurant" setIsOpen={setIsAddR}><AddRestaurant /></FormPopUp>}
                 {isEdit && <FormPopUp title="Update Restaurant" setIsOpen={setIsEdit}><UpdateRestaurant rId={rId} /></FormPopUp>}
                 {isAdd && <FormPopUp title="Add Product" setIsOpen={setIsAdd}><AddProduct rId={rId}/></FormPopUp> }
                 {isEditP && <FormPopUp title="UpdateProduct" setIsOpen={setIsEditP}><UpdateProduct pId={pId} setPId={setPId}/></FormPopUp>}
                 {isEditStatus && <FormPopUp title="Update Status" setIsOpen={setIsEditStatus}><UpdateStatus rId={rId} status={restaurants.status}/></FormPopUp>}
-        </>
+        
+            </Col>
+            </Row>
+          </>
     )
 }
 
