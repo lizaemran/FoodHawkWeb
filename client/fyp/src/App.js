@@ -11,9 +11,9 @@ function App() {
         <Switch>
         <Route path='/SignUp' component={Form} />
         <Route path='/SignIn' component={FormLogin} />
-        <Route path='/User' component={MainPage} />
+        <Route exact path='/' component={MainPage} />
         <Route path='/Cart' component={Cart} />
-        <Route exact path='/' component={Home} />
+        <Route path='/Admin' component={Home} />
           
           
       </Switch>

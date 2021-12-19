@@ -1,11 +1,25 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { Button, Container, Form } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import {useDispatch} from 'react-redux';
+import { loginUserAsync } from '../../redux/auth';
 
 const FormLoginSub = () => {
+  const [userName, setUserName] = useState('');
+  const [password, setPassword] = useState('');
+  const dispatch = useDispatch();
+	const onSubmit = (event) => {
+		event.preventDefault();
+		dispatch(loginUserAsync({
+            username: userName,
+            password: password,
+		}));
+		    setUserName("");
+        setPassword("");
+	};
     return (
         <Container className='p-5 '>
-        <Form  className='' noValidate>
+        <Form  className='' noValidate onSubmit={onSubmit}>
           <h1 className='text-white'>
             Log In
           </h1>
@@ -16,6 +30,8 @@ const FormLoginSub = () => {
               type='text'
               name='username'
               placeholder='Enter your username'
+              value={userName}
+              onChange={(event) => setUserName(event.target.value)}
             />
           </div>
           <div className='d-flex flex-column'>
@@ -25,14 +41,14 @@ const FormLoginSub = () => {
               type='password'
               name='password'
               placeholder='Enter your password'
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
             />
           </div>
          
-          <Link to="/">
-          <Button className='py-2 px-5 fs-6' style={{background:"#EF5023", border:"none"}} type='submit'>
+          <Button type="submit" className='py-2 px-5 fs-6 form-btn' style={{background:"#EF5023", border:"none"}} type='submit'>
             Login
           </Button>
-          </Link>
           <span className='text-white '>
             <br />Don't Have An Account Yet? Register <a href='/SignUp'>here</a>
           </span>
