@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const {User, validate} = require('../models/user');
 const router = express.Router();
 const bcrypt = require('bcrypt');
+const userAuth = require('../middleware/userAuth');
 
 router.post('/', async(req,res) => {
     console.log(req.body)
@@ -30,6 +31,12 @@ router.post('/', async(req,res) => {
     await user.save();
     const token = user.generateAuthToken();
     user.token = token;
+    res.send(user);
+});
+
+router.get('/', userAuth, async(req, res)=> {
+    let user = await User.findOne({_id: req.user._id});
+    if (!user) return res.status(404).send("USER NOT FOUND");
     res.send(user);
 });
 

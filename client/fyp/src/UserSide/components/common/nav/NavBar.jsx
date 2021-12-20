@@ -9,7 +9,7 @@ const NavBar = () => {
     return (
       <Navbar className="" bg="" expand="lg" style={{background:"black"}}>
       <Container fluid>
-        <Navbar.Brand href="/User" className='NavLogo d-flex justify-content-center align-items-end'><Image className="" src={logo} alt="logo" style={{color:"#EF5023", height:"auto", width:"70px"}}/><p className='text-white fs-4'>Food Hawk</p></Navbar.Brand>
+        <Navbar.Brand href="/" className='NavLogo d-flex justify-content-center align-items-end'><Image className="" src={logo} alt="logo" style={{color:"#EF5023", height:"auto", width:"70px"}}/><p className='text-white fs-4'>Food Hawk</p></Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <nav className="mr-auto" style={{ maxHeight: '100px' }} navbarScroll>
         <Navbar.Collapse id="navbarScroll">

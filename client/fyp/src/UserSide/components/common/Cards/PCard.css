@@ -2,13 +2,19 @@
   background-color: black;
 }
 .black {
-  background-color: black !important;
+  background-color: rgba(0, 0, 0, 0.452) !important;
 }
 .white-c {
   color: white !important;
 }
 .black-c {
   color: black !important;
+}
+.card-div{
+  transition: all ease-in ;
+}
+.card-div:hover{
+  box-shadow: -0.1px 0.1px 20px gray;
 }
 /* .card-up{
   transform: translateY(-40px);

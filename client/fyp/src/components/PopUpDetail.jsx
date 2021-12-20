@@ -8,6 +8,7 @@ const PopUpDetail = ({id, image, name, price, discount, category, setPId, setIsE
     const dispatch = useDispatch();
     let rId = 0;
     let newrId = 0;
+    const userType = useSelector((state)=> state.auth?.user_type);
     const handleDeletedClick = () => {
 		dispatch(deleteProductAsync({ id:id }));
 	};
@@ -60,15 +61,15 @@ const PopUpDetail = ({id, image, name, price, discount, category, setPId, setIsE
                     <img className="p-image" src={image} alt="restaurant"/>
                 </div>
                 <div className="col-10">
-                <div className="admin-button">
+                {userType === 'admin' && <div className="admin-button">
                 <a onClick={()=> {setIsEditP(true)}}>Edit</a>
-                </div>
+                </div>}
                     <h1>{name}</h1>
                     <button id="btn" onClick={AddtoCart}>ADD TO CART</button>
                     <div id="rating">
                       <p className="price">PKR{price}</p>
                     </div>
-                    <div id="close" onClick={handleDeletedClick}><i class="fas fa-times"></i></div>
+                    {userType === 'admin' && <div id="close" onClick={handleDeletedClick}><i class="fas fa-times"></i></div>}
                     <p class="description">
                     Description: Lopem ispum lotez.<br />
                     Discount: {discount}<br />

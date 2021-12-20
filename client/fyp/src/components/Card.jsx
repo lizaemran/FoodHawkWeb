@@ -3,11 +3,11 @@ import ProductPopUp from './ProductPopUp';
 import {popup} from '../animations';
 import {motion} from 'framer-motion';
 import { deleteRestaurantAsync } from '../redux/Slice';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 const Card = ({id, image, stars, name, location, setRId, setPId, setIsAdd, setIsEdit, setIsEditP, isOnline, setIsEditStatus}) => {
     const dispatch = useDispatch();
     const [isPopUp, setIsPopUp] = useState(false);
-
+    const userType = useSelector((state)=> state.auth?.user_type)
     const renderStars = (stars) => {
         let rating = [];
              for(let i=1; i<=5; i++){
@@ -33,11 +33,11 @@ const Card = ({id, image, stars, name, location, setRId, setPId, setIsAdd, setIs
                     <img class="p-image" src={image} alt="restaurant"/>
                 </div>
                 <div className="col-10">
-                <div className="admin-button">
+                {userType === 'admin' && <div className="admin-button">
                 <a onClick={()=> {setIsEditStatus(true)}}>Status</a>  
                 <a onClick={()=> {setIsAdd(true)}}>Add</a>
                 <a onClick={()=> {setIsEdit(true)}}>Edit</a>
-                </div>
+                </div>}
                     <h1>{name}</h1>
                     <button id="btn" onClick={()=> {setIsPopUp(true)}} >ORDER</button>
                     <div id="rating">
@@ -45,7 +45,7 @@ const Card = ({id, image, stars, name, location, setRId, setPId, setIsAdd, setIs
                             renderStars(stars)
                         }
                     </div>
-                    <div id="close" onClick={handleDeletedClick}><i class="fas fa-times"></i></div>
+                    {userType === 'admin' && <div id="close" onClick={handleDeletedClick}><i class="fas fa-times"></i></div>}
                     <p class="description">
                     Delivery Time: 40min<br />
                     Delivery Fee: Rs. 50<br />

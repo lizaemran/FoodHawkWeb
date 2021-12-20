@@ -8,13 +8,11 @@ router.get('/', async (req,res) => {
     if (!products) return res.status(404).send("PRODUCT NOT FOUND");
     res.send(products);
 });
-
 router.get('/:id', async (req,res) => {
     const products = await Product.findById(req.params.id);
     if (!products) return res.status(404).send("PRODUCT WITH ID NOT FOUND");
     res.send(products);
 });
-
 router.post('/:r_id', async(req,res) => {
     let product = new Product({
         name : req.body.name,
@@ -30,7 +28,6 @@ router.post('/:r_id', async(req,res) => {
     restaurant = await restaurant.save();
     res.send(product);
 });
-
 router.put('/:id', async(req, res) => {
    let products;
     try { products = await Product.findByIdAndUpdate({_id:req.params.id},{

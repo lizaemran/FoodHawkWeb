@@ -2,19 +2,16 @@ const express = require('express');
 const mongoose = require('mongoose');
 const {Restaurant} = require('../models/restaurants');
 const router = express.Router();
-
 router.get('/', async (req,res) => {
     const restaurants = await Restaurant.find().sort({"rating": -1 });
     if (!restaurants) return res.status(404).send("RESTAURANT NOT FOUND");
     res.send(restaurants);
 });
-
 router.get('/:id', async (req,res) => {
     const restaurants = await Restaurant.find({"_id":req.params.id}).select("-_id products").populate("products");
     if (!restaurants) return res.status(404).send("RESTAURANT NOT FOUND");
     res.send(restaurants[0].products);
 });
-
 router.post('/', async(req,res) => {
     const restaurant = new Restaurant({
         name : req.body.name,
@@ -26,7 +23,6 @@ router.post('/', async(req,res) => {
     await restaurant.save();
     res.send(restaurant);
 });
-
 router.put('/:id', async(req, res) => {
    let restaurant;
     try { restaurant = await Restaurant.findByIdAndUpdate({_id:req.params.id},{
@@ -56,9 +52,6 @@ router.patch('/:id', async(req,res) => {
     catch{
         if (!restaurant) return res.status(404).send("RESTAURANT WITH ID NOT FOUND");
     }
-       
-    
-
 });
 
 module.exports = router;

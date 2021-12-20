@@ -31,13 +31,14 @@ const userSchema = new mongoose.Schema({
         required: true
         
     }, 
-    // user_type: {
-    //     type: String,
-    //     required: true
-    // }
+    user_type: {
+        type: String,
+        required: false,
+        default: "user"
+    }
 })
 userSchema.methods.generateAuthToken = function(){
-    const token = jwt.sign({_id: this._id},"key");
+    const token = jwt.sign({_id: this._id, isUser: true},"key");
     return token;
 }
 function validateUser(user){

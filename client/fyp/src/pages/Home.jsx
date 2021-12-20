@@ -16,6 +16,8 @@ import FormPopUp from '../components/FormPopUp';
 import {setCart} from '../redux/CartSlice';
 import { Col, Container, Row } from 'react-bootstrap';
 import SideNav from '../components/SideNav/SideNav';
+import { getUserAsync, getAdminAsync } from '../redux/auth';
+import jwt_decode from "jwt-decode";
 const Home = () => {
     const {cartItems, total} = useSelector((state)=> state.cart);
     const cart = useSelector((state)=> state.cart);
@@ -27,12 +29,26 @@ const Home = () => {
     const [search, setSearch] = useState("");
     const dispatch = useDispatch();
 	const restaurants = useSelector((state)=> state.restaurants);
+	const token = useSelector((state)=> state.auth.token);
     const [searched, setSearched] = useState([]);
     const [rId, setRId] = useState(searched[0]);
     const [pId, setPId] = useState("");
     useEffect(()=> {
 		dispatch(getRestaurantsAsync());
+        var decoded = jwt_decode(token);
+        console.log(decoded);
+        if(decoded.isAdmin === true){
+            dispatch(getAdminAsync());
+        }
+        else if(decoded.isUser === true){
+            dispatch(getUserAsync());
+        }
+        else{
+            window.location.href='/';
+        }
+        
 	},[dispatch]);
+   
     useEffect(() => {
         if(total === 0){
             localStorage.setItem("cart",[]);
@@ -67,8 +83,7 @@ const Home = () => {
     useEffect(()=> {
         setSearched(restaurants);
     },[restaurants])
-   
-
+   const userType = useSelector((state)=> state.auth?.user_type)
     return (
         <>
             <Row>
@@ -77,7 +92,7 @@ const Home = () => {
             </Col>
             <Col xl={11} lg={11} md={11} sm={12} xs={12}>
             <Nav search={search} setSearch={setSearch} />
-            <i onClick={()=>{setIsAddR(true)}} id="addRestaurant"className="fas fa-plus"></i>
+            {userType === 'admin' && <i onClick={()=>{setIsAddR(true)}} id="addRestaurant"className="fas fa-plus"></i>}
             <img id="pizza"src={pizza} alt="pizza"/>
             <img id="burger" src={burger} alt="burger"/>
             <img id="fries" src={fries} alt="fries"/>
