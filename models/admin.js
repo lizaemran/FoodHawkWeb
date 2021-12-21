@@ -6,6 +6,14 @@ const adminSchema = new mongoose.Schema({
         type:String,
         required:true 
     },
+    firstname:{
+        type: String,
+        required:true 
+    },
+    lastname:{
+        type: String,
+        required:true 
+    },
     email:{
         type: String,
         required:true 
@@ -31,6 +39,8 @@ adminSchema.methods.generateAuthToken = function(){
 function validateAdmin(admin){
     const schema = new Joi.object({
         username : Joi.string().min(3).max(50).required(),
+        firstname: Joi.string().min(5).max(1024).required(),
+        lastname: Joi.string().min(5).max(1024).required(),
         password: Joi.string().min(5).max(1024).required(),
         email: Joi.string().min(5).max(255).required().email(),
     })

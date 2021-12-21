@@ -111,6 +111,10 @@ const AuthSlice = createSlice({
             token: localStorage.getItem('token'),
         },
     reducers:{
+        hydrate:(state, action) => {
+            // do not do state = action.payload it will not update the store
+            return action.payload
+            },
         logoutUser: (state, action) => {
             localStorage.removeItem('token');
             window.location.href = '/';
@@ -159,6 +163,8 @@ const AuthSlice = createSlice({
                 ...state,
                 id: action?.payload?.admin?._id,
                 username: action?.payload?.admin?.username,
+                firstname: action?.payload?.admin?.firstname,
+                lastname: action?.payload?.admin?.lastname,
                 email: action?.payload?.admin?.email,
                 password: action?.payload?.admin?.password,
                 user_type: action?.payload?.admin?.user_type

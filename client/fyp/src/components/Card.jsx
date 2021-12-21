@@ -25,8 +25,7 @@ const Card = ({id, image, stars, name, location, setRId, setPId, setIsAdd, setIs
 	};
     return (
 <>
-{isPopUp && <ProductPopUp id={id} image={image} name={name} location={location} setIsPopUp={setIsPopUp} setPId={setPId} setIsEditP={setIsEditP}/>
-}
+{isPopUp && <ProductPopUp id={id} image={image} name={name} location={location} setIsPopUp={setIsPopUp} setPId={setPId} setIsEditP={setIsEditP}/>}
             <motion.div className="row r-card mb-5" style={{marginRight:"1%"}} variants={popup} initial='hidden' animate='show' onClick={()=> {setRId(id)}}>
                 <div className="col-2">
                     <div id="status" className = {isOnline ? "active-status": "inactive-status"}></div>

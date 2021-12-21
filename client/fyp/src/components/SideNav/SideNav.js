@@ -10,12 +10,12 @@ const SideNav = () => {
         dispatch(logoutUser());
     }
     return (
-        <div className='bg-dark p-5 d-flex flex-column justify-content-center align-items-center shadow-lg' style={{ borderRadius:"0px 10px 10px 0px"}}>
-            <Link to="/"><AiOutlineHome className='fs-2 my-5'/></Link>
-            <Link to="/account"><CgProfile className='fs-2 my-5'/></Link>
-            <Link to="/"><AiOutlineMail className='fs-2 my-5'/></Link>
-            <Link to="/"><AiOutlineInfoCircle className='fs-2 my-5'/></Link>
-            <AiOutlineLogout onClick={logOut} className='fs-2 my-5' style={{cursor:"pointer"}}/>
+        <div className='bg-dark p-5 d-flex flex-column justify-content-center align-items-center shadow-lg ' style={{ borderRadius:"0px 10px 10px 0px"}}>
+            <Link to="/dashboard"><AiOutlineHome className='side-link fs-2 my-5'/></Link>
+            <Link to="/account"><CgProfile className='side-link fs-2 my-5'/></Link>
+            <Link to="/"><AiOutlineMail className='side-link fs-2 my-5'/></Link>
+            <Link to="/"><AiOutlineInfoCircle className='side-link fs-2 my-5'/></Link>
+            <AiOutlineLogout onClick={logOut} className='side-link fs-2 my-5' style={{cursor:"pointer"}}/>
 
         </div>
     )

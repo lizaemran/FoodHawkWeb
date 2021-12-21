@@ -45,7 +45,7 @@
     font-size: 2rem;
 }
 #checkout-btn{
-    background-color: #EF476F;
+    background-color: #ef5023;
     width: 45%;
     border: none;
     color: white;
@@ -80,14 +80,14 @@
     margin: 0px;
     font-size: 1rem;
     border-radius: 5%;
-    border: solid 0.1rem #EF476F;
+    border: solid 0.1rem #ef5023;
 }
 #quantity-style-div{
     width: fit-content;
     height: fit-content;
 }
 #q-button-1{
-    background-color: #EF476F;
+    background-color: #ef5023;
     color: white;
     border: none;
     border-top-left-radius:50%;
@@ -95,7 +95,7 @@
     padding: 5px 10px;
 }
 #q-button-2{
-    background-color: #EF476F;
+    background-color: #ef5023;
     color: white;
     border: none;
     border-top-right-radius:50%;

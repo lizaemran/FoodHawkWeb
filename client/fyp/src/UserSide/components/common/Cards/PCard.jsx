@@ -17,7 +17,7 @@ export function PCard({ data, setOrdered,stars }) {
         return rating;
 }
   return (
-    <Card className={`${isHov ? 'card-up' : ''} `} style={{width:"19rem"}} onMouseEnter={() => setIsHov(true)} onMouseLeave={() => setIsHov(false)}>
+    <Card className={`${isHov ? 'card-up' : ''} card-div`} style={{width:"19rem"}} onMouseEnter={() => setIsHov(true)} onMouseLeave={() => setIsHov(false)}>
     <Card className={`${isHov ? 'black' : 'bg-white'} h-100 shadow-sm rounded justify-content-center align-items-center` }>
       <Card.Img variant="top" className={`${isHov ? 'image-up': ''}`} src={data.image} style={{width:"200px", height:"25vh", objectFit:"contain"}}/>
       <Card.Body className="d-flex flex-column justify-content-center align-items-center">

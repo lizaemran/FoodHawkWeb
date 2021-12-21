@@ -36,7 +36,7 @@ const Home = () => {
     useEffect(()=> {
 		dispatch(getRestaurantsAsync());
         var decoded = jwt_decode(token);
-        console.log(decoded);
+        // console.log(decoded);
         if(decoded.isAdmin === true){
             dispatch(getAdminAsync());
         }

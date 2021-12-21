@@ -39,7 +39,7 @@ const AdminLogin = () => {
           <div className='d-flex flex-column'>
             <label className='text-white'>Password</label>
             <input
-              className='w-100 mb-3 input1 fs-6 rounded-3 mt-0 border-0 text-muted'
+              className='w-100 mb-3 p-3 input1 fs-6 rounded-3 mt-0 border-0 text-muted'
               type='password'
               name='password'
               placeholder='Enter your password'

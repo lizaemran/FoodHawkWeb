@@ -42,9 +42,9 @@ const MainPage = () => {
                   <Swiper className="mySwiper " slidesPerView={3} spaceBetween={10}  breakpoints = {{ 300 : {slidesPerView : 1} ,499 : {slidesPerView : 1} , 800 : {slidesPerView : 2}, 1024: {slidesPerView : 3}}}>
                     { restaurants.map(data => (
                      <SwiperSlide  style={{width: "426px", height:"410px"}}>
-                        <Col key={'${data.id}'} className='card-div'>
-                          <PCard data={data}  stars={data.rating} />
-                        </Col>
+                       
+                          <PCard key={'${data.id}'} data={data} stars={data.rating} />
+                      
                         </SwiperSlide>
                         )) }
         </Swiper>
