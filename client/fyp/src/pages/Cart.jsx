@@ -34,22 +34,22 @@ const Cart = () => {
   
     return (
         <div className="container mt-3">
-            <h1 className="text-center p-5">Cart</h1>
+            <h5 className="text-center p-5">Cart</h5>
             <div className="row align-items-center text-center h-100">
                     <div className="col image">
 
                     </div>
                     <div className="col name">
-                        <h1>Product</h1>
+                        <h5>Product</h5>
                     </div>
                     <div className="col">
-                        <h1>Quantity</h1>
+                        <h5>Quantity</h5>
                     </div>
                     <div className="col">
-                        <h1>Discount</h1>
+                        <h5>Discount</h5>
                     </div>
                     <div className="col">
-                        <h1>Total</h1>
+                        <h5>Total</h5>
                     </div>
                 <hr />
             {cartItems.map((c)=>
@@ -65,8 +65,8 @@ const Cart = () => {
             )}
             </div>
             <div className="d-flex justify-content-end">
-                <h1 className="total-style">Total Amount:</h1>
-                <h1 id="total-style-h1" className="  total-style"> {`PKR ${sum}`} </h1>
+                <h5 className="total-style">Total Amount:</h5>
+                <h5 id="total-style-h5" className="  total-style"> {`PKR ${sum}`} </h5>
             </div>
             <div id="checkout">
             <button id="checkout-btn" className="mr-30 cart-style">CHECKOUT</button>

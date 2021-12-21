@@ -45,9 +45,9 @@ const Nav = ({setSearch, search}) => {
                         cartItems !== undefined && cartItems.map((c) => 
                             <div className="cart-menu">
                                 <img src={c.image} alt="cart-image"/>
-                                <h1>{c.name}</h1>
-                                <h1>x{c.countItems}</h1>
-                                <h1>{c.price}</h1>
+                                <h4>{c.name}</h4>
+                                <h4>x{c.countItems}</h4>
+                                <h4>{c.price}</h4>
                                 <span onClick={()=> handleDeleted(c.id)} ><i className="fas fa-times"></i></span>
                             </div>
                         )

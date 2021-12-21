@@ -18,6 +18,8 @@ import { Col, Container, Row } from 'react-bootstrap';
 import SideNav from '../components/SideNav/SideNav';
 import { getUserAsync, getAdminAsync } from '../redux/auth';
 import jwt_decode from "jwt-decode";
+import Cart from './Cart';
+import CartHome from '../components/CartHome';
 const Home = () => {
     const {cartItems, total} = useSelector((state)=> state.cart);
     const cart = useSelector((state)=> state.cart);
@@ -90,7 +92,7 @@ const Home = () => {
             <Col xl={1} lg={1} md={1} sm={12} xs={12} >
             <SideNav />
             </Col>
-            <Col xl={11} lg={11} md={11} sm={12} xs={12}>
+            <Col >
             <Nav search={search} setSearch={setSearch} />
             {userType === 'admin' && <i onClick={()=>{setIsAddR(true)}} id="addRestaurant"className="fas fa-plus"></i>}
             <img id="pizza"src={pizza} alt="pizza"/>
@@ -127,6 +129,10 @@ const Home = () => {
                 {isEditStatus && <FormPopUp title="Update Status" setIsOpen={setIsEditStatus}><UpdateStatus rId={rId} status={restaurants.status}/></FormPopUp>}
         
             </Col>
+            {total > 0 && 
+            <Col  xl={2} lg={2} md={2} sm={12} xs={12} className='bg-light'>
+                <CartHome />
+            </Col>}
             </Row>
           </>
     )
