@@ -8,6 +8,15 @@ async() => {
     } 
 });
 
+export const getRestaurantAsync = createAsyncThunk('products/getRestaurantAsync' , 
+async(payload) => {
+    const response = await fetch(`http://localhost:7000/api/restaurant/${payload.id}`);
+    if(response.ok){
+        const restaurant = await response.json();
+        return {restaurant};
+    }
+});
+
 export const addRestaurantsAsync = createAsyncThunk('restaurants/addRestaurantsAsync',
 async(payload) => {
     const response = await fetch('http://localhost:7000/api/restaurant/', {
@@ -80,13 +89,24 @@ const Slice = createSlice({
     name: "restaurants",
     initialState:
     [
-        { name:"KFC", image:"https://i.ibb.co/g6PDrG5/kfc.jpg", rating: 5, location: "E-11", status: false,
+        { 
+            name:"KFC", image:"https://i.ibb.co/g6PDrG5/kfc.jpg", rating: 5, location: "E-11", status: false,
         }
     ],
     extraReducers: {
         [getRestaurantsAsync.fulfilled]: (state,action) => {
             console.log("Fetched restaurants successfully.");
-            return action.payload.restaurants;
+            return {
+                ...state,
+                restaurants: action.payload.restaurants,
+            }
+        },
+        [getRestaurantAsync.fulfilled]: (state, action) => {
+            console.log("Fetched Restaurant Successfully.");
+            return {
+                ...state,
+                restaurant: action.payload.restaurant,
+            }
         },
         [addRestaurantsAsync.fulfilled]: (state,action) => {
             console.log("Posted restaurants successfully.");

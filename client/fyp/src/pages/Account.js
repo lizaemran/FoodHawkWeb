@@ -13,7 +13,7 @@ import jwt_decode from "jwt-decode";
 const Account = () => {
     const token = useSelector((state)=> state.auth.token);
     const auth = useSelector((state) => state.auth);
-    const restaurants = useSelector((state)=> state.restaurants);
+    const restaurants = useSelector((state)=> state.restaurants.restaurants);
     const users = useSelector((state)=> state?.admin.users);
     const dispatch = useDispatch();
     useEffect(() => {

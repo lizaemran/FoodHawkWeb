@@ -53,15 +53,20 @@ const Nav = ({setSearch, search}) => {
                         {total === 0? <h1 style={{fontSize: "1.25rem"}}>Cart is empty</h1> :
                         cartItems !== undefined && cartItems.map((c) => 
                             <div className="cart-menu">
-                                <img src={c.image} alt="cart-image"/>
-                                <h4>{c.name}</h4>
-                                <h4>x{c.countItems}</h4>
-                                <h4>{c.price}</h4>
+                                <img src={c.image} style={{marginRight:'5px'}} alt="cart-image"/>
+                                <h6 style={{marginRight:'5px'}}>{c.name}</h6>
+                                <h6 style={{marginRight:'5px'}}>x{c.countItems}</h6>
+                                <h6 style={{marginRight:'5px'}}>{c.price}</h6>
                                 <span onClick={()=> handleDeleted(c.id)} ><i className="fas fa-times"></i></span>
                             </div>
                         )
                     }
-                        {total!==0 && <Link to="/Cart"><button>View Cart</button></Link>}
+                        {total!==0 && 
+                        <Link to="/Cart">
+                            <button className='py-2' style={{fontSize:'12px', borderRadius:'5px'}}>
+                            View Cart
+                            </button>
+                            </Link>}
                        
                     </div>}
                    

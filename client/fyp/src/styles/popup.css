@@ -25,7 +25,7 @@
 .p-image{
     width: 140px;
     height: 140px;
-    object-fit: contain;
+    object-fit: cover;
 }
 
 .price{

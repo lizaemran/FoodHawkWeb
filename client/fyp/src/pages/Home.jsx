@@ -25,14 +25,13 @@ const Home = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
     const cart = useSelector((state)=> state.cart);
     const [isEdit, setIsEdit] = useState(false);
     const [isAdd, setIsAdd] = useState(false);
-    
     const [isAddR, setIsAddR] = useState(false);    
     const [isEditStatus, setIsEditStatus] = useState(false);
     const dispatch = useDispatch();
-	const restaurants = useSelector((state)=> state.restaurants);
+	const restaurants = useSelector((state)=> state.restaurants.restaurants);
 	const token = useSelector((state)=> state.auth.token);
     const [searched, setSearched] = useState([]);
-    const [rId, setRId] = useState(searched[0]);
+    const [rId, setRId] = useState();
     
     useEffect(()=> {
 		dispatch(getRestaurantsAsync());

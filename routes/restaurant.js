@@ -7,10 +7,15 @@ router.get('/', async (req,res) => {
     if (!restaurants) return res.status(404).send("RESTAURANT NOT FOUND");
     res.send(restaurants);
 });
-router.get('/:id', async (req,res) => {
+router.get('/:id/products', async (req,res) => {
     const restaurants = await Restaurant.find({"_id":req.params.id}).select("-_id products").populate("products");
     if (!restaurants) return res.status(404).send("RESTAURANT NOT FOUND");
     res.send(restaurants[0].products);
+});
+router.get('/:id', async (req,res) => {
+    const restaurants = await Restaurant.findById({"_id":req.params.id}).populate("products");
+    if (!restaurants) return res.status(404).send("RESTAURANT NOT FOUND");
+    res.send(restaurants);
 });
 router.post('/', async(req,res) => {
     const restaurant = new Restaurant({

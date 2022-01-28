@@ -6,7 +6,7 @@ import jwt_decode from "jwt-decode";
 
 const PopUpDetail = ({id, image, name, price, discount, category, setPId, setIsEditP}) => {
     const {cartItems, total} = useSelector((state)=> state.cart);
-    const restaurants = useSelector((state)=> state.restaurants);
+    const restaurants = useSelector((state)=> state.restaurants.restaurants);
     const token = useSelector((state)=> state.auth.token);
     var decoded = jwt_decode(token);
     const dispatch = useDispatch();
@@ -40,8 +40,8 @@ const PopUpDetail = ({id, image, name, price, discount, category, setPId, setIsE
             }
         }
         else{
-        newrId = restaurants.filter((r)=> 
-        r.products.filter((p)=> p === id).length > 0 );
+        newrId = restaurants?.filter((r)=> 
+        r.products?.filter((p)=> p === id).length > 0 );
         dispatch(addCart({
             id: id,
             countItems: 1,

@@ -28,8 +28,8 @@ const MainPage = () => {
   const dispatch = useDispatch();
   useEffect(()=> {
 		dispatch(getRestaurantsAsync());
-	},[dispatch]);
-  const restaurants = useSelector((state)=> state.restaurants);
+	},[]);
+  const restaurants = useSelector((state)=> state.restaurants.restaurants);
     return (
       <div className='bg-light'>
          <Box/> 
@@ -40,7 +40,7 @@ const MainPage = () => {
                {/* {ordered && <Confirmation toggle={setOrdered} />}  */}
                   <Row style={{marginLeft:"50px", height:"20rem"}}  >
                   <Swiper className="mySwiper " slidesPerView={3} spaceBetween={10}  breakpoints = {{ 300 : {slidesPerView : 1} ,499 : {slidesPerView : 1} , 800 : {slidesPerView : 2}, 1024: {slidesPerView : 3}}}>
-                    { restaurants.map(data => (
+                    { restaurants?.map(data => (
                      <SwiperSlide  style={{width: "426px", height:"410px"}}>
                        
                           <PCard key={'${data.id}'} data={data} stars={data.rating} />
