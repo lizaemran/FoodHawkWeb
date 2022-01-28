@@ -2,9 +2,13 @@ import React from 'react';
 import {deleteProductAsync} from '../redux/ProductSlice';
 import {useSelector, useDispatch} from 'react-redux';
 import {addCart} from '../redux/CartSlice';
+import jwt_decode from "jwt-decode";
+
 const PopUpDetail = ({id, image, name, price, discount, category, setPId, setIsEditP}) => {
     const {cartItems, total} = useSelector((state)=> state.cart);
     const restaurants = useSelector((state)=> state.restaurants);
+    const token = useSelector((state)=> state.auth.token);
+    var decoded = jwt_decode(token);
     const dispatch = useDispatch();
     let rId = 0;
     let newrId = 0;
@@ -65,7 +69,9 @@ const PopUpDetail = ({id, image, name, price, discount, category, setPId, setIsE
                 <a onClick={()=> {setIsEditP(true)}}>Edit</a>
                 </div>}
                     <h1>{name}</h1>
-                    <button id="btn" onClick={AddtoCart}>ADD TO CART</button>
+                    {decoded.isAdmin === false && 
+                     <button id="btn" onClick={AddtoCart}>ADD TO CART</button>
+                    }
                     <div id="rating">
                       <p className="price">PKR{price}</p>
                     </div>

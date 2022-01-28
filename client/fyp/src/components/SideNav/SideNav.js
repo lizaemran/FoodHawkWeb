@@ -10,7 +10,8 @@ const SideNav = () => {
         dispatch(logoutUser());
     }
     return (
-        <div className='bg-dark p-5 d-flex flex-column justify-content-center align-items-center shadow-lg ' style={{ borderRadius:"0px 10px 10px 0px"}}>
+        <div className='bg-dark p-5 d-flex flex-column justify-content-center align-items-center shadow-lg position-fixed' 
+        style={{ borderRadius:"0px 20px 20px 0px"}}>
             <Link to="/dashboard"><AiOutlineHome className='side-link fs-2 my-5'/></Link>
             <Link to="/account"><CgProfile className='side-link fs-2 my-5'/></Link>
             <Link to="/"><AiOutlineMail className='side-link fs-2 my-5'/></Link>

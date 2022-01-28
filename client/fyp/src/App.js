@@ -7,6 +7,7 @@ import {Switch, Route} from "react-router-dom";
 import FormLogin from './pages/SignIn/FormLogin';
 import AdminLogin from './pages/AdminLogin';
 import Account from './pages/Account';
+import Restaurant from './pages/Restaurant';
 function App() {
   return (
     <div >
@@ -18,6 +19,7 @@ function App() {
         <Route path='/dashboard' component={Home} />
         <Route path='/admin-login' component={AdminLogin} />
         <Route path='/account' component={Account}/>
+        <Route path='/restaurant' component={Restaurant}/>
       </Switch>
     </div>
   );

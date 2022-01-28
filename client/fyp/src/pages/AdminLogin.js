@@ -20,8 +20,9 @@ const AdminLogin = () => {
     return (
         <>
            <NavBar />
-           <Container className='p-5 d-flex justify-content-center align-items-center bg-dark '>
-           <Form  className='p-3' noValidate onSubmit={onSubmit}>
+           <div className='bg-dark '>
+           <Container className='p-5 d-flex justify-content-center align-items-center '>
+           <Form  className='p-5 rounded-3' noValidate onSubmit={onSubmit} style={{border:'1px solid white'}}>
           <h1 className='text-white'>
             Log In
           </h1>
@@ -56,6 +57,7 @@ const AdminLogin = () => {
           </span> */}
         </Form>
            </Container>
+           </div>
            <Footer /> 
         </>
     )

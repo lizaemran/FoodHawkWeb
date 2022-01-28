@@ -49,8 +49,8 @@ const FormLoginSub = () => {
           <Button type="submit" className='py-2 px-5 fs-6 form-btn' style={{background:"#EF5023", border:"none"}} type='submit'>
             Login
           </Button>
-          <span className='text-white '>
-            <br />Don't Have An Account Yet? Register <a href='/SignUp'>here</a>
+          <span className='text-white' style={{fontSize:'12px'}}>
+            <br />Don't Have An Account Yet? <a href='/SignUp'>Register</a>
           </span>
         </Form>
       </Container>

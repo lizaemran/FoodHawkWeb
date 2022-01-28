@@ -128,8 +128,8 @@ const FormSignup = () => {
         <Button type="submit" className='py-2 px-5 fs-6 form-btn' style={{background:"#EF5023", border:"none"}}>
           Sign up
         </Button>
-        <span className='text-white fs-6'>
-          <br />Already have an account? Login <a href='/SignIn'>here</a>
+        <span className='text-white' style={{fontSize:'12px'}}>
+          <br />Already have an account? <a href='/SignIn'>Login</a>
         </span>
       </Form>
     </Container>

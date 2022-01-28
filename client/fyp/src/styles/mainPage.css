@@ -2,3 +2,42 @@
   height: 17.5rem;
   width: 17.5rem;
 }
+.res-but{
+ color: black !important;
+ background-color: transparent !important;
+ border: 1px solid black !important;
+ 
+}
+.res-but-active{
+  color: white !important;
+  background-color: #EF5023 !important;
+  border: 1px solid #EF5023 !important;
+}
+.res-tab{
+  color: gray !important;
+  background-color: transparent !important;
+  border-top: none !important;
+  border-left: none !important;
+  border-right: none !important;
+  border-bottom: 2px solid gray !important;
+  
+ }
+ .res-tab-active{
+  color: black !important;
+  background-color: transparent !important;
+  border-top: none !important;
+  border-left: none !important;
+  border-right: none !important;
+  border-bottom: 3px solid #EF5023 !important;
+  font-weight: 500;
+ }
+ .book-form{
+  width: 30vw !important;
+  font-size: 1.2rem;
+  padding: 0.2rem 1.0rem !important;
+  border: 2px solid#EF5023 !important;
+  margin-top: 1vh !important;
+  margin-bottom: 1vh !important;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2) !important;
+  border-radius: 10px !important;
+ }

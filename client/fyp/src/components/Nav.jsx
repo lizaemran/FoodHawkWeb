@@ -3,11 +3,14 @@ import '../styles/nav.css';
 import {deleteCart} from '../redux/CartSlice';
 import {useSelector, useDispatch} from 'react-redux';
 import {Link} from 'react-router-dom';
+import jwt_decode from "jwt-decode";
+
 const Nav = ({setSearch, search}) => {
     const dispatch = useDispatch();
     const {cartItems,total } = useSelector((state)=> state.cart);
     const products = useSelector((state)=> state.products);
     const [isCart, setIsCart] = useState(false);
+    const token = useSelector((state)=> state.auth.token);
     const [cart, setCart] = useState([]);
     useEffect(()=> {
          setCart(cartItems.map((cI)=> ( {item: products.filter((p) => cI.id === p._id), count: cI.countItems})));
@@ -22,7 +25,7 @@ const Nav = ({setSearch, search}) => {
     const d = new Date();
     const month = d.toLocaleString('default', { month: 'long' });
     const date = d.getDate() + " " + month + ", " + d.getFullYear();
-
+    var decoded = jwt_decode(token);
     return (
         <>
         <div className="center">
@@ -35,6 +38,7 @@ const Nav = ({setSearch, search}) => {
             }}/>
          <div className='d-flex'>
             <p className='nav-date fs-5'>{date}</p>
+            {decoded.isAdmin === false && 
             <div onMouseLeave={()=> setIsCart(false)} >
             <div onMouseEnter={()=> setIsCart(true)}  className = {isCart ?  `cart-icon-activate  cart-icon`: `cart-icon`}><i className="fas fa-shopping-basket"></i>
                 <div className="cart-number"><p>{total}</p></div>
@@ -56,6 +60,7 @@ const Nav = ({setSearch, search}) => {
                        
                     </div>}
                     </div>
+                    }
                     </div>
         </div>
         
