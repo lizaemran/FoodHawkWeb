@@ -69,7 +69,7 @@ const PopUpDetail = ({id, image, name, price, discount, category, setPId, setIsE
                 <a onClick={()=> {setIsEditP(true)}}>Edit</a>
                 </div>}
                     <h1>{name}</h1>
-                    {decoded.isAdmin === false && 
+                    {decoded.isUser === true  && 
                      <button id="btn" onClick={AddtoCart}>ADD TO CART</button>
                     }
                     <div id="rating">

@@ -4,6 +4,7 @@ import {popup} from '../animations';
 import {motion} from 'framer-motion';
 import { deleteRestaurantAsync } from '../redux/Slice';
 import {useDispatch, useSelector} from 'react-redux';
+import {Link} from 'react-router-dom';
 const Card = ({id, image, stars, name, location, setRId, setPId, setIsAdd, setIsEdit, setIsEditP, isOnline, setIsEditStatus}) => {
     const dispatch = useDispatch();
     const [isPopUp, setIsPopUp] = useState(false);
@@ -37,7 +38,7 @@ const Card = ({id, image, stars, name, location, setRId, setPId, setIsAdd, setIs
                 <a onClick={()=> {setIsAdd(true)}}>Add</a>
                 <a onClick={()=> {setIsEdit(true)}}>Edit</a>
                 </div>}
-                    <h1>{name}</h1>
+                    <Link to='/restaurant' style={{color:'black', textDecoration:'none'}}><h1>{name}</h1></Link>
                     <button id="btn" onClick={()=> {setIsPopUp(true)}} >ORDER</button>
                     <div id="rating">
                         {

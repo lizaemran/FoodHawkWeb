@@ -4,13 +4,14 @@ import {deleteCart} from '../redux/CartSlice';
 import {useSelector, useDispatch} from 'react-redux';
 import {Link} from 'react-router-dom';
 import jwt_decode from "jwt-decode";
-
+import {FaUserCircle} from 'react-icons/fa';
 const Nav = ({setSearch, search}) => {
     const dispatch = useDispatch();
     const {cartItems,total } = useSelector((state)=> state.cart);
     const products = useSelector((state)=> state.products);
     const [isCart, setIsCart] = useState(false);
     const token = useSelector((state)=> state.auth.token);
+    const firstName = useSelector((state) => state.auth.username);
     const [cart, setCart] = useState([]);
     useEffect(()=> {
          setCart(cartItems.map((cI)=> ( {item: products.filter((p) => cI.id === p._id), count: cI.countItems})));
@@ -37,15 +38,19 @@ const Nav = ({setSearch, search}) => {
                 setSearch(e.target.value||"");
             }}/>
          <div className='d-flex'>
+
             <p className='nav-date fs-5'>{date}</p>
-            {decoded.isAdmin === false && 
+
+            {decoded.isUser === true && 
             <div onMouseLeave={()=> setIsCart(false)} >
             <div onMouseEnter={()=> setIsCart(true)}  className = {isCart ?  `cart-icon-activate  cart-icon`: `cart-icon`}><i className="fas fa-shopping-basket"></i>
                 <div className="cart-number"><p>{total}</p></div>
+                
             </div>
+            
             {isCart &&
                     <div className="cart-drop-menu">
-                        {total === 0? <h1 style={{fontSize: "1.25rem"}}>No Products In Cart Yet</h1> :
+                        {total === 0? <h1 style={{fontSize: "1.25rem"}}>Cart is empty</h1> :
                         cartItems !== undefined && cartItems.map((c) => 
                             <div className="cart-menu">
                                 <img src={c.image} alt="cart-image"/>
@@ -59,8 +64,13 @@ const Nav = ({setSearch, search}) => {
                         {total!==0 && <Link to="/Cart"><button>View Cart</button></Link>}
                        
                     </div>}
+                   
                     </div>
+                    
                     }
+                    <div className='nav-date fs-5' style={{marginLeft:'10px'}}>
+                        <FaUserCircle className='fs-3' /> {firstName}
+                    </div>
                     </div>
         </div>
         

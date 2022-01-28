@@ -20,21 +20,20 @@ import { getUserAsync, getAdminAsync } from '../redux/auth';
 import jwt_decode from "jwt-decode";
 import Cart from './Cart';
 import CartHome from '../components/CartHome';
-const Home = () => {
+const Home = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
     const {cartItems, total} = useSelector((state)=> state.cart);
     const cart = useSelector((state)=> state.cart);
     const [isEdit, setIsEdit] = useState(false);
     const [isAdd, setIsAdd] = useState(false);
-    const [isEditP, setIsEditP] = useState(false);
+    
     const [isAddR, setIsAddR] = useState(false);    
     const [isEditStatus, setIsEditStatus] = useState(false);
-    const [search, setSearch] = useState("");
     const dispatch = useDispatch();
 	const restaurants = useSelector((state)=> state.restaurants);
 	const token = useSelector((state)=> state.auth.token);
     const [searched, setSearched] = useState([]);
     const [rId, setRId] = useState(searched[0]);
-    const [pId, setPId] = useState("");
+    
     useEffect(()=> {
 		dispatch(getRestaurantsAsync());
         var decoded = jwt_decode(token);
@@ -95,10 +94,10 @@ const Home = () => {
             <Col >
             <Nav search={search} setSearch={setSearch} />
             {userType === 'admin' && <i onClick={()=>{setIsAddR(true)}} id="addRestaurant"className="fas fa-plus"></i>}
-            <img id="pizza"src={pizza} alt="pizza"/>
+            {/* <img id="pizza"src={pizza} alt="pizza"/>
             <img id="burger" src={burger} alt="burger"/>
             <img id="fries" src={fries} alt="fries"/>
-            <img id="soda" src={soda} alt="soda"/>
+            <img id="soda" src={soda} alt="soda"/> */}
             <Container  className="home-container">
             <Row>
             {searched?.map((restaurant) => (
