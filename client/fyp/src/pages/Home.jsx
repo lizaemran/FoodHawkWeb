@@ -20,6 +20,9 @@ import { getUserAsync, getAdminAsync } from '../redux/auth';
 import jwt_decode from "jwt-decode";
 import Cart from './Cart';
 import CartHome from '../components/CartHome';
+import { Swiper, SwiperSlide } from "swiper/react";
+import 'swiper/swiper-bundle.min.css'
+import 'swiper/swiper.min.css'
 const Home = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
     const {cartItems, total} = useSelector((state)=> state.cart);
     const cart = useSelector((state)=> state.cart);
@@ -99,8 +102,11 @@ const Home = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
             <img id="soda" src={soda} alt="soda"/> */}
             <Container  className="home-container">
             <Row>
+            <Swiper className="mySwiper " slidesPerView={3} spaceBetween={10}  breakpoints = {{ 300 : {slidesPerView : 1} ,499 : {slidesPerView : 1} , 800 : {slidesPerView : 2}, 1024: {slidesPerView : 3}}}>
+
             {searched?.map((restaurant) => (
                 <Col xl={6} lg={6} md={6} sm={12} xs={12} key={restaurant._id}>
+                <SwiperSlide  style={{width: "426px", height:"410px"}}>
 				<Card  
                 key={restaurant._id} 
                 id={restaurant._id} 
@@ -116,8 +122,10 @@ const Home = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
                 setIsEditP={setIsEditP}
                 setIsEditStatus={setIsEditStatus}
                 />
+                </SwiperSlide>
                 </Col>
 			))}
+            </Swiper>
             </Row>
             </Container>
                 {isAddR && <FormPopUp title="Add Restaurant" setIsOpen={setIsAddR}><AddRestaurant /></FormPopUp>}

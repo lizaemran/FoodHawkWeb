@@ -107,11 +107,11 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
                 <Button className={!bookmark ? 'res-but' : 'res-but-active'} onClick={()=> {setReview(false); setDirection(false); setBookmark(true); setShare(false);}} style={{marginRight:'10px'}}>
                     <BsBookmarkPlus className='fs-5' style={{color: bookmark ? 'white' : '#EF5023'}}/> Bookmark
                 </Button>
-                <WhatsappShareButton url='http://localhost:3000/restaurant' style={{marginRight:'5px'}}>
+                <WhatsappShareButton url='http://localhost:3000/restaurant' title={restaurant?.name}  style={{marginRight:'5px'}}>
                     {/* <BsShare className='fs-5' style={{color: share ? 'white' : '#EF5023'}}/> Share */}
                     <WhatsappIcon size={32} round={true} />
                 </WhatsappShareButton>
-                <TwitterShareButton url='http://localhost:3000/restaurant'>
+                <TwitterShareButton url='http://localhost:3000/restaurant' title={restaurant?.name}>
                     {/* <BsShare className='fs-5' style={{color: share ? 'white' : '#EF5023'}}/> Share */}
                     <TwitterIcon size={32} round={true} />
                 </TwitterShareButton>

@@ -2,7 +2,7 @@
     position: fixed;
     top: 0;
     left:0;
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: rgba(0, 0, 0, 0.541);
     width: 100vw;
     height: 100vh;
     backdrop-filter: blur(10px);
@@ -17,15 +17,15 @@
 }
 
 .p-card{
-    background-color: rgba(0,0,0,0.5)!important;
+    background-color: rgba(0, 0, 0, 0.247)!important;
     color: white;
 
 
 }
 .p-image{
-    width: 140px;
-    height: 140px;
-    object-fit: cover;
+    width: 100px;
+    height: 120px;
+    object-fit: contain;
 }
 
 .price{

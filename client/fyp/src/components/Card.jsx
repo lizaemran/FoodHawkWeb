@@ -5,7 +5,7 @@ import {motion} from 'framer-motion';
 import { deleteRestaurantAsync, getRestaurantAsync } from '../redux/Slice';
 import {useDispatch, useSelector} from 'react-redux';
 import {Link} from 'react-router-dom';
-import { Image } from 'react-bootstrap';
+import { Col, Image } from 'react-bootstrap';
 const Card = ({id, image, stars, name, location, setRId, setPId, setIsAdd, setIsEdit, setIsEditP, isOnline, setIsEditStatus}) => {
     const dispatch = useDispatch();
     const [isPopUp, setIsPopUp] = useState(false);
@@ -33,12 +33,12 @@ const Card = ({id, image, stars, name, location, setRId, setPId, setIsAdd, setIs
     return (
 <>
 {isPopUp && <ProductPopUp id={id} image={image} name={name} location={location} setIsPopUp={setIsPopUp} setPId={setPId} setIsEditP={setIsEditP}/>}
-            <motion.div className="row r-card mb-5" style={{marginRight:"1%"}} variants={popup} initial='hidden' animate='show' onClick={()=> {setRId(id)}}>
-                <div className="col-2">
+            <motion.div className="row r-card my-4" style={{marginRight:"1%"}} variants={popup} initial='hidden' animate='show' onClick={()=> {setRId(id)}}>
+                <Col className="col-2 m-auto">
                     <div id="status" className = {isOnline ? "active-status": "inactive-status"}></div>
                     <Link to='/restaurant'><Image onClick={restaurantDetailHandler} className="p-image" src={image} alt="restaurant"/></Link>
-                </div>
-                <div className="col-10">
+                </Col>
+                <Col className="col-10">
                 {userType === 'admin' && <div className="admin-button">
                 <a onClick={()=> {setIsEditStatus(true)}}>Status</a>  
                 <a onClick={()=> {setIsAdd(true)}}>Add</a>
@@ -58,7 +58,7 @@ const Card = ({id, image, stars, name, location, setRId, setPId, setIsAdd, setIs
                     Location: {location}
                     </p>
                     
-                </div>
+                </Col>
  
             </motion.div>
 </>           

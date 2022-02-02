@@ -254,19 +254,21 @@ width:100%;
   }
 }
 .r-card {
-  background-color: #0000003f;
+  background-color: #00000018;
   padding: 0;
-  box-shadow: -1px 10px 10px rgba(0, 0, 0, 0.274);
+  /* box-shadow: -1px 10px 10px rgba(0, 0, 0, 0.274); */
   border-radius: 10px;
+  margin-right: 10px!important;
 
   cursor: pointer;
 }
 .r-card .col-2 {
-  padding: 0;
+  padding-left: 5px;
   position: relative;
  
 }
 .r-card .col-2 img {
+  
   border-radius: 10px 0px 0px 10px;
   
 }
@@ -276,17 +278,17 @@ width:100%;
 }
 
 .r-card h1 {
-  font-size: 2rem;
+  font-size: 1.5rem;
   margin-top: 0.5rem;
 }
 .home-container {
-  padding: 5% 5% !important;
+  padding: 1% 1% !important;
 }
 #rating {
   position: absolute;
-  right: 7%;
+  right: 1%;
   top: 4%;
-  font-size: 2rem;
+  font-size: 1rem;
 }
 #close {
   position: absolute;
@@ -308,11 +310,11 @@ width:100%;
 }
 #status {
   position: absolute;
-  height: 35px;
-  width: 35px;
+  height: 30px;
+  width: 30px;
   background-color: #17d614;
   border-radius: 50%;
-  top: -20px;
+  top: -30px;
   left: 5px;
   border: 3px solid #edf6f9;
 }
@@ -321,12 +323,12 @@ width:100%;
   background-color: #EF5023;
   border: none;
   color: white;
-  font-size: 1.25em;
+  font-size: 1em;
   position: absolute;
   right: 3%;
   bottom: 10%;
   border-radius: 10px;
-  padding: 1rem 3rem;
+  padding: 0.5rem 1.5em;
 }
 
 .toggle-heading {
@@ -381,7 +383,7 @@ width:100%;
   margin-bottom: 20px !important;
 }
 .r-card:hover {
-  box-shadow: -1px 25px 10px -15px rgba(0, 0, 0, 0.55);
+  box-shadow: -1px 15px 10px -15px rgba(0, 0, 0, 0.55);
 }
 .admin-button {
   position: absolute;
