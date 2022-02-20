@@ -1,7 +1,9 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const {Restaurant} = require('../models/restaurants');
+const {Restaurant, validate} = require('../models/restaurants');
 const router = express.Router();
+const bcrypt = require('bcrypt');
+const restaurantAuth = require('../middleware/restaurantAuth');
 router.get('/', async (req,res) => {
     const restaurants = await Restaurant.find().sort({"rating": -1 });
     if (!restaurants) return res.status(404).send("RESTAURANT NOT FOUND");
@@ -17,15 +19,38 @@ router.get('/:id', async (req,res) => {
     if (!restaurants) return res.status(404).send("RESTAURANT NOT FOUND");
     res.send(restaurants);
 });
+router.get('/dashboard/:username', async (req,res) => {
+    let restaurant = await Restaurant.findOne({username: req.params.username}).populate("products");
+    if (!restaurant) return res.status(404).send("RESTAURANT NOT FOUND");
+    res.send(restaurant);
+});
 router.post('/', async(req,res) => {
-    const restaurant = new Restaurant({
+    const {error} = validate(req.body);
+    if(error) return res.status(400).send(error.details[0].message);
+    let restaurant = await Restaurant.findOne({username: req.body.username});
+    if(restaurant){
+        return res.status(400).send("RESTAURANT ALREADY EXIST");
+    }
+    let restaurant1 = await Restaurant.findOne({email: req.body.email});
+    if(restaurant1){
+        return res.status(400).send("RESTAURANT ALREADY EXISTS.");
+    }
+    const salt = await bcrypt.genSalt(10);
+    let pass = await bcrypt.hash(req.body.password, salt);
+     restaurant = new Restaurant({
+        username: req.body.username,
+        password: pass,
+        email: req.body.email,
         name : req.body.name,
         image: req.body.image,
         location: req.body.location,
+        phone: req.body.phone,
         rating: req.body.rating,
         status: false
     });
     await restaurant.save();
+    const token = restaurant.generateAuthToken();
+    restaurant.token = token;
     res.send(restaurant);
 });
 router.put('/:id', async(req, res) => {

@@ -6,7 +6,7 @@ const bcrypt = require('bcrypt');
 const userAuth = require('../middleware/userAuth');
 
 router.post('/', async(req,res) => {
-    console.log(req.body)
+    // console.log(req.body)
     const {error} = validate(req.body);
     if(error) return res.status(400).send(error.details[0].message);
     let user = await User.findOne({username: req.body.username});

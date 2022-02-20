@@ -4,6 +4,7 @@ const {User, validate} = require('../models/user');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const { Admin } = require('../models/admin');
+const { Restaurant } = require('../models/restaurants');
 
 router.post('/user', async(req,res) => {
     let user = await User.findOne({username: req.body.username});
@@ -16,6 +17,19 @@ router.post('/user', async(req,res) => {
     }
     const token = user.generateAuthToken();
     res.send({token: token});
+});
+
+router.post('/restaurant', async(req,res) => {
+    let restaurant = await Restaurant.findOne({username: req.body.username});
+    if(!restaurant){
+        return res.status(400).send("INVALID USERNAME OR PASSWORD");
+    }
+    let pass = await bcrypt.compare(req.body.password, restaurant.password);
+    if(!pass){
+        return res.status(400).send("INVALID USERNAME OR PASSWORD");
+    }
+    const token = restaurant.generateAuthToken();
+    res.send({token: token, restaurant: restaurant});
 });
 
 router.post('/admin', async(req,res) => {

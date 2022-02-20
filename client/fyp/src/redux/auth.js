@@ -1,4 +1,5 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
+import { getRestaurantAsync } from './Slice';
 export const registerUserAsync = createAsyncThunk('auth/registerUserAsync',
 async(payload) => {
     const response = await fetch('http://localhost:7000/api/user/', {
@@ -58,6 +59,42 @@ async(payload) => {
         const token = await response.json();
         console.log(token);
         return {token};
+    }
+});
+
+export const loginRestaurantAsync = createAsyncThunk('auth/loginRestaurantAsync',
+async(payload) => {
+    const response = await fetch('http://localhost:7000/api/auth/restaurant', {
+        method: "POST",
+        headers: {
+            "Content-Type": 'application/json',
+        },
+        body: JSON.stringify({
+            username: payload.username,
+            password: payload.password,
+        })
+    });
+    if(response.ok){
+        const data = await response.json();
+        // window.location.href = `/restaurant/dashboard/${payload.username}`
+        return {data};
+    }
+})
+
+export const getRestaurantDashboardAsync = createAsyncThunk('auth/getRestaurantDashboardAsync',
+async(payload) => {
+    const response = await fetch(`http://localhost:7000/api/restaurant/dashboard/${payload}`, {
+        method: "GET",
+        headers: {
+            "Content-Type": 'application/json',
+            "x-auth-token": localStorage.getItem('token')
+
+        },
+    });
+    if(response.ok){
+        const restaurant = await response.json();
+        // console.log(restaurant);
+        return {restaurant};
     }
 });
 
@@ -121,6 +158,7 @@ const AuthSlice = createSlice({
             return{
                 ...state,
                 token: null,
+                
             }
         },
     },
@@ -141,6 +179,41 @@ const AuthSlice = createSlice({
             localStorage.setItem('token', action?.payload?.token?.token)
             window.location.href = '/dashboard';
             return{...state, token : action?.payload?.token?.token}
+        },
+        [loginRestaurantAsync.fulfilled]: (state,action) => {
+            console.log("Restaurant logged in successfully.");
+            localStorage.setItem('token', action?.payload?.data?.token)
+            window.location.href = `/restaurant/dashboard/${action.payload?.data?.restaurant?.username}`
+            return{...state, token : action?.payload?.data?.token, 
+                id: action?.payload?.data?.restaurant?._id,
+                username: action?.payload?.data?.restaurant?.username,
+                name: action?.payload?.data?.restaurant?.name,
+                email: action?.payload?.data?.restaurant?.email,
+                password: action?.payload?.data?.restaurant?.password,
+                phone: action?.payload?.data?.restaurant?.phone,
+                location: action?.payload?.data?.restaurant?.location,
+                image: action?.payload?.data?.restaurant?.image,
+                rating: action?.payload?.data?.restaurant?.rating,
+                status: action?.payload?.data?.restaurant?.status,
+                user_type: 'Restaurant'
+            }
+        },
+        [getRestaurantDashboardAsync.fulfilled]: (state, action) => {
+            console.log("Got Restaurant successfully.");
+            return{...state, 
+                id: action?.payload?.restaurant?._id,
+                username: action?.payload?.restaurant?.username,
+                name: action?.payload?.restaurant?.name,
+                email: action?.payload?.restaurant?.email,
+                password: action?.payload?.restaurant?.password,
+                phone: action?.payload?.restaurant?.phone,
+                location: action?.payload?.restaurant?.location,
+                image: action?.payload?.restaurant?.image,
+                rating: action?.payload?.restaurant?.rating,
+                status: action?.payload?.restaurant?.status,
+                products: action?.payload?.restaurant?.products,
+                user_type: 'Restaurant'
+            }
         },
         [getUserAsync.fulfilled]: (state,action) => {
             console.log("Got User successfully.");

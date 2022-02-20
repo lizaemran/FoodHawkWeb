@@ -41,3 +41,23 @@
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2) !important;
   border-radius: 5px !important;
  }
+ .restaurant__register__bg{
+   background-image: url('../img/Pizza3.jpg');
+   background-position: center center;
+   background-repeat: no-repeat;
+   background-size: cover;
+   width: 100%;
+   height: 100%;
+ }
+ .restaurant__register__form__bg {
+   background-color: rgba(0, 0, 0, 0.3);
+   backdrop-filter: blur(10px);
+ }
+ .dashboard__bg{
+  background-image: url('../img/bg2.jpg');
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+ }

@@ -2,16 +2,15 @@ import React, { useState, useEffect } from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import { patchRestaurantAsync} from '../redux/Slice';
 const UpdateStatus = ({rId, status}) => {
-	const restaurants = useSelector((state)=> state.restaurants);
+	const restaurants = useSelector((state)=> state.restaurants.restaurants);
     const [imageValue, setImageValue] = useState('');
 	const[statusValue, setStatusValue] = useState(status);
 
 	let restaurant = {}
 	useEffect(()=>{
-		restaurant = restaurants.filter((r) => r._id == rId);
-		restaurant = restaurant[0];
-		setImageValue(restaurant.image);
-		setStatusValue(restaurant.status);
+		restaurant = restaurants?.filter((r) => r._id === rId);
+		setImageValue(restaurant?.image);
+		setStatusValue(restaurant?.status);
 	},[restaurants]);
 
 	const dispatch = useDispatch();

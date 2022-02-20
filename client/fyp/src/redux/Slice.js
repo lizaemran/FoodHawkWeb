@@ -25,15 +25,20 @@ async(payload) => {
             "Content-Type": 'application/json',
         },
         body: JSON.stringify({
+            username: payload.username,
+            password: payload.password,
+            email: payload.email,
             name: payload.name,
             image: payload.image,
             location: payload.location,
+            phone: payload.phone,
             rating: payload.rating
         })
     });
 
     if(response.ok){
         const restaurants = await response.json();
+        window.location.href = `/restaurant/dashboard/${payload.username}`
         return {restaurants};
     }
 });

@@ -3,7 +3,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import { addProductsAsync } from '../redux/ProductSlice';
 
 const AddProduct = ({rId}) => {
-    const restaurants = useSelector((state)=> state.restaurants);
+    const restaurants = useSelector((state)=> state.restaurants.restaurants);
 	const [nameValue, setNameValue] = useState('');
     const [priceValue, setPriceValue] = useState('');
     const [imageValue, setImageValue] = useState('');
@@ -13,9 +13,8 @@ const AddProduct = ({rId}) => {
 	const dispatch = useDispatch();
     let restaurant = {}
 	useEffect(()=>{
-		restaurant = restaurants.filter((r) => r._id == rId);
-		restaurant = restaurant[0];
-		setImageValueRestaurant(restaurant.image);
+		restaurant = restaurants?.filter((r) => r._id == rId);
+		setImageValueRestaurant(restaurant?.image);
 
 	},[restaurants]);
 	const onSubmit = (event) => {
