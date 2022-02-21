@@ -1,5 +1,5 @@
 .popup-main{
-    position: fixed;
+    position: absolute;
     top: 0;
     left:0;
     background-color: rgba(0, 0, 0, 0.541);
@@ -19,6 +19,7 @@
 .p-card{
     background-color: rgba(0, 0, 0, 0.247)!important;
     color: white;
+    margin-bottom: 50px;
 
 
 }
