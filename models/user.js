@@ -31,6 +31,12 @@ const userSchema = new mongoose.Schema({
         required: true
         
     }, 
+    orders: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Order"
+        }
+    ],
     user_type: {
         type: String,
         required: false,

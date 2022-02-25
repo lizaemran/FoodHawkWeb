@@ -4,7 +4,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import {addCart} from '../redux/CartSlice';
 import jwt_decode from "jwt-decode";
 
-const PopUpDetail = ({id, image, name, price, discount, category, setPId, setIsEditP}) => {
+const PopUpDetail = ({id, image, name, price, discount, category, r_id, setPId, setIsEditP}) => {
     const {cartItems, total} = useSelector((state)=> state.cart);
     const restaurants = useSelector((state)=> state.restaurants.restaurants);
     const token = useSelector((state)=> state.auth.token);
@@ -24,6 +24,7 @@ const PopUpDetail = ({id, image, name, price, discount, category, setPId, setIsE
             newrId = restaurants.filter((r)=> 
             r.products.filter((p)=> p === id).length > 0 );
             if(rId[0]._id === newrId[0]._id){
+                alert(r_id);
                 dispatch(addCart({
                     id: id,
                     countItems: 1,
@@ -32,7 +33,7 @@ const PopUpDetail = ({id, image, name, price, discount, category, setPId, setIsE
                     image: image,
                     discount: discount,
                     category: category,
-                    restaurant: newrId._id,
+                    restaurant: r_id,
                 }))
             }
             else{

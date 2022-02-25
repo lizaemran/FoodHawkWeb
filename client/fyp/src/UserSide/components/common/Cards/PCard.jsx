@@ -2,7 +2,11 @@ import React, {useState} from 'react';
 import { Card, Badge, Button, Row, Col } from 'react-bootstrap';
 import "../Cards/PCard.css";
 import {BsArrowRight} from "react-icons/bs";
+import { useDispatch } from 'react-redux';
+import { getRestaurantAsync } from '../../../../redux/Slice';
+import { Link } from 'react-router-dom';
 export function PCard({ data, setOrdered,stars }) {
+  const dispatch = useDispatch();
   const [isHov, setIsHov] = useState(false);
   const renderStars = (stars) => {
     let rating = [];
@@ -16,6 +20,11 @@ export function PCard({ data, setOrdered,stars }) {
         }
         return rating;
 }
+const restaurantDetailHandler = () => {
+  dispatch(getRestaurantAsync({
+      id:data.id
+  }))
+}
   return (
     <Card className={`${isHov ? 'card-up' : ''} card-div`} style={{width:"19rem"}} onMouseEnter={() => setIsHov(true)} onMouseLeave={() => setIsHov(false)}>
     <Card className={`${isHov ? 'black' : 'bg-white'} h-100 shadow-sm rounded justify-content-center align-items-center` }>
@@ -28,15 +37,16 @@ export function PCard({ data, setOrdered,stars }) {
       </Card.Body>
       {isHov && 
       <Row className='w-100 d-flex align-items-center p-3' style={{backgroundColor:"#ef5023"}}>
-      <Col className=" text-white" style={{backgroundColor:"transparent", border:"none"}}>
-        <text>Order</text>
-        </Col>
-        <Col className="d-flex justify-content-end"><BsArrowRight style={{color:"white", fontSize:"1.5rem"}}/>
-        </Col>
+        <Link  to='/restaurant'>
+          <Col onClick={restaurantDetailHandler} className=" text-white" style={{backgroundColor:"transparent", border:"none"}}>
+          <text>Order</text>
+          </Col>
+          <Col className="d-flex justify-content-end"><BsArrowRight style={{color:"white", fontSize:"1.5rem"}}/>
+          </Col>
+        </Link>
       </Row>
 }
     </Card>
     </Card>
-   
   );
 }

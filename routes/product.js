@@ -15,12 +15,12 @@ router.get('/:id', async (req,res) => {
 });
 router.post('/:r_id', async(req,res) => {
     let product = new Product({
+        restaurant_id: req.params.r_id,
         name : req.body.name,
         price: req.body.price,
         image: req.body.image,
         discount: req.body.discount,
         category: req.body.category
-
     });
     product = await product.save();
     let restaurant = await Restaurant.findById({_id:req.params.r_id});

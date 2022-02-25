@@ -5,8 +5,9 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 const adminAuth = require('../middleware/adminAuth');
 const { User } = require('../models/user');
+const { Rider } = require('../models/rider');
+const { Order } = require('../models/order');
 router.post('/', async(req,res) => {
-    console.log(req.body)
     const {error} = validate(req.body);
     if(error) return res.status(400).send(error.details[0].message);
     let admin = await Admin.findOne({username: req.body.username});
@@ -42,5 +43,16 @@ router.get('/users', adminAuth, async (req,res) => {
     let user = await User.find({});
     res.send(user);
 });
+
+router.get('/riders', adminAuth, async (req,res) => {
+    let rider = await Rider.find({});
+    res.send(rider);
+});
+
+router.get('/orders', adminAuth, async (req,res) => {
+    let order = await Order.find({});
+    res.send(order);
+});
+
 
 module.exports = router;

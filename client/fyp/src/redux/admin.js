@@ -29,6 +29,36 @@ async(payload) => {
         return {users};
     }
 });
+export const getAllRidersAsync = createAsyncThunk('admin/getAllRidersAsync',
+async(payload) => {
+    const response = await fetch('http://localhost:7000/api/admin/riders', {
+        method: "GET",
+        headers: {
+            "Content-Type": 'application/json',
+            "x-auth-token": localStorage.getItem('token')
+        },
+    });
+    if(response.ok){
+        const riders = await response.json();
+        console.log(riders);
+        return {riders};
+    }
+});
+export const getAllOrdersAsync = createAsyncThunk('admin/getAllOrdersAsync',
+async(payload) => {
+    const response = await fetch('http://localhost:7000/api/admin/orders', {
+        method: "GET",
+        headers: {
+            "Content-Type": 'application/json',
+            "x-auth-token": localStorage.getItem('token')
+        },
+    });
+    if(response.ok){
+        const orders = await response.json();
+        console.log(orders);
+        return {orders};
+    }
+});
 const AdminSlice = createSlice({
     name: "admin",
     initialState: 
@@ -54,6 +84,20 @@ const AdminSlice = createSlice({
             return{
                 ...state,
                 users: action?.payload?.users,
+            }
+        },
+        [getAllRidersAsync.fulfilled]: (state,action) => {
+            console.log("Got All Riders successfully.");
+            return{
+                ...state,
+                riders: action?.payload?.riders,
+            }
+        },
+        [getAllOrdersAsync.fulfilled]: (state,action) => {
+            console.log("Got All Orders successfully.");
+            return{
+                ...state,
+                orders: action?.payload?.orders,
             }
         },
     }

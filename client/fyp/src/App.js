@@ -12,6 +12,10 @@ import Restaurant from './pages/Restaurant';
 import RestaurantSignUp from './pages/RestaurantSignUp';
 import RestaurantDashboard from './pages/RestaurantDashboard';
 import RestaurantLogin from './pages/RestaurantLogin';
+import RiderSignUp from './pages/RiderSignUp';
+import RiderLogin from './pages/RiderLogin';
+import RiderDashboard from './pages/RiderDashboard';
+
 function App() {
   const [pId, setPId] = useState("");
   const [isEditP, setIsEditP] = useState(false);
@@ -30,6 +34,11 @@ function App() {
         <Route exact path='/restaurant/register' component={RestaurantSignUp} />
         <Route exact path='/restaurant/login' component={RestaurantLogin} />
         <Route exact path='/restaurant/dashboard/:username' component={RestaurantDashboard} />
+        <Route exact path='/rider/register' component={RiderSignUp} />
+        <Route exact path='/rider/login' component={RiderLogin} />
+        <Route exact path='/rider/dashboard/' component={RiderDashboard} />
+
+
       </Switch>
     </div>
   );

@@ -43,6 +43,47 @@ async(payload) => {
     }
 });
 
+export const registerRiderAsync = createAsyncThunk('auth/registerRiderAsync',
+async(payload) => {
+    const response = await fetch('http://localhost:7000/api/rider/', {
+        method: "POST",
+        headers: {
+            "Content-Type": 'application/json',
+        },
+        body: JSON.stringify({
+            username: payload.username,
+            name: payload.name,
+            email: payload.email,
+            password: payload.password,
+            phone: payload.phone,
+        })
+    });
+
+    if(response.ok){
+        const rider = await response.json();
+        return {rider};
+    }
+});
+
+export const loginRiderAsync = createAsyncThunk('auth/loginRiderAsync',
+async(payload) => {
+    const response = await fetch('http://localhost:7000/api/auth/rider', {
+        method: "POST",
+        headers: {
+            "Content-Type": 'application/json',
+        },
+        body: JSON.stringify({
+            username: payload.username,
+            password: payload.password,
+        })
+    });
+    if(response.ok){
+        const token = await response.json();
+        return {token};
+    }
+});
+
+
 export const loginAdminAsync = createAsyncThunk('auth/loginAdminAsync',
 async(payload) => {
     const response = await fetch('http://localhost:7000/api/auth/admin', {
@@ -132,6 +173,22 @@ async(payload) => {
 });
 
 
+export const getRiderAsync = createAsyncThunk('auth/getRiderAsync',
+async(payload) => {
+    const response = await fetch('http://localhost:7000/api/rider/', {
+        method: "GET",
+        headers: {
+            "Content-Type": 'application/json',
+            "x-auth-token": localStorage.getItem('token')
+        },
+    });
+    if(response.ok){
+        const rider = await response.json();
+        console.log(rider);
+        return {rider};
+    }
+});
+
 
 
 const AuthSlice = createSlice({
@@ -168,10 +225,22 @@ const AuthSlice = createSlice({
             window.location.href = '/SignIn';
             return action.payload.user;
         },
+        [registerRiderAsync.fulfilled]: (state,action) => {
+            console.log("Rider registered successfully.");
+            window.location.href = '/rider/login';
+            return action.payload.rider;
+        },
         [loginUserAsync.fulfilled]: (state,action) => {
             console.log("User logged in successfully.");
             localStorage.setItem('token', action?.payload?.token?.token)
             window.location.href = '/dashboard';
+            return{...state, token : action?.payload?.token?.token}
+        },
+        [loginRiderAsync.fulfilled]: (state,action) => {
+            console.log("Rider logged in successfully.");
+            console.log(action.payload);
+            localStorage.setItem('token', action?.payload?.token?.token)
+            window.location.href = '/rider/dashboard';
             return{...state, token : action?.payload?.token?.token}
         },
         [loginAdminAsync.fulfilled]: (state,action) => {
@@ -212,7 +281,8 @@ const AuthSlice = createSlice({
                 rating: action?.payload?.restaurant?.rating,
                 status: action?.payload?.restaurant?.status,
                 products: action?.payload?.restaurant?.products,
-                user_type: 'Restaurant'
+                user_type: 'Restaurant',
+                orders: action?.payload?.restaurant?.orders,
             }
         },
         [getUserAsync.fulfilled]: (state,action) => {
@@ -241,6 +311,19 @@ const AuthSlice = createSlice({
                 email: action?.payload?.admin?.email,
                 password: action?.payload?.admin?.password,
                 user_type: action?.payload?.admin?.user_type
+            }
+        },
+        [getRiderAsync.fulfilled]: (state,action) => {
+            console.log("Got Rider successfully.");
+            return{
+                ...state,
+                id: action?.payload?.rider?._id,
+                username: action?.payload?.rider?.username,
+                name: action?.payload?.rider?.name,
+                email: action?.payload?.rider?.email,
+                password: action?.payload?.rider?.password,
+                phone: action?.payload?.rider?.phone,
+                user_type: 'rider'
             }
         },
     }

@@ -30,6 +30,7 @@ const RestaurantDashboard = () => {
     const img = useSelector((state) => state?.auth?.image);
     const products = useSelector((state) => state?.auth?.products);
     const r_id = useSelector((state) => state?.auth?.id);
+    const orders = useSelector((state) => state?.auth?.orders);
 
     return (
         <div className='dashboard__bg' >
@@ -113,6 +114,18 @@ const RestaurantDashboard = () => {
                 <Container className='p-3'>
                     <Row className='text-white p-2' style={{backgroundColor:'rgba(255, 255, 255, 0.5)', borderRadius:'20px', backdropFilter:'2px'}}>
                         Total Sales: PKR 0
+                    </Row>
+                </Container>
+            </section>
+
+            <section>
+                <Container className='p-3'>
+                    <Row className='text-white p-2' style={{backgroundColor:'rgba(255, 255, 255, 0.5)', borderRadius:'20px', backdropFilter:'2px'}}>
+                        Orders: {orders?.map((u, index)=> 
+                        <div className='' style={{width:'fit-content'}}>
+                         {u} <span> , </span>
+                        </div>
+                        )}
                     </Row>
                 </Container>
             </section>

@@ -5,6 +5,8 @@ const product = require('./routes/product');
 const user = require('./routes/user');
 const admin = require('./routes/admin');
 const auth = require('./routes/auth');
+const rider = require('./routes/rider');
+const order = require('./routes/order');
 const cors = require('cors')
 const app = express();
 
@@ -15,6 +17,8 @@ app.use('/api/product',product);
 app.use('/api/user', user);
 app.use('/api/auth', auth)
 app.use('/api/admin', admin);
+app.use('/api/rider', rider);
+app.use('/api/order', order);
 
 mongoose.connect('mongodb+srv://liza:lizfiz1@foodhawk.uitlt.mongodb.net/data?retryWrites=true&w=majority')
     .then(()=>{console.log('Connected')})

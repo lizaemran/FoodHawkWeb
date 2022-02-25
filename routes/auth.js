@@ -5,6 +5,7 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 const { Admin } = require('../models/admin');
 const { Restaurant } = require('../models/restaurants');
+const { Rider } = require('../models/rider');
 
 router.post('/user', async(req,res) => {
     let user = await User.findOne({username: req.body.username});
@@ -42,6 +43,19 @@ router.post('/admin', async(req,res) => {
         return res.status(400).send("INVALID USERNAME OR PASSWORD");
     }
     const token = admin.generateAuthToken();
+    res.send({token: token});
+});
+
+router.post('/rider', async(req,res) => {
+    let rider = await Rider.findOne({username: req.body.username});
+    if(!rider){
+        return res.status(400).send("INVALID USERNAME OR PASSWORD");
+    }
+    let pass = await bcrypt.compare(req.body.password, rider.password);
+    if(!pass){
+        return res.status(400).send("INVALID USERNAME OR PASSWORD");
+    }
+    const token = rider.generateAuthToken();
     res.send({token: token});
 });
 

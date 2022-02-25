@@ -13,6 +13,7 @@ const CartSlice = createSlice({
             else{
             state.cartItems.push({
                 id: action.payload.id,
+                restaurant: action.payload.restaurant,
                 name: action.payload.name,
                 price: action.payload.price,
                 image: action.payload.image,

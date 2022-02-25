@@ -29,7 +29,7 @@ const MainPage = () => {
   useEffect(()=> {
 		dispatch(getRestaurantsAsync());
 	},[]);
-  const restaurants = useSelector((state)=> state.restaurants.restaurants);
+  const restaurants = useSelector((state)=> state.restaurants?.restaurants);
     return (
       <div className='bg-light'>
          <Box/> 
@@ -43,7 +43,7 @@ const MainPage = () => {
                     { restaurants?.map(data => (
                      <SwiperSlide  style={{width: "426px", height:"410px"}}>
                        
-                          <PCard key={'${data.id}'} data={data} stars={data.rating} />
+                          <PCard key={`${data.id}`} data={data} stars={data.rating} />
                       
                         </SwiperSlide>
                         )) }

@@ -5,8 +5,8 @@ module.exports = function(req,res,next){
     if(!token) return res.status(401).send('Access Denied, No token provided.');
     try{
         const decoded = jwt.verify(token,'key');
-        req.restaurant = decoded;
-        if(!req.restaurant.isRestaurant ) return res.status(403).send('Access denies');
+        req.rider = decoded;
+        if(!req.rider.isRider ) return res.status(403).send('Access denies');
         next();
     }
     catch(ex){

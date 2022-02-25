@@ -47,10 +47,10 @@
 }
 #checkout-btn{
     background-color: #ef5023;
-    width: 45%;
+    width: 35%;
     border: none;
     color: white;
-    font-size: 2rem;
+    font-size: 1rem;
     bottom: 10%;
     border-radius: 10px;
     padding: 0.4rem 2.6rem;
@@ -60,7 +60,7 @@
     text-align: right;
 }
 .cart-style{
-    font-size: 2rem;
+    font-size: 1.25rem;
 }
 .total-style{
     font-size: 2rem;
@@ -79,6 +79,7 @@
     width: 60px!important;
     height: 32.5px!important;
     margin: 0px;
+    text-align: center;
     font-size: 1rem;
     border-radius: 5%;
     border: solid 0.1rem #ef5023;
