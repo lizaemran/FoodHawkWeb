@@ -1,13 +1,14 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
-export const addOrderAsync = createAsyncThunk('restaurants/addOrderAsync',
+export const addOrderAsync = createAsyncThunk('user/addOrderAsync',
 async(payload) => {
-    const response = await fetch(`http://localhost:7000/api/order/${payload.r_id}/${payload.p_id}`, {
+    const response = await fetch(`http://localhost:7000/api/order/${payload.r_id}/${payload.u_id}`, {
         method: "POST",
         headers: {
             "Content-Type": 'application/json',
         },
         body: JSON.stringify({
             products: payload.products,
+            total_price: payload.total_price,
             status: 'pending',
             date: payload.date,
             time: payload.time,
@@ -19,11 +20,54 @@ async(payload) => {
         return {order};
     }
 });
+
+export const getOrderAsync = createAsyncThunk('user/getOrderAsync' , 
+async(payload) => {
+    const response = await fetch(`http://localhost:7000/api/user/order/${payload}`, {
+        method: "GET",
+        headers: {
+            "Content-Type": 'application/json',
+            "x-auth-token": localStorage.getItem('token')
+        },
+    });
+    if(response.ok){
+        const order = await response.json();
+        return {order};
+    }
+});
+
+
+export const getProductAsync = createAsyncThunk('user/getProductAsync' , 
+async(payload) => {
+    const response = await fetch(`http://localhost:7000/api/product/${payload}`);
+    if(response.ok){
+        const product = await response.json();
+        return {product};
+    }
+});
+
+export const getAllOrdersForUserAsync = createAsyncThunk('user/getAllOrdersForUserAsync' , 
+async(payload) => {
+    const response = await fetch(`http://localhost:7000/api/user/${payload}/orders`, {
+        method: "GET",
+        headers: {
+            "Content-Type": 'application/json',
+            "x-auth-token": localStorage.getItem('token')
+        },
+    });
+    if(response.ok){
+        const orders = await response.json();
+        return {orders};
+    }
+});
 const UserSlice = createSlice({
     name: "user",
     initialState: 
         {
          orders: []  ,
+         order : {},
+         products: [],
+         allOrders : [],
         },
     reducers:{
         hydrate:(state, action) => {
@@ -34,7 +78,24 @@ const UserSlice = createSlice({
     extraReducers: {
         [addOrderAsync.fulfilled]: (state,action) => {
             console.log("Order Added successfully.");
-            state.unshift(action.payload.order);
+            state.orders.push(action.payload.order);
+            window.location.href = `/track-order/${action.payload.order._id}`;
+
+        },
+        [getOrderAsync.fulfilled]: (state, action) => {
+            console.log("Fetched Order Successfully.");
+            return {
+                ...state,
+                order: action.payload.order,
+            }
+        },
+        [getProductAsync.fulfilled]: (state,action) => {
+            console.log("Fetched product successfully.");
+            state.products.push(action.payload.product);
+        },
+        [getAllOrdersForUserAsync.fulfilled]: (state,action) => {
+            console.log("Fetched all orders for user successfully.");
+            state.allOrders.push(action.payload.orders);
         },
     }
        

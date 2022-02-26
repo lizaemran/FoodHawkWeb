@@ -44,7 +44,7 @@ const Home = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
             console.log("local storage");
             localStorage.setItem("cart",JSON.stringify(cart));
         }
-        
+        setSearched(restaurants);
     }, [cartItems])
     useEffect(() => {
         if(localStorage.getItem("cart")){
@@ -53,6 +53,7 @@ const Home = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
             ))
         }
         dispatch(getRestaurantsAsync());
+        setSearched(restaurants);
         var decoded = jwt_decode(token);
         // console.log(decoded);
         if(decoded.isAdmin === true){
@@ -67,7 +68,7 @@ const Home = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
         
     }, []);
     useEffect(()=>{
-        if(search!= null && search.length>1){
+        if(search!= null && search.length>1 && search!=''){
         setSearched(restaurants.filter((r)=> r.name.toLowerCase().includes(search.toLowerCase())));
     }
     else{
@@ -75,7 +76,7 @@ const Home = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
     }
     },[search.length > 1])
 
-   const userType = useSelector((state)=> state.auth?.user_type)
+   const userType = useSelector((state)=> state.auth?.user_type);
     return (
         <>
             <Row>

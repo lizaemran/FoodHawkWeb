@@ -7,6 +7,7 @@ import {AiOutlineLogout} from 'react-icons/ai';
 import FormPopUp from '../components/FormPopUp';
 import UpdateStatus from '../components/UpdateStatus';
 import AddProduct from '../components/AddProduct';
+import {getOrderDetailAsync} from '../redux/Slice';
 const RestaurantDashboard = () => {
     const dispatch = useDispatch();
     const [isEditStatus, setIsEditStatus] = useState(false);
@@ -19,18 +20,27 @@ const RestaurantDashboard = () => {
     location = location.pathname;
     const username = location.split('/')[3];
     const status = useSelector((state) => state?.auth?.status);
-    useEffect(()=> {
-        dispatch(getRestaurantDashboardAsync(username))
-    }, []) //have to re-render on status change
-    const logOut = (e) => {
-        e.preventDefault();
-        dispatch(logoutUser());
-    }
     const name = useSelector((state) => state?.auth?.name);
     const img = useSelector((state) => state?.auth?.image);
     const products = useSelector((state) => state?.auth?.products);
     const r_id = useSelector((state) => state?.auth?.id);
     const orders = useSelector((state) => state?.auth?.orders);
+
+    useEffect(()=> {
+        dispatch(getRestaurantDashboardAsync(username))
+    }, []) //have to re-render on status change
+    useEffect(()=> {
+        for(let i = 0; i < orders?.length; i++){
+            dispatch(getOrderDetailAsync({
+                id : orders[i]
+            }));
+        }
+    }, [orders]) //have to re-render on status change
+    const logOut = (e) => {
+        e.preventDefault();
+        dispatch(logoutUser());
+    }
+    const order_detail = useSelector((state) => state?.restaurants?.order_detail);
 
     return (
         <div className='dashboard__bg' >
@@ -120,12 +130,44 @@ const RestaurantDashboard = () => {
 
             <section>
                 <Container className='p-3'>
-                    <Row className='text-white p-2' style={{backgroundColor:'rgba(255, 255, 255, 0.5)', borderRadius:'20px', backdropFilter:'2px'}}>
-                        Orders: {orders?.map((u, index)=> 
-                        <div className='' style={{width:'fit-content'}}>
-                         {u} <span> , </span>
-                        </div>
-                        )}
+                    <Row className='text-white p-3' style={{backgroundColor:'rgba(255, 255, 255, 0.5)', borderRadius:'20px', backdropFilter:'2px'}}>
+                        Orders: {orders?.length}
+                        <Table striped bordered hover responsive>
+                    <thead className='text-white' >
+                        <tr>
+                        <th>#</th>
+                        <th>Products</th>
+                        <th>Status</th>
+                        <th>Price</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                       {order_detail?.map((u, index)=> 
+                       <tr className='text-white'>
+                           <td>
+                               {index+1}
+                           </td>
+                           <td>
+                                {u.products?.map((p, index)=> <div>{p} <span>, </span></div>)}
+                           </td>
+                           <td className=''>
+                               {u?.status}
+                           </td>
+                           <td className=''>
+                               {u?.total_price}
+                           </td>
+                           <td className=''>
+                               {u?.date}
+                           </td>
+                           <td className=''>
+                               {u?.time}
+                           </td>
+                       </tr>
+                       )}
+                    </tbody>
+                    </Table>
                     </Row>
                 </Container>
             </section>

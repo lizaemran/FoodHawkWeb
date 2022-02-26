@@ -54,5 +54,11 @@ router.get('/orders', adminAuth, async (req,res) => {
     res.send(order);
 });
 
+router.get('/order/:id', adminAuth, async (req,res) => {
+    const order = await Order.findById({"_id":req.params.id});
+    if (!order) return res.status(404).send("ORDER NOT FOUND");
+    res.send(order);
+});
+
 
 module.exports = router;

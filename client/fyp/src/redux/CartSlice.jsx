@@ -11,9 +11,10 @@ const CartSlice = createSlice({
             {state.cartItems[index].countItems += 1;
             state.total += 1;}
             else{
+               
             state.cartItems.push({
                 id: action.payload.id,
-                restaurant: action.payload.restaurant,
+                restaurant_id: action.payload.restaurant_id,
                 name: action.payload.name,
                 price: action.payload.price,
                 image: action.payload.image,

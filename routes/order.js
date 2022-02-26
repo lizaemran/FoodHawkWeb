@@ -10,7 +10,8 @@ router.post('/:r_id/:u_id', async(req,res) => {
     let order = new Order({
         restaurant_id: req.params.r_id,
         user_id: req.params.u_id,
-        products: req.body.products,	
+        products: req.body.products,
+        total_price: req.body.total_price,	
         status: req.body.status,
         date: req.body.date,
         time: req.body.time,

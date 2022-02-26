@@ -4,6 +4,7 @@ const {Restaurant, validate} = require('../models/restaurants');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const restaurantAuth = require('../middleware/restaurantAuth');
+const { Order } = require('../models/order');
 router.get('/', async (req,res) => {
     const restaurants = await Restaurant.find().sort({"rating": -1 });
     if (!restaurants) return res.status(404).send("RESTAURANT NOT FOUND");
@@ -82,6 +83,12 @@ router.patch('/:id', async(req,res) => {
     catch{
         if (!restaurant) return res.status(404).send("RESTAURANT WITH ID NOT FOUND");
     }
+});
+
+router.get('/order/:id', restaurantAuth, async (req,res) => {
+    const order = await Order.findById({"_id":req.params.id});
+    if (!order) return res.status(404).send("ORDER NOT FOUND");
+    res.send(order);
 });
 
 

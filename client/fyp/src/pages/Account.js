@@ -10,6 +10,7 @@ import {GrNote} from 'react-icons/gr';
 import { useDispatch } from 'react-redux';
 import { getAllOrdersAsync, getAllRidersAsync, getAllUsersAsync } from '../redux/admin';
 import jwt_decode from "jwt-decode";
+import { getAllOrdersForUserAsync } from '../redux/user';
 const Account = () => {
     const token = useSelector((state)=> state.auth.token);
     const auth = useSelector((state) => state.auth);
@@ -22,13 +23,21 @@ const Account = () => {
     const [isRider, setIsRider] = useState(false);
     const [isOrder, setIsOrder] = useState(false);
     const dispatch = useDispatch();
+    var decoded = jwt_decode(token);
     useEffect(() => {
+        if(decoded.isAdmin == true){
         dispatch(getAllUsersAsync());
         dispatch(getAllRidersAsync());
         dispatch(getAllOrdersAsync());
+        }
+        else if(decoded.isUser == true){
+        dispatch(getAllOrdersForUserAsync(auth?.id));
+        }
+        else{
+            alert("You are not authorized to view this page");
+        }
     }, [dispatch])
-    var decoded = jwt_decode(token);
-
+    const allOrders = useSelector((state)=> state?.user?.allOrders);
     return (
         <>
         <div>
@@ -172,7 +181,7 @@ const Account = () => {
                                 {index}
                            </td>
                            <td>
-                               {u?.products?.map((p, index)=> p )}
+                               {u?.products?.map((p, index)=> <div key={index}>{p} <span> , </span></div> )}
                            </td>
                            <td>
                                {u.user_id}
@@ -235,6 +244,49 @@ const Account = () => {
                )}
                </>)
                }
+               {decoded.isUser == true && (
+                <Row className='py-5'>
+                    <h3>Orders</h3>
+                    <Col>
+                   <Table striped bordered hover responsive>
+                    <thead>
+                        <tr>
+                        <th>#</th>
+                        <th>Products</th>
+                        <th>Price</th>
+                        <th>Status</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                       {allOrders[0]?.map((u, index)=> 
+                       <tr>
+                           <td>
+                                {index}
+                           </td>
+                           <td>
+                               {u.products?.map((p, index)=> <div>{p} <span>, </span></div> )}
+                           </td>
+                           <td>
+                               {u.total_price}
+                           </td>
+                           <td>
+                               {u.status}
+                           </td>
+                           <td>
+                               {u.date}
+                           </td>
+                           <td>
+                               {u.time}
+                           </td>
+                       </tr>
+                       )}
+                    </tbody>
+                    </Table>
+                   </Col>
+                </Row>
+               )}
            </Container>
            </Col>
         </Row>

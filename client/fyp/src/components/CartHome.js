@@ -38,7 +38,7 @@ const CartHome = () => {
                     Your Delivery Address
                     <p><MdOutlineLocationOn className='fs-5' style={{color:"#ef5023"}}/>{address}</p>
                 </div>
-                <Link to='/Cart'><Button className='m-4' style={{background:"#ef5023", border:"none", outline:"none"}}>Go To Cart</Button></Link>
+                <Link to='/Cart'><Button className='mx-5' style={{background:"#ef5023", border:"none", outline:"none"}}>Go To Cart</Button></Link>
             </Row>
         </div>
     )

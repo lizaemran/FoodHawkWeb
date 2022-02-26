@@ -14,6 +14,10 @@ const orderSchema = new mongoose.Schema({
             ref: "Product"
         }
     ],
+    total_price:{
+        type:Number,
+        required:true
+    },
     status:{
         type:String,
         required:true 

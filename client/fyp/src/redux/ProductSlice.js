@@ -9,7 +9,6 @@ async(payload) => {
     }
 });
 
-
 export const addProductsAsync = createAsyncThunk('products/addProductsAsync',
 async(payload) => {
     const response = await fetch(`http://localhost:7000/api/product/${payload.id}`, {
@@ -97,7 +96,8 @@ const ProductSlice = createSlice({
         },
         [deleteProductAsync.fulfilled]: (state,action) => {
             return state.filter((product) => product._id !== action.payload.id);
-        }
+        },
+
     },
 });
 export default ProductSlice.reducer; 

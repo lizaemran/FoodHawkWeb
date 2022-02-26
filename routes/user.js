@@ -4,6 +4,7 @@ const {User, validate} = require('../models/user');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const userAuth = require('../middleware/userAuth');
+const { Order } = require('../models/order');
 
 router.post('/', async(req,res) => {
     // console.log(req.body)
@@ -38,6 +39,17 @@ router.get('/', userAuth, async(req, res)=> {
     let user = await User.findOne({_id: req.user._id});
     if (!user) return res.status(404).send("USER NOT FOUND");
     res.send(user);
+});
+
+router.get('/:id/orders', userAuth, async(req, res)=> {
+    let orders = await Order.find({user_id: req.user._id});
+    if (!orders) return res.status(404).send("ORDERS NOT FOUND");
+    res.send(orders);
+});
+router.get('/order/:id', userAuth, async (req,res) => {
+    const order = await Order.findById({"_id":req.params.id});
+    if (!order) return res.status(404).send("ORDER NOT FOUND");
+    res.send(order);
 });
 
 module.exports = router;

@@ -90,14 +90,34 @@ async(payload) => {
         return {id: restaurant.id, status: payload.status};
     }
 });
+
+export const getOrderDetailAsync = createAsyncThunk('restaurant/getOrderDetailAsync' , 
+async(payload) => {
+    const response = await fetch(`http://localhost:7000/api/restaurant/order/${payload.id}`, {
+        method: "GET",
+        headers: {
+            "Content-Type": 'application/json',
+            "x-auth-token": localStorage.getItem('token')
+        },
+    });
+    if(response.ok){
+        const order = await response.json();
+        return {order};
+    }
+});
 const Slice = createSlice({
     name: "restaurants",
     initialState:
-    [
-        { 
-            name:"KFC", image:"https://i.ibb.co/g6PDrG5/kfc.jpg", rating: 5, location: "E-11", status: false,
-        }
-    ],
+    {
+        restaurants: [], order_detail : [],
+    },
+    // [
+    //     { 
+    //         name:"KFC", image:"https://i.ibb.co/g6PDrG5/kfc.jpg", rating: 5, location: "E-11", status: false,
+    //     },
+       
+    // ],
+
     extraReducers: {
         [getRestaurantsAsync.fulfilled]: (state,action) => {
             console.log("Fetched restaurants successfully.");
@@ -128,7 +148,12 @@ const Slice = createSlice({
         [patchRestaurantAsync.fulfilled]: (state, action) => {
             const index = state.findIndex((restaurant)=> restaurant.id === action.payload.id);
             state[index].status = action.payload.status;
-        }
+        },
+        [getOrderDetailAsync.fulfilled]: (state, action) => {
+            console.log("Fetched Order Detail Successfully.");
+            console.log(action.payload.order);
+            state.order_detail.push(action.payload.order);
+        },
     },
 });
 export default Slice.reducer;

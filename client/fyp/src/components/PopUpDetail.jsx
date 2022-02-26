@@ -24,16 +24,17 @@ const PopUpDetail = ({id, image, name, price, discount, category, r_id, setPId, 
             newrId = restaurants.filter((r)=> 
             r.products.filter((p)=> p === id).length > 0 );
             if(rId[0]._id === newrId[0]._id){
-                alert(r_id);
+                console.log(r_id);
                 dispatch(addCart({
                     id: id,
+                    restaurant_id: r_id,
                     countItems: 1,
                     name: name,
                     price: price,
                     image: image,
                     discount: discount,
                     category: category,
-                    restaurant: r_id,
+                    
                 }))
             }
             else{
@@ -43,8 +44,10 @@ const PopUpDetail = ({id, image, name, price, discount, category, r_id, setPId, 
         else{
         newrId = restaurants?.filter((r)=> 
         r.products?.filter((p)=> p === id).length > 0 );
+        console.log(r_id);
         dispatch(addCart({
             id: id,
+            restaurant_id: r_id,
             countItems: 1,
             name: name,
             price: price,
