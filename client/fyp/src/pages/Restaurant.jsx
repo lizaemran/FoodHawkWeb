@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import { Breadcrumb, Button, Col, Container, Image, Row, Modal, Form } from 'react-bootstrap'
+import { Breadcrumb, Button, Col, Container, Image, Row, Modal, Form, } from 'react-bootstrap'
 import {AiOutlineStar} from 'react-icons/ai';
 import {MdOutlineDirections} from 'react-icons/md';
 import {BsBookmarkPlus, BsShare} from 'react-icons/bs';
@@ -12,7 +12,10 @@ import PopUpDetail from '../components/PopUpDetail';
 import { useSelector } from 'react-redux';
 import Nav from '../components/Nav';
 import Reviews from '../components/Reviews';
+import { Link } from 'react-router-dom';
 import {WhatsappShareButton, WhatsappIcon, TwitterShareButton, TwitterIcon} from 'react-share';
+import NavBar from '../UserSide/components/common/nav/NavBar';
+import Footer from '../UserSide/components/common/Footer/Footer';
 const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
     const [review, setReview] = useState(true);
     const [direction, setDirection] = useState(false);
@@ -24,6 +27,7 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
     const [reviews, setReviews] = useState(false);
     const [orderOnline, setOrderOnline] = useState(false);
     const [book, setBook] = useState(false);
+    const token = useSelector((state) => state.auth.token);
     const firstName = useSelector((state) => state.auth.username);
     const restaurant = useSelector((state) => state.restaurants.restaurant);
     const renderStars = (stars) => {
@@ -66,12 +70,16 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
       }
     return (
         <div>
+            {token === null && <NavBar />}
             <Row>
+                {token !== null &&
                 <Col xl={1} lg={1} md={1} sm={12} xs={12}>
                 <SideNav />
-                </Col>
-                <Col className='px-5'  xl={11} lg={11} md={11} sm={12} xs={12}>
+                </Col>}
+                <Col className='px-5 pt-5'>
+                {token !== null &&
                 <Nav search={search} setSearch={setSearch} />
+}
                 <div className='px-4'>
                 <Breadcrumb>
                 <Breadcrumb.Item href="/dashboard">Home</Breadcrumb.Item>
@@ -174,9 +182,34 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
                    </div>}
                    {orderOnline && 
                     <div className='py-5'>
-                        {restaurant?.products.map((r) => 
-                            <PopUpDetail key={r._id} id={r._id} image={r.image} name={r.name} price={r.price} discount={r.discount} category={r.category} setPId={setPId} setIsEditP={setIsEditP}/>
-                        )}                   </div>}
+                        {token !== null ? (<>
+                             {restaurant?.products.map((r) => 
+                                <PopUpDetail key={r._id} id={r._id} image={r.image} name={r.name} price={r.price} discount={r.discount} category={r.category} setPId={setPId} setIsEditP={setIsEditP}/>
+                            )}  
+                            </>) : (
+                                <Row className='flex-wrap'> 
+                                    {restaurant?.products.map((r) =>
+                                    <Col key={r._id} xl={3} lg={4} md={3} sm={12} xs={12}>
+                                        <Col className='bg-light p-2 d-flex flex-column justify-content-between align-items-center w-100 mb-3' style={{borderRadius:'5px'}} xl={4} lg={4} md={4} sm={12} xs={12}>
+                                        <Image src={r.image} style={{height:'auto', width:'10vw', }} />
+                                        <div className='d-flex flex-column justify-content-center align-items-center'>
+                                        <p className='fs-5 fw-bold'>{r.name}</p>
+                                        <p>PKR {r.price}</p>
+                                        <p>{r.category}</p>
+                                        </div>
+                                        <Button className='w-100' style={{backgroundColor:'#ef5023',color:'white', textDecoration:'none', border:'none'}}>
+                                            <Link to='/SignIn' style={{backgroundColor:'#ef5023',color:'white', textDecoration:'none'}}>
+                                                Order
+                                            </Link>
+                                        </Button>
+                                        </Col>
+                                    </Col>
+                                    )}
+                                </Row>
+
+                        )}
+                                        
+                    </div>}
                    {book && 
                     <div className='py-5'>
                         <BookTableForm />
@@ -184,6 +217,7 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
                 </div>
                 </Col>
             </Row>
+            {token === null && <Footer />}
         </div>
     )
 }
