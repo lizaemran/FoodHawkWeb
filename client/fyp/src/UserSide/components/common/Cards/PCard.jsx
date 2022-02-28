@@ -27,17 +27,16 @@ const restaurantDetailHandler = () => {
 }
 
   return (
-    <Card className={`${isHov ? 'card-up' : ''} card-div`} style={{width:"19rem"}} onMouseEnter={() => setIsHov(true)} onMouseLeave={() => setIsHov(false)}>
-    <Card className={`${isHov ? 'black' : 'bg-white'} h-100 shadow-sm rounded justify-content-center align-items-center` }>
-      <Card.Img variant="top" className={`${isHov ? 'image-up': ''}`} src={data.image} style={{width:"200px", height:"25vh", objectFit:"contain"}}/>
+    <Card className={`${isHov ? '' : ''} card-div h-100 justify-content-center align-items-center `} style={{width:"19rem", borderRadius:'15px'}} onMouseEnter={() => setIsHov(true)} onMouseLeave={() => setIsHov(false)}>
+      <Card.Img variant="" className={`${isHov ? 'image-up': ''}`} src={data.image} style={{width:"150px", height:"25vh", objectFit:"contain"}}/>
       <Card.Body className="d-flex flex-column justify-content-center align-items-center">
-          <Card.Title className={`${isHov ? 'white-c' : 'black-c'} mb-0 fw-bold`}>{data.name}</Card.Title>
+          <Card.Title className=' mb-0 fw-bold'>{data.name}</Card.Title>
           <Card.Text className='p-2 text-success fw-bold' style={{fontSize:"12px"}}>
           {renderStars(stars)} 
           </Card.Text>
       </Card.Body>
       {isHov && 
-      <Row className='w-100 d-flex justify-content-center align-items-center p-3' style={{backgroundColor:"#ef5023"}}>
+      <Row className='w-100 d-flex justify-content-center align-items-center p-3 card-div-button' style={{backgroundColor:"#ef5023", borderRadius:'0px 0px 13px 13px'}}>
         <Link  to='/restaurant' className='d-flex justify-content-center align-items-center' style={{textDecoration:'none'}}>
           <Col onClick={restaurantDetailHandler} className=" text-white" style={{backgroundColor:"transparent", border:"none"}}>
           <text>Order</text>
@@ -47,7 +46,6 @@ const restaurantDetailHandler = () => {
         </Link>
       </Row>
 }
-    </Card>
     </Card>
   );
 }

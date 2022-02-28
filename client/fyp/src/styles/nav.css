@@ -95,17 +95,18 @@ select {
   border-radius: 50%;
   color: white;
   background-color: black !important;
-  height: 25px;
-  width: 25px;
+  height: 20px;
+  width: 20px;
   position: absolute;
   text-align: center;
   bottom: 0;
   right: 0;
+  font-size: 0.8rem;
 }
 .cart-drop-menu {
   box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
   position: absolute;
-  right: 2%;
+  right: 4%;
   border-radius: 10px;
   top: 10%;
   width: 20%;

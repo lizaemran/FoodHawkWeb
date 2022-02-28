@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import {useDispatch} from 'react-redux';
 import { loginUserAsync } from '../../redux/auth';
 
-const FormLoginSub = () => {
+const FormLoginSub = ({noRedirection, setModalShowLogin}) => {
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
   const dispatch = useDispatch();
@@ -13,7 +13,10 @@ const FormLoginSub = () => {
 		dispatch(loginUserAsync({
             username: userName,
             password: password,
+            noRedirection: noRedirection,
+
 		}));
+    setModalShowLogin(false);
 		    setUserName("");
         setPassword("");
 	};

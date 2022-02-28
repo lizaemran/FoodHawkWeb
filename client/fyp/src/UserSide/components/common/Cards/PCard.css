@@ -1,24 +1,12 @@
-.btn {
-  background-color: black;
-}
-.black {
-  background-color: rgba(0, 0, 0, 0.452) !important;
-}
-.white-c {
-  color: white !important;
-}
-.black-c {
-  color: black !important;
-}
-.card-div{
-  transition: all ease-in ;
-}
+
 .card-div:hover{
-  box-shadow: -0.1px 0.1px 20px gray;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
 }
-/* .card-up{
-  transform: translateY(-40px);
-} */
+.image-up{
+  transition: all 0.2s ease-in-out;
+  transform: scale(1.1)!important;
+
+}
 /* .image-up{
   transform: scale();
   z-index: 9999999px;

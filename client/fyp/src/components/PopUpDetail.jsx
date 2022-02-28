@@ -47,7 +47,7 @@ const PopUpDetail = ({id, image, name, price, discount, category, r_id, setPId, 
         console.log(r_id);
         dispatch(addCart({
             id: id,
-            restaurant_id: r_id,
+            restaurant_id: newrId[0]._id,
             countItems: 1,
             name: name,
             price: price,

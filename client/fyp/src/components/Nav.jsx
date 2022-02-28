@@ -39,11 +39,11 @@ const Nav = ({setSearch, search}) => {
             }}/>
          <div className='d-flex'>
 
-            <p className='nav-date fs-5'>{date}</p>
+            <p className='nav-date fs-6'>{date}</p>
 
             {decoded.isUser === true && <>
             <div onMouseLeave={()=> setIsCart(false)} >
-            <div onMouseEnter={()=> setIsCart(true)}  className = {isCart ?  `cart-icon-activate  cart-icon`: `cart-icon`}><i className="fas fa-shopping-basket"></i>
+            <div onMouseEnter={()=> setIsCart(true)}  className = {isCart ?  `cart-icon-activate  cart-icon`: `cart-icon`}><i className="fas fa-shopping-basket fs-2"></i>
                 <div className="cart-number"><p>{total}</p></div>
                 
             </div>
@@ -73,7 +73,7 @@ const Nav = ({setSearch, search}) => {
                     </div>
                     
                     
-                    <div className='nav-date fs-5' style={{marginLeft:'10px'}}>
+                    <div className='nav-date fs-5' style={{marginLeft:'10px', marginTop:'4vh'}}>
                         <FaUserCircle className='fs-3' /> {firstName}
                     </div>
                     </>

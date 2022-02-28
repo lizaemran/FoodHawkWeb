@@ -38,6 +38,8 @@ async(payload) => {
     });
     if(response.ok){
         const token = await response.json();
+        
+        token.noRedirection = payload.noRedirection;
         console.log(token);
         return {token};
     }
@@ -233,7 +235,10 @@ const AuthSlice = createSlice({
         [loginUserAsync.fulfilled]: (state,action) => {
             console.log("User logged in successfully.");
             localStorage.setItem('token', action?.payload?.token?.token)
-            window.location.href = '/dashboard';
+            console.log(action?.payload?.token?.noRedirection);
+            if(!action?.payload?.token?.noRedirection){
+                window.location.href = '/dashboard';
+            }
             return{...state, token : action?.payload?.token?.token}
         },
         [loginRiderAsync.fulfilled]: (state,action) => {
