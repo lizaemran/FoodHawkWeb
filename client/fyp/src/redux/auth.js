@@ -20,6 +20,7 @@ async(payload) => {
 
     if(response.ok){
         const user = await response.json();
+        console.log(user.token);
         return {user};
     }
 });
@@ -38,7 +39,6 @@ async(payload) => {
     });
     if(response.ok){
         const token = await response.json();
-        
         token.noRedirection = payload.noRedirection;
         console.log(token);
         return {token};
@@ -223,9 +223,17 @@ const AuthSlice = createSlice({
     },
     extraReducers: {
         [registerUserAsync.fulfilled]: (state,action) => {
-            console.log("User registered successfully.");
-            window.location.href = '/SignIn';
-            return action.payload.user;
+            console.log("User registered successfully. Sign In to continue");
+            return {
+                ...state,
+                username: action.payload.user.username,
+                user_type: action.payload.user.user_type,
+                firstname: action.payload.user.firstname,
+                lastname: action.payload.user.lastname,
+                email: action.payload.user.email,
+                contact: action.payload.user.contact,
+                address: action.payload.user.address,
+            };
         },
         [registerRiderAsync.fulfilled]: (state,action) => {
             console.log("Rider registered successfully.");
@@ -234,12 +242,12 @@ const AuthSlice = createSlice({
         },
         [loginUserAsync.fulfilled]: (state,action) => {
             console.log("User logged in successfully.");
-            localStorage.setItem('token', action?.payload?.token?.token)
+            localStorage.setItem('token', action?.payload?.token?.token);
             console.log(action?.payload?.token?.noRedirection);
             if(!action?.payload?.token?.noRedirection){
                 window.location.href = '/dashboard';
             }
-            return{...state, token : action?.payload?.token?.token}
+            return{...state, registered: false,  token : action?.payload?.token?.token}
         },
         [loginRiderAsync.fulfilled]: (state,action) => {
             console.log("Rider logged in successfully.");

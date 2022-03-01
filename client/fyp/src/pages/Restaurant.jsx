@@ -20,6 +20,7 @@ import Footer from '../UserSide/components/common/Footer/Footer';
 import FormLoginSub from './SignIn/FormLoginSub';
 import { getUserAsync } from '../redux/auth';
 import { useEffect } from 'react';
+import FormSignup from './SignUp/FormSignup';
 const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
     const [review, setReview] = useState(false);
     const [direction, setDirection] = useState(false);
@@ -31,7 +32,7 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
     const [reviews, setReviews] = useState(false);
     const [orderOnline, setOrderOnline] = useState(false);
     const [book, setBook] = useState(false);
-    const token = useSelector((state) => state.auth.token);
+    const token = useSelector(state => state.auth.token);
     const firstName = useSelector((state) => state.auth.username);
     const restaurant = useSelector((state) => state.restaurants.restaurant);
     const noRedirection = true;
@@ -50,7 +51,7 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
     }
     useEffect (() => {
         dispatch(getUserAsync());
-    }, [token !== null])
+    }, [token])
     const [modalShow, setModalShow] = useState(false);
     function MyVerticallyCenteredModal(props) {
         return (
@@ -78,6 +79,7 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
         );
       }
       const [modalShowLogin, setModalShowLogin] = useState(false);
+      const [modalShowSignUp, setModalShowSignUp] = useState(false);
       function MyVerticallyCenteredModal2(props) {
           return (
             <Modal
@@ -89,14 +91,18 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
             >
               <Modal.Header closeButton>
                 <Modal.Title id="contained-modal-title-vcenter">
-                  Login/ Register to Continue
+                  {/* <h4>{modalShowLogin ? 'Login to Continue' : 'Register to Continue'}</h4> */}
                 </Modal.Title>
               </Modal.Header>
               <Modal.Body className='bg-secondary'>
-               <FormLoginSub noRedirection={noRedirection} setModalShowLogin={setModalShowLogin}/>
+                {modalShowSignUp ?
+                <FormSignup noRedirection={noRedirection} setModalShowLogin={setModalShowLogin} setModalShowSignUp={setModalShowSignUp} />
+             :
+                <FormLoginSub noRedirection={noRedirection} setModalShowLogin={setModalShowLogin} setModalShowSignUp={setModalShowSignUp} />
+                }
               </Modal.Body>
               <Modal.Footer>
-                <Button style={{backgroundColor:'#ef5023', border:'none'}}>Close</Button>
+                <Button onClick={() => {setModalShowLogin(false); setBook(false); setOverview(true);}} style={{backgroundColor:'#ef5023', border:'none'}}>Close</Button>
               </Modal.Footer>
             </Modal>
           );
@@ -112,7 +118,7 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
                 <Col className='px-5 pt-4'>
                 {token !== null &&
                 <Nav search={search} setSearch={setSearch} />
-}
+                }
                 <div className='px-4'>
                 <Breadcrumb>
                 <Breadcrumb.Item href="/dashboard">Home</Breadcrumb.Item>
@@ -141,7 +147,7 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
                     show={modalShow}
                     onHide={() => setModalShow(false)}
                 />
-                {token === null &&
+                {token === null && 
                  <MyVerticallyCenteredModal2
                     show={modalShowLogin}
                     onHide={() => setModalShowLogin(false)}
@@ -239,7 +245,7 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
                         <Reviews name='Anonymous' stars='4' desc='Lorem, ipsum dolor sit amet consectetur adipisicing elit. Pariatur praesentium sequi eum sed, doloribus nesciunt illum? Nisi omnis odio nobis corrupti ducimus Obcaecati, consequatur?' />
                    </div>}
                    {orderOnline && 
-                    <div className='py-5'>
+                    <div className='p-4 mt-2' style={{background:'radial-gradient(circle, rgba(177,174,182,1) 0%, rgba(217,190,147,1) 47%, rgba(236,231,187,1) 100%)'}}>
                         {token !== null ? (<>
                              {restaurant?.products.map((r) => 
                                 <PopUpDetail key={r._id} id={r._id} image={r.image} name={r.name} price={r.price} discount={r.discount} category={r.category} setPId={setPId} setIsEditP={setIsEditP}/>
@@ -266,7 +272,7 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
                         )}
                                         
                     </div>}
-                   {(token !== null && book) && 
+                   {(token !== null && token === false && book) && 
                     <div className='py-3' >
                         <BookTableForm />
                    </div>}
