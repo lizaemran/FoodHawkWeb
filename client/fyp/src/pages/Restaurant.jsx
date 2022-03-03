@@ -11,6 +11,7 @@ import map from '../img/googlemaps.jfif';
 import BookTableForm from '../components/BookTableForm';
 import PopUpDetail from '../components/PopUpDetail';
 import { useDispatch, useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 import Nav from '../components/Nav';
 import Reviews from '../components/Reviews';
 import { Link } from 'react-router-dom';
@@ -21,6 +22,7 @@ import FormLoginSub from './SignIn/FormLoginSub';
 import { getUserAsync } from '../redux/auth';
 import { useEffect } from 'react';
 import FormSignup from './SignUp/FormSignup';
+import { getRestaurantByUsernameAsync } from '../redux/Slice';
 const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
     const [review, setReview] = useState(false);
     const [direction, setDirection] = useState(false);
@@ -49,9 +51,14 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
             }
             return rating;
     }
+    var location = useLocation();
+    location = location.pathname.split('/')[2];
     useEffect (() => {
         dispatch(getUserAsync());
     }, [token])
+    useEffect(() => {
+        dispatch(getRestaurantByUsernameAsync({username: location}));
+    }, [])
     const [modalShow, setModalShow] = useState(false);
     function MyVerticallyCenteredModal(props) {
         return (
@@ -89,7 +96,7 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
               aria-labelledby="contained-modal-title-vcenter"
               centered
             >
-              <Modal.Header closeButton>
+              <Modal.Header closeButton >
                 <Modal.Title id="contained-modal-title-vcenter">
                   {/* <h4>{modalShowLogin ? 'Login to Continue' : 'Register to Continue'}</h4> */}
                 </Modal.Title>
@@ -102,7 +109,7 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
                 }
               </Modal.Body>
               <Modal.Footer>
-                <Button onClick={() => {setModalShowLogin(false); setBook(false); setOverview(true);}} style={{backgroundColor:'#ef5023', border:'none'}}>Close</Button>
+                <Button onClick={() => {setModalShowLogin(false); setBook(false); setReview(false); setReviews(false); setOverview(true);}} style={{backgroundColor:'#ef5023', border:'none'}}>Close</Button>
               </Modal.Footer>
             </Modal>
           );
@@ -121,8 +128,8 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
                 }
                 <div className='px-4'>
                 <Breadcrumb>
-                <Breadcrumb.Item href="/dashboard">Home</Breadcrumb.Item>
-                <Breadcrumb.Item href="/dashboard">
+                <Breadcrumb.Item href={`${token !== null ? '/dashboard' : '/'}`}>Home</Breadcrumb.Item>
+                <Breadcrumb.Item href={`${token !== null ? '/dashboard' : '/'}`}>
                     Restaurants
                 </Breadcrumb.Item>
                 <Breadcrumb.Item active>{restaurant?.name}</Breadcrumb.Item>
@@ -140,13 +147,15 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
                     </div>
                     </Col>
                 </Row>
-                <Button className={!review ? 'res-but' : 'res-but-active'} onClick={()=> {setReview(true); setDirection(false); setBookmark(false); setShare(false); setModalShow(true);}} style={{marginRight:'10px'}}>
+                <Button className={!review ? 'res-but' : 'res-but-active'} onClick={()=> {setModalShowLogin(true); setReview(true); setDirection(false); setBookmark(false); setShare(false); setModalShow(true);}} style={{marginRight:'10px'}}>
                     <AiOutlineStar className='fs-5' style={{color: review ? 'white' : '#EF5023'}} /> Add a review
                 </Button>
+                {token !== null && 
                 <MyVerticallyCenteredModal
                     show={modalShow}
                     onHide={() => setModalShow(false)}
                 />
+                }
                 {token === null && 
                  <MyVerticallyCenteredModal2
                     show={modalShowLogin}
@@ -159,11 +168,11 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
                 <Button className={!bookmark ? 'res-but' : 'res-but-active'} onClick={()=> {setReview(false); setDirection(false); setBookmark(true); setShare(false);}} style={{marginRight:'10px'}}>
                     <BsBookmarkPlus className='fs-5' style={{color: bookmark ? 'white' : '#EF5023'}}/> Bookmark
                 </Button>
-                <WhatsappShareButton url='http://localhost:3000/restaurant' title={restaurant?.name}  style={{marginRight:'5px'}}>
+                <WhatsappShareButton url={`http://localhost:3000/restaurant/${restaurant?.username}`} separator=" "  title={'Place order from your favourite restaurant! ' + restaurant?.name}  style={{marginRight:'5px'}}>
                     {/* <BsShare className='fs-5' style={{color: share ? 'white' : '#EF5023'}}/> Share */}
                     <WhatsappIcon size={32} round={true} />
                 </WhatsappShareButton>
-                <TwitterShareButton url='http://localhost:3000/restaurant' title={restaurant?.name}>
+                <TwitterShareButton url={`http://localhost:3000/restaurant/${restaurant?.username}`} hashtags={['#FoodHawk','#Food', '#OnlineOrder']} title={'Place order from your favourite restaurant! ' + restaurant?.name}>
                     {/* <BsShare className='fs-5' style={{color: share ? 'white' : '#EF5023'}}/> Share */}
                     <TwitterIcon size={32} round={true} />
                 </TwitterShareButton>
@@ -185,7 +194,7 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
                 <div className={!gallery ? 'res-tab' : 'res-tab-active'}onClick={() => {setOverview(false); setMenu(false); setGallery(true); setReviews(false); setOrderOnline(false); setBook(false);}} style={{marginRight:'10px', cursor:'pointer'}}>
                    Gallery
                 </div>
-                <div className={!reviews ? 'res-tab' : 'res-tab-active'} onClick={() => {setOverview(false); setMenu(false); setGallery(false); setReviews(true); setOrderOnline(false); setBook(false);}}  style={{marginRight:'10px', cursor:'pointer'}}>
+                <div className={!reviews ? 'res-tab' : 'res-tab-active'} onClick={() => {setModalShowLogin(true); setOverview(false); setMenu(false); setGallery(false); setReviews(true); setOrderOnline(false); setBook(false);}}  style={{marginRight:'10px', cursor:'pointer'}}>
                     Reviews
                 </div>
                 <div className={!orderOnline ? 'res-tab' : 'res-tab-active'} onClick={() => {setOverview(false); setMenu(false); setGallery(false); setReviews(false); setOrderOnline(true); setBook(false);}} style={{marginRight:'10px', cursor:'pointer'}}>
@@ -200,6 +209,12 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
                         <h5>Known For</h5>
                         <p>
                             Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum nulla iste maiores optio, vero odit ab aliquid, voluptate necessitatibus similique perferendis. Iste delectus suscipit repudiandae!
+                        </p>
+                        <p>
+                            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Libero itaque, <b>molestias officiis fugit</b> modi facere.
+                        </p>
+                        <p>
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. In qui esse sint cupiditate quos quod libero perferendis, magnam quis quasi delectus atque, officia nisi beatae aliquam corrupti voluptates, consectetur neque? Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus est tempore nobis nostrum officiis sed natus sit perspiciatis aut alias.
                         </p>
                    </div>}
                    {menu && 
@@ -239,7 +254,7 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
                         </Row>
                         {/* </Container> */}
                    </div>}
-                   {reviews && 
+                   {(token !== null && token !== '' && reviews) && 
                     <div className='py-5'>
                         <Reviews name='Anonymous' stars='5' desc='Lorem, ipsum dolor sit amet consectetur adipisicing elit. Pariatur praesentium sequi eum sed, doloribus nesciunt illum? Nisi omnis odio nobis corrupti ducimus aut corporis soluta dolor sit amet consectetur adipisicing elit. Obcaecati, consequatur?' />
                         <Reviews name='Anonymous' stars='4' desc='Lorem, ipsum dolor sit amet consectetur adipisicing elit. Pariatur praesentium sequi eum sed, doloribus nesciunt illum? Nisi omnis odio nobis corrupti ducimus Obcaecati, consequatur?' />
@@ -272,7 +287,7 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
                         )}
                                         
                     </div>}
-                   {(token !== null && token === false && book) && 
+                   {(token !== null && token !== '' && book) && 
                     <div className='py-3' >
                         <BookTableForm />
                    </div>}

@@ -8,9 +8,18 @@ async() => {
     } 
 });
 
-export const getRestaurantAsync = createAsyncThunk('products/getRestaurantAsync' , 
+export const getRestaurantAsync = createAsyncThunk('restaurants/getRestaurantAsync' , 
 async(payload) => {
     const response = await fetch(`http://localhost:7000/api/restaurant/${payload.id}`);
+    if(response.ok){
+        const restaurant = await response.json();
+        return {restaurant};
+    }
+});
+
+export const getRestaurantByUsernameAsync = createAsyncThunk('restaurants/getRestaurantByUsernameAsync' , 
+async(payload) => {
+    const response = await fetch(`http://localhost:7000/api/restaurant/dashboard/${payload.username}`);
     if(response.ok){
         const restaurant = await response.json();
         return {restaurant};
@@ -128,6 +137,13 @@ const Slice = createSlice({
         },
         [getRestaurantAsync.fulfilled]: (state, action) => {
             console.log("Fetched Restaurant Successfully.");
+            return {
+                ...state,
+                restaurant: action.payload.restaurant,
+            }
+        },
+        [getRestaurantByUsernameAsync.fulfilled]: (state, action) => {
+            console.log("Fetched Restaurant By Username Successfully.");
             return {
                 ...state,
                 restaurant: action.payload.restaurant,

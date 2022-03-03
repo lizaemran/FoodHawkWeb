@@ -2,6 +2,9 @@
   transform: scale(1.0);
   color: black;
 }
+.nav-scroll .show {
+  flex-direction: column!important;
+}
 .card-div:hover{
 transition: all 0.2s ease-in-out;
 transform: scale(0.999);
@@ -30,12 +33,14 @@ color: black!important;
  color: black !important;
  background-color: transparent !important;
  border: 1px solid black !important;
+ margin-bottom: 10px;
  
 }
 .res-but-active, .res-but:hover{
   color: white !important;
   background-color: #EF5023 !important;
   border: 1px solid #EF5023 !important;
+  margin-bottom: 10px;
 }
 .res-tab{
   color: gray !important;
@@ -45,6 +50,7 @@ color: black!important;
   border-right: none !important;
   border-bottom: 1px solid gray !important;
   padding: 5px 10px;
+  margin: auto;
  }
  .res-tab-active, .res-tab:hover{
   color: black !important;
@@ -55,6 +61,7 @@ color: black!important;
   font-weight: 500;
   background-color: #ef4f232a;
   padding: 5px 10px;
+  margin: auto;
  }
  .book-form{
   width: 30vw !important;

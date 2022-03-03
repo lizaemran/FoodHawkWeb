@@ -6,7 +6,8 @@ import { deleteRestaurantAsync, getRestaurantAsync } from '../redux/Slice';
 import {useDispatch, useSelector} from 'react-redux';
 import {Link} from 'react-router-dom';
 import { Col, Image } from 'react-bootstrap';
-const Card = ({id, image, stars, name, location, setRId, setPId, setIsAdd, setIsEdit, setIsEditP, isOnline, setIsEditStatus}) => {
+import {MdOutlineLocationOn} from 'react-icons/md';
+const Card = ({id, username, image, stars, name, location, setRId, setPId, setIsAdd, setIsEdit, setIsEditP, isOnline, setIsEditStatus}) => {
     const dispatch = useDispatch();
     const [isPopUp, setIsPopUp] = useState(false);
     const userType = useSelector((state)=> state.auth?.user_type)
@@ -36,7 +37,7 @@ const Card = ({id, image, stars, name, location, setRId, setPId, setIsAdd, setIs
             <motion.div className="row r-card my-4" style={{marginRight:"1%"}} variants={popup} initial='hidden' animate='show' onClick={()=> {setRId(id)}}>
                 <Col className="col-2 m-auto">
                     <div id="status" className = {isOnline ? "active-status": "inactive-status"}></div>
-                    <Link to='/restaurant'><Image onClick={restaurantDetailHandler} className="p-image" src={image} alt="restaurant"/></Link>
+                    <Link to={`/restaurant/${username}`}><Image onClick={restaurantDetailHandler} className="p-image" src={image} alt="restaurant"/></Link>
                 </Col>
                 <Col className="col-10">
                 {userType === 'admin' && <div className="admin-button">
@@ -44,7 +45,7 @@ const Card = ({id, image, stars, name, location, setRId, setPId, setIsAdd, setIs
                 <a onClick={()=> {setIsAdd(true)}}>Add</a>
                 <a onClick={()=> {setIsEdit(true)}}>Edit</a>
                 </div>}
-                    <Link to='/restaurant' style={{color:'black', textDecoration:'none'}}><h1 onClick={restaurantDetailHandler}>{name}</h1></Link>
+                    <Link to={`/restaurant/${username}`} style={{color:'black', textDecoration:'none'}}><h1 onClick={restaurantDetailHandler}>{name}</h1></Link>
                     <button id="btn" onClick={()=> {setIsPopUp(true)}} >ORDER</button>
                     <div id="rating">
                         {
@@ -55,7 +56,7 @@ const Card = ({id, image, stars, name, location, setRId, setPId, setIsAdd, setIs
                     <p class="description">
                     Delivery Time: 40min<br />
                     Delivery Fee: Rs. 50<br />
-                    Location: {location}
+                    <MdOutlineLocationOn  className='fs-5'/> {location}
                     </p>
                     
                 </Col>

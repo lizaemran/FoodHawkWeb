@@ -79,7 +79,7 @@ const Home = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
    const userType = useSelector((state)=> state.auth?.user_type);
     return (
         <>
-            <Row>
+            <Row className='' style={{backgroundColor:'#e5e5e5'}}>
             <Col xl={1} lg={1} md={1} sm={12} xs={12} >
             <SideNav />
             </Col>
@@ -104,6 +104,7 @@ const Home = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
                 stars={restaurant.rating}
                 isOnline={restaurant.status}
                 location={restaurant.location}
+                username={restaurant.username}
                 setRId={setRId}
                 setPId={setPId}
                 setIsAdd={setIsAdd}

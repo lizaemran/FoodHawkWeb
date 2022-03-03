@@ -50,9 +50,9 @@ select {
   display: flex;
   align-items: center;
 }
+
 .center i {
   font-size: 2.5rem;
-  margin-top: 40px;
   color: #EF5023;
 }
 .cart-icon-activate i {
@@ -99,7 +99,7 @@ select {
   width: 20px;
   position: absolute;
   text-align: center;
-  bottom: 0;
+  top: 30px;
   right: 0;
   font-size: 0.8rem;
 }
@@ -108,7 +108,7 @@ select {
   position: absolute;
   right: 4%;
   border-radius: 10px;
-  top: 10%;
+  top: 7%;
   width: 20%;
   max-height: 40%;
   background-color: #f2f2f2;
@@ -117,8 +117,8 @@ select {
   overflow-y: scroll;
 }
 .nav-date{
-  padding: 15px 10px;
-  margin-top: 5vh;
+  padding: 15px 5px;
+  /* margin-top: 5vh; */
 }
 .cart-drop-menu button {
   padding: 5px 10px;
@@ -277,6 +277,48 @@ width:100%;
   border-radius: 10px 0px 0px 10px;
   
 }
+@media only screen and (max-width: 1000px) {
+  .r-card .col-2 img {
+    height: 20vh;
+    width: 130%;
+    border-radius: 10px 0px 0px 10px;
+  }
+  .mainbox {
+    height: 89.5vh!important;
+  }
+
+}
+@media only screen and (max-width: 600px) {
+  .r-card .col-2 img {
+    height: 20vh;
+    width: 170%;
+    border-radius: 10px 0px 0px 10px;
+  }
+  .mainbox {
+    height: 84vh!important;
+  }
+
+}
+@media only screen and (max-width: 350px) {
+  .r-card .col-2 img {
+    height: 20vh;
+    width: 200%;
+    border-radius: 10px 0px 0px 10px;
+  }
+  #rating {
+    display: flex;
+    flex-direction: column;
+  }
+  #btn {
+    font-size: 0.85em!important;
+    right: 2%!important;
+    bottom: 5%!important;
+  }
+  .mainbox {
+    height: 88vh!important;
+  }
+
+}
 .r-card .col-10 {
   position: relative;
   padding: 0rem 3rem;
@@ -330,7 +372,7 @@ width:100%;
   color: white;
   font-size: 1em;
   position: absolute;
-  right: 3%;
+  right: 5.5%;
   bottom: 10%;
   border-radius: 10px;
   padding: 0.5rem 1.5em;
@@ -437,3 +479,4 @@ width:100%;
 #addRestaurant:hover {
   filter: brightness(0.9);
 }
+

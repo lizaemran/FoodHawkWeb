@@ -2,7 +2,10 @@
 .navbar-toggler-icon {
   color: white !important;
 }
-
+div.navbar-collapse.show{
+  background-color: rgba(82, 88, 88, 0.315)!important;
+  
+}
 .navbar-toggler {
   border: 3px solid white !important;
   background-color: white !important;

@@ -20,11 +20,7 @@ export function PCard({ data, setOrdered,stars }) {
         }
         return rating;
 }
-const restaurantDetailHandler = () => {
-  dispatch(getRestaurantAsync({
-      id:data._id
-  }))
-}
+
 
   return (
     <Card className={`${isHov ? '' : ''} card-div h-100 justify-content-center align-items-center `} style={{width:"19rem", borderRadius:'15px'}} onMouseEnter={() => setIsHov(true)} onMouseLeave={() => setIsHov(false)}>
@@ -37,8 +33,8 @@ const restaurantDetailHandler = () => {
       </Card.Body>
       {isHov && 
       <Row className='w-100 d-flex justify-content-center align-items-center p-3 card-div-button' style={{backgroundColor:"#ef5023", borderRadius:'0px 0px 13px 13px'}}>
-        <Link  to='/restaurant' className='d-flex justify-content-center align-items-center' style={{textDecoration:'none'}}>
-          <Col onClick={restaurantDetailHandler} className=" text-white" style={{backgroundColor:"transparent", border:"none"}}>
+        <Link  to={`/restaurant/${data.username}`} className='d-flex justify-content-center align-items-center' style={{textDecoration:'none'}}>
+          <Col className=" text-white" style={{backgroundColor:"transparent", border:"none"}}>
           <text>Order</text>
           </Col>
           <Col className="d-flex justify-content-end"><BsArrowRight style={{color:"white", fontSize:"1.5rem"}}/>

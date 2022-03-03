@@ -6,6 +6,13 @@ import NavBar from "../nav/NavBar";
 import burger from "../../../../img/e3c16df9.png";
 import {AiOutlineArrowDown} from "react-icons/ai";
 function Box() {
+  const scrollDown = () => {
+    window.scroll({
+      top: 700,
+      left: 0,
+      behavior: "smooth",
+    });
+  };
     return (
         <div className='curve shadow-lg' style={{backgroundColor:"black"}}>
           <NavBar />
@@ -20,7 +27,7 @@ function Box() {
               </Col>
               <Col  className='d-flex justify-content-center align-items-end'>
               <Button className="position-absolute shadow-lg" style={{borderRadius:"50%", backgroundColor:"#ef5023", border:"none", height:"60px", width:"60px", bottom:"0px", zIndex:"3"}}>
-                <AiOutlineArrowDown className='text-white' style={{fontSize:"2rem"}}/>
+                <AiOutlineArrowDown   onClick={() => { scrollDown();}}  style={{ transitionDelay: "3s", cursor: "pointer"  }} className='down text-white' style={{fontSize:"2rem"}}/>
               </Button></Col>
               <Col  className='d-flex justify-content-end align-items-end'>
                 {/* <Image className='w-75 h-auto' src={burger} alt="burger"/> */}

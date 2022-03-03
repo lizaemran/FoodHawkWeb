@@ -29,28 +29,28 @@ const Nav = ({setSearch, search}) => {
     var decoded = jwt_decode(token);
     return (
         <>
-        <div className="center">
-            <input className='' 
+        <div className="center ">
+            <input className='w-50' 
             type="text" 
             placeholder="Search for restaurants" 
             value={search}
             onChange={(e)=> {
                 setSearch(e.target.value||"");
             }}/>
-         <div className='d-flex'>
+         <div className='center'>
 
-            <p className='nav-date fs-6'>{date}</p>
+            <p className='nav-date fs-6' style={{margin: '0px'}}>{date}</p>
 
             {decoded.isUser === true && <>
             <div onMouseLeave={()=> setIsCart(false)} >
-            <div onMouseEnter={()=> setIsCart(true)}  className = {isCart ?  `cart-icon-activate  cart-icon`: `cart-icon`}><i className="fas fa-shopping-basket fs-2"></i>
+            <div onMouseEnter={()=> setIsCart(true)}  className = {isCart ?  `cart-icon-activate  cart-icon nav-date`: `cart-icon nav-date`}><i className="fas fa-shopping-basket fs-2"></i>
                 <div className="cart-number"><p>{total}</p></div>
                 
             </div>
             
             {isCart &&
                     <div className="cart-drop-menu">
-                        {total === 0? <h1 style={{fontSize: "1.25rem"}}>Cart is empty</h1> :
+                        {total === 0? <h1 style={{fontSize: "0.8rem"}}>Cart is empty</h1> :
                         cartItems !== undefined && cartItems.map((c) => 
                             <div className="cart-menu">
                                 <img src={c.image} style={{marginRight:'5px'}} alt="cart-image"/>
@@ -73,7 +73,7 @@ const Nav = ({setSearch, search}) => {
                     </div>
                     
                     
-                    <div className='nav-date fs-5' style={{marginLeft:'10px', marginTop:'4vh'}}>
+                    <div className='nav-date fs-5' style={{marginLeft:'10px'}}>
                         <FaUserCircle className='fs-3' /> {firstName}
                     </div>
                     </>

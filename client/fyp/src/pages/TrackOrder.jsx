@@ -35,21 +35,22 @@ const TrackOrder = () => {
             </Col>
             <Col>
                 <Container className='p-5'>
-                    <Row>
-                        <h3>Order</h3>
-                        <Col>
+                <h5>Order</h5>
+                    <Row className='flex-wrap'>
                             {products?.map((product, index) => 
-                                <div key={index} className=' d-flex justify-content-start align-items-center'>
-                                    <img src={product.image} alt="product" className='' style={{height:'15vh', width:'auto'}} />
+                                <Col xl={4} lg={4} md={3} sm={12} xs={12} className='m-2 p-2' key={index} className=' d-flex justify-content-start align-items-center' style={{backgroundColor:'#f7f2f2', boxShadow: 'rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px', borderRadius:'10px'}}>
+                                    <img src={product.image} alt="product" className='' style={{height:'15vh', width:'auto', marginRight:'20px'}} />
                                     <div className='d-flex flex-column'>
-                                        <h6>{product.name}</h6>
-                                        <h6>PKR {product.price}</h6>
+                                        <h6><b>{product.name}</b></h6>
+                                        <h6>PKR {product.price}/-</h6>
                                         <h6>{product.category}</h6>
                                     </div>
-                                </div>
+                                </Col>
                             
                             )}
-                        </Col>
+                    </Row>
+                    <Row>
+
                     </Row>
                     <Row>
                         <Image src={map} alt='map-tracking' className='h-auto w-100' style={{}} />

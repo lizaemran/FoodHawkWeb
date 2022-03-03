@@ -17,10 +17,11 @@ import RiderLogin from './pages/RiderLogin';
 import RiderDashboard from './pages/RiderDashboard';
 import TrackOrder from './pages/TrackOrder';
 import { getRestaurantsAsync } from './redux/Slice';
+import Results from './pages/Results';
 function App() {
   const [pId, setPId] = useState("");
   const [isEditP, setIsEditP] = useState(false);
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState(" ");
   // useEffect (() => {
   //   dispatch(getRestaurantsAsync());
   // }, [])
@@ -30,12 +31,13 @@ function App() {
         <Route path='/SignUp' component={Form} />
         <Route path='/SignIn' component={FormLogin} />
         <Route exact path='/' component={MainPage} />
+        <Route path='/results/:search' component={Results} />
         <Route path='/Cart' component={() => <Cart search={search} setSearch={setSearch} />} />
         <Route path='/dashboard' component={()=> <Home pId={pId} setPId={setPId} isEditP={isEditP} setIsEditP={setIsEditP} search={search} setSearch={setSearch} />} />
         <Route path='/track-order/:id' component={TrackOrder} />
         <Route path='/admin-login' component={AdminLogin} />
         <Route path='/account' component={Account}/>
-        <Route exact path='/restaurant' component={()=> <Restaurant pId={pId} setPId={setPId} isEditP={isEditP} setIsEditP={setIsEditP} search={search} setSearch={setSearch} />}/>
+        <Route exact path='/restaurant/:name' component={()=> <Restaurant pId={pId} setPId={setPId} isEditP={isEditP} setIsEditP={setIsEditP} search={search} setSearch={setSearch} />}/>
         <Route exact path='/restaurant/register' component={RestaurantSignUp} />
         <Route exact path='/restaurant/login' component={RestaurantLogin} />
         <Route exact path='/restaurant/dashboard/:username' component={RestaurantDashboard} />
