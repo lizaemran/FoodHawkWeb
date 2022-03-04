@@ -9,6 +9,7 @@ const UpdateStatus = ({rId, status}) => {
 	let restaurant = {}
 	useEffect(()=>{
 		restaurant = restaurants?.filter((r) => r._id === rId);
+		restaurant = restaurant[0];
 		setImageValue(restaurant?.image);
 		setStatusValue(restaurant?.status);
 	},[restaurants]);

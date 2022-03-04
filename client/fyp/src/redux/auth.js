@@ -20,7 +20,7 @@ async(payload) => {
 
     if(response.ok){
         const user = await response.json();
-        console.log(user.token);
+        // console.log(user.token);
         return {user};
     }
 });
@@ -40,7 +40,7 @@ async(payload) => {
     if(response.ok){
         const token = await response.json();
         token.noRedirection = payload.noRedirection;
-        console.log(token);
+        // console.log(token);
         return {token};
     }
 });
@@ -100,7 +100,7 @@ async(payload) => {
     });
     if(response.ok){
         const token = await response.json();
-        console.log(token);
+        // console.log(token);
         return {token};
     }
 });
@@ -153,7 +153,7 @@ async(payload) => {
     });
     if(response.ok){
         const user = await response.json();
-        console.log(user);
+        // console.log(user);
         return {user};
     }
 });
@@ -169,7 +169,7 @@ async(payload) => {
     });
     if(response.ok){
         const admin = await response.json();
-        console.log(admin);
+        // console.log(admin);
         return {admin};
     }
 });
@@ -186,7 +186,7 @@ async(payload) => {
     });
     if(response.ok){
         const rider = await response.json();
-        console.log(rider);
+        // console.log(rider);
         return {rider};
     }
 });
@@ -243,7 +243,7 @@ const AuthSlice = createSlice({
         [loginUserAsync.fulfilled]: (state,action) => {
             console.log("User logged in successfully.");
             localStorage.setItem('token', action?.payload?.token?.token);
-            console.log(action?.payload?.token?.noRedirection);
+            // console.log(action?.payload?.token?.noRedirection);
             if(!action?.payload?.token?.noRedirection){
                 window.location.href = '/dashboard';
             }
@@ -251,7 +251,6 @@ const AuthSlice = createSlice({
         },
         [loginRiderAsync.fulfilled]: (state,action) => {
             console.log("Rider logged in successfully.");
-            console.log(action.payload);
             localStorage.setItem('token', action?.payload?.token?.token)
             window.location.href = '/rider/dashboard';
             return{...state, token : action?.payload?.token?.token}

@@ -9,13 +9,12 @@ const AddProduct = ({rId}) => {
     const [imageValue, setImageValue] = useState('');
     const [discountValue, setDiscountValue] = useState('');
     const [categoryValue, setCategoryValue] = useState('Fast Food');
-    const [imageValueRestaurant, setImageValueRestaurant] = useState('');
 	const dispatch = useDispatch();
     let restaurant = {}
 	useEffect(()=>{
-		restaurant = restaurants?.filter((r) => r._id == rId);
-		setImageValueRestaurant(restaurant?.image);
-
+		restaurant = restaurants?.filter((r) => r._id === rId);
+		restaurant = restaurant[0];
+		setImageValue(restaurant.image);
 	},[restaurants]);
 	const onSubmit = (event) => {
 		event.preventDefault();
@@ -37,7 +36,7 @@ const AddProduct = ({rId}) => {
 	return (
 <>     
         <div className="form-image">
-			<img src={imageValueRestaurant} alt="product-image"/>
+			<img src={imageValue} alt="product-image"/>
 		</div>
         <form onClick={(e) => {e.stopPropagation()}} onSubmit={onSubmit} className='form-inline mt-3 mb-3 form1'>
 			<label className='sr-only'>Name</label>

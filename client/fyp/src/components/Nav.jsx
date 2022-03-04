@@ -30,7 +30,7 @@ const Nav = ({setSearch, search}) => {
     return (
         <>
         <div className="center ">
-            <input className='w-50' 
+            <input className='w-50 bg-light' 
             type="text" 
             placeholder="Search for restaurants" 
             value={search}

@@ -33,7 +33,7 @@ const Home = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
     const dispatch = useDispatch();
 	const restaurants = useSelector((state)=> state.restaurants.restaurants);
 	const token = useSelector((state)=> state.auth.token);
-    const [searched, setSearched] = useState(restaurants);
+    const [searched, setSearched] = useState(false);
     const [rId, setRId] = useState();
    
     useEffect(() => {
@@ -44,7 +44,6 @@ const Home = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
             console.log("local storage");
             localStorage.setItem("cart",JSON.stringify(cart));
         }
-        setSearched(restaurants);
     }, [cartItems])
     useEffect(() => {
         if(localStorage.getItem("cart")){
@@ -53,7 +52,6 @@ const Home = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
             ))
         }
         dispatch(getRestaurantsAsync());
-        setSearched(restaurants);
         var decoded = jwt_decode(token);
         // console.log(decoded);
         if(decoded.isAdmin === true){
@@ -67,8 +65,9 @@ const Home = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
         }
         
     }, []);
+    var decoded = jwt_decode(token);
     useEffect(()=>{
-        if(search!= null && search.length>1 && search!=''){
+        if(search!== null && search.length > 1 && search !== ''){
         setSearched(restaurants.filter((r)=> r.name.toLowerCase().includes(search.toLowerCase())));
     }
     else{
@@ -93,6 +92,29 @@ const Home = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
             <Container  className="home-container">
             <Row>
             {/* <Swiper className="mySwiper " slidesPerView={3} spaceBetween={10}  breakpoints = {{ 300 : {slidesPerView : 1} ,499 : {slidesPerView : 1} , 800 : {slidesPerView : 2}, 1024: {slidesPerView : 3}}}> */}
+           {!searched ?  <>
+           {restaurants?.map((restaurant) => (
+                <div key={restaurant._id}>
+                {/* <SwiperSlide  style={{width: "426px", height:"410px"}}> */}
+				<Card  
+                key={restaurant._id} 
+                id={restaurant._id} 
+                name={restaurant.name} 
+                image={restaurant.image} 
+                stars={restaurant.rating}
+                isOnline={restaurant.status}
+                location={restaurant.location}
+                username={restaurant.username}
+                setRId={setRId}
+                setPId={setPId}
+                setIsAdd={setIsAdd}
+                setIsEdit={setIsEdit}
+                setIsEditP={setIsEditP}
+                setIsEditStatus={setIsEditStatus}
+                />
+                {/* </SwiperSlide> */}
+                </div>
+			))}</> : <>
             {searched?.map((restaurant) => (
                 <div key={restaurant._id}>
                 {/* <SwiperSlide  style={{width: "426px", height:"410px"}}> */}
@@ -114,7 +136,8 @@ const Home = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
                 />
                 {/* </SwiperSlide> */}
                 </div>
-			))}
+			))} 
+            </>}
             {/* </Swiper> */}
             </Row>
             </Container>

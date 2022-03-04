@@ -47,6 +47,12 @@ const restaurantSchema = new mongoose.Schema({
         required: true
         
     }, 
+    ratingArray : [
+        {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Rating" 
+        }
+    ],
     status: {
         type: Boolean,
         required: false
@@ -72,4 +78,4 @@ function validateRestaurant(restaurant){
 }
 const Restaurant = mongoose.model('Restaurant',restaurantSchema);
 exports.Restaurant = Restaurant;
-exports.validate = validateRestaurant;
+exports.validateR = validateRestaurant;

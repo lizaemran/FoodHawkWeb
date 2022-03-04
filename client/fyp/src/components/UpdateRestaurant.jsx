@@ -3,14 +3,14 @@ import {useSelector, useDispatch} from 'react-redux';
 import { updateRestaurantsAsync } from '../redux/Slice';
 
 const UpdateRestaurant = ({rId}) => {
-	const restaurants = useSelector((state)=> state.restaurants);
+	const restaurants = useSelector((state)=> state.restaurants.restaurants);
 	const [nameValue, setNameValue] = useState('');
     const [imageValue, setImageValue] = useState('');
     const [locationValue, setLocationValue] = useState('');
     const [ratingValue, setRatingValue] = useState('');
 	let restaurant = {}
 	useEffect(()=>{
-		restaurant = restaurants.filter((r) => r._id == rId);
+		restaurant = restaurants?.filter((r) => r._id === rId);
 		restaurant = restaurant[0];
 		setNameValue(restaurant.name);
 		setImageValue(restaurant.image);

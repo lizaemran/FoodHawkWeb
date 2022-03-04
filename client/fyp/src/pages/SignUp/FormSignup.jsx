@@ -42,7 +42,7 @@ const FormSignup = ({noRedirection, setModalShowLogin, setModalShowSignUp}) => {
         <div className='d-flex flex-column'>
           <label className='text-white' style={{fontSize:'14px'}}>Username</label>
           <input
-            className='w-75 mb-1 input1 fs-6 rounded-3 mt-0 border-0 text-muted'
+            className='w-75 mb-1 input1 fs-6 rounded-3 mt-0 border-0 text-muted bg-light'
             type='text'
             style={{fontSize:'14px'}}
             name='username'
@@ -54,7 +54,7 @@ const FormSignup = ({noRedirection, setModalShowLogin, setModalShowSignUp}) => {
         <div className='d-flex flex-column'>
           <label className='text-white' style={{fontSize:'14px'}}>First Name</label>
           <input
-            className='w-75 mb-1 input1 fs-6 rounded-3 mt-0 border-0 text-muted'
+            className='w-75 mb-1 input1 fs-6 rounded-3 mt-0 border-0 text-muted bg-light'
             type='text'
             name='username'
             style={{fontSize:'14px'}}
@@ -66,7 +66,7 @@ const FormSignup = ({noRedirection, setModalShowLogin, setModalShowSignUp}) => {
         <div className='d-flex flex-column'>
           <label className='text-white' style={{fontSize:'14px'}}>Last Name</label>
           <input
-            className='w-75 mb-1 input1 fs-6 rounded-3 mt-0 border-0 text-muted'
+            className='w-75 mb-1 input1 fs-6 rounded-3 mt-0 border-0 text-muted bg-light'
             type='text'
             name='username'
             style={{fontSize:'14px'}}
@@ -78,7 +78,7 @@ const FormSignup = ({noRedirection, setModalShowLogin, setModalShowSignUp}) => {
         <div className='d-flex flex-column'>
           <label className='text-white' style={{fontSize:'14px'}}>Email</label>
           <input
-            className='input1 w-75 mb-1 fs-6 p-3 rounded-3 mt-0 border-0 text-muted'
+            className='input1 w-75 mb-1 fs-6 p-3 rounded-3 mt-0 border-0 text-muted bg-light'
             type='email'
             name='email'
             style={{fontSize:'14px'}}
@@ -90,7 +90,7 @@ const FormSignup = ({noRedirection, setModalShowLogin, setModalShowSignUp}) => {
         <div className='d-flex flex-column'>
           <label className='text-white' style={{fontSize:'14px'}}>Password</label>
           <input
-            className='input1 w-75 mb-1 fs-6 p-3 rounded-3 mt-0 border-0 text-muted'
+            className='input1 w-75 mb-1 fs-6 p-3 rounded-3 mt-0 border-0 text-muted bg-light'
             type='password'
             name='password'
             style={{fontSize:'14px'}}
@@ -111,7 +111,7 @@ const FormSignup = ({noRedirection, setModalShowLogin, setModalShowSignUp}) => {
         <div className='d-flex flex-column'>
           <label className='text-white' style={{fontSize:'14px'}}>Phone Number</label>
           <input
-            className='input1 w-75 mb-1 fs-6 p-3 rounded-3 mt-0 border-0 text-muted'
+            className='input1 w-75 mb-1 fs-6 p-3 rounded-3 mt-0 border-0 text-muted bg-light'
             type='phone'
             name='phone'
             style={{fontSize:'14px'}}
@@ -123,7 +123,7 @@ const FormSignup = ({noRedirection, setModalShowLogin, setModalShowSignUp}) => {
         <div className='d-flex flex-column'>
           <label className='text-white' style={{fontSize:'14px'}}>Address</label>
           <input
-            className='input1 w-75 mb-1 fs-6 rounded-3 mt-0 border-0 text-muted'
+            className='input1 w-75 mb-1 fs-6 rounded-3 mt-0 border-0 text-muted bg-light'
             type='text'
             name='address'
             style={{fontSize:'14px'}}

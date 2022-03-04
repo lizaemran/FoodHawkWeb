@@ -139,7 +139,7 @@ const Account = () => {
                                 {index}
                            </td>
                            <td>
-                               {u.name}
+                               {u?.name}
                            </td>
                            <td>
                                {u.location}
@@ -151,7 +151,7 @@ const Account = () => {
                                {u.status === true ? 'Active' : 'Closed'} 
                            </td>
                            <td>
-                               {u.products.length}
+                               {u.products?.length}
                            </td>
                        </tr>
                        )}

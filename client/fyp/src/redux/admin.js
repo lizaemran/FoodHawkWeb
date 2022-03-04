@@ -58,7 +58,10 @@ async(payload) => {
         console.log(orders);
         return {orders};
     }
+
 });
+
+
 const AdminSlice = createSlice({
     name: "admin",
     initialState: 

@@ -1,28 +1,26 @@
 .form-pop-up{
-    width: 25%;
+    width: 30vw!important;
     position: fixed;
-    height: 60%;
+    height: 60vh!important;
     overflow-y: hidden;
     top: 10%;
     right: 10%;
     z-index: 69;
-    background: #f2f2f2;
-    padding-bottom: 20px;
+    background: #f7f6f600;
     border-radius: 10px;
-    box-shadow: 0px 0px 20px rgba(0,0,0,0.3);
+    /* border: solid 0.3rem rgba(11, 70, 199, 0.932); */
 
 }
 .form-pop-up input[type="text"] , .select{
     width: 100%;
-    font-size: 1.5rem;
+    font-size: 1rem;
     padding: 0.4rem 1.3rem;
-    border: solid 0.3rem rgba(11, 70, 199, 0.932);
     margin-top: 1vh;
     box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
     border-radius: 7.5px;
 }
 .form-pop-up button{
-    font-size: 1.5rem!important;
+    font-size: 1rem!important;
     background: rgba(11, 70, 199, 0.932)!important;
     
 }
@@ -30,25 +28,29 @@
     background: rgba(11, 70, 199, 0.932);
     display: flex;
     justify-content: space-between;
-    padding: 15px 15px;
+    padding: 10px 10px;
     align-items: center;
     color: white;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     cursor: move;
+    font-size: 1rem!important;
  
 }
 .pop-up-title i{
-    font-size: 1.8rem;
+    font-size: 1rem;
     cursor: pointer;
 }
 .children-forms{
-    padding: 0px 20px 0px 20px;
+    padding: 0px 10px 0px 10px;
     overflow-y: scroll !important;
     height: 90%;
     border: 3px solid rgba(11, 70, 199, 0.932);
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
+    background-color: #f2f2f2!important;
+    box-shadow: 0px 0px 20px rgba(0,0,0,0.3);
+
 }
 .form-image{
     text-align: center;
@@ -57,8 +59,8 @@
 }
 .form-image img{
     border-radius: 50%;
-    height: 150px;
-    width:150px;
+    height: 100px;
+    width:100px;
     object-fit: cover;
     
     

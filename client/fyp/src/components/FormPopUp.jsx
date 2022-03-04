@@ -5,7 +5,7 @@ const FormPopUp = ({children, title, setIsOpen}) => {
     return (
         <Draggable bounds="parent" cancel=".children-forms">
         <div className="form-pop-up">
-            <div className="pop-up-title"><h2>{title}</h2><i onClick={()=> {setIsOpen(false)}} class="fas fa-times"></i></div>
+            <div className="pop-up-title"><h4>{title}</h4><i onClick={()=> {setIsOpen(false)}} class="fas fa-times"></i></div>
             <div className="children-forms">
             {children}
             </div>

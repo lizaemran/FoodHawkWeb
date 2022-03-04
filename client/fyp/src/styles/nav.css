@@ -255,6 +255,9 @@ width:100%;
     transform: scale(1);
   }
 }
+.mainbox {
+  height: 85vh!important;
+}
 .r-card {
   background-color: #00000018;
   padding: 0;
@@ -274,7 +277,7 @@ width:100%;
 .r-card .col-2 img {
   height: 20vh;
   width: 100%;
-  border-radius: 10px 0px 0px 10px;
+  border-radius: 50%;
   
 }
 @media only screen and (max-width: 1000px) {
@@ -287,6 +290,7 @@ width:100%;
     height: 89.5vh!important;
   }
 
+
 }
 @media only screen and (max-width: 600px) {
   .r-card .col-2 img {
@@ -295,7 +299,13 @@ width:100%;
     border-radius: 10px 0px 0px 10px;
   }
   .mainbox {
-    height: 84vh!important;
+    height: 86vh!important;
+  }
+  .res-tab-menu{
+    flex-direction: column!important;
+    justify-content: center!important;
+    align-items: center!important;
+
   }
 
 }
@@ -353,7 +363,7 @@ width:100%;
   color: #ffd60a;
 }
 .grey {
-  color: #cfcbcb;
+  color: #bbb9b9;
 }
 #status {
   position: absolute;
@@ -466,7 +476,7 @@ width:100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  top: 15%;
+  top: 9%;
   left: 52.5%;
   font-size: 1.25rem;
   background: #EF5023;
@@ -477,6 +487,6 @@ width:100%;
   cursor: pointer;
 }
 #addRestaurant:hover {
-  filter: brightness(0.9);
+  filter: brightness(0.8);
 }
 

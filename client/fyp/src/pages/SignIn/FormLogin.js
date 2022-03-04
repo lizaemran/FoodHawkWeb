@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import FormLoginSub from './FormLoginSub';
 // import FormSuccess from './FormSuccess';
-import BurgerS from "../../img/sign-up.jpg";
+import BurgerS from "../../img/registerpage.jpg";
 import { Col, Row, Image } from 'react-bootstrap';
 import NavBar from '../../UserSide/components/common/nav/NavBar';
 import Footer from '../../UserSide/components/common/Footer/Footer';

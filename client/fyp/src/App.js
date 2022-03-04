@@ -21,7 +21,7 @@ import Results from './pages/Results';
 function App() {
   const [pId, setPId] = useState("");
   const [isEditP, setIsEditP] = useState(false);
-  const [search, setSearch] = useState(" ");
+  const [search, setSearch] = useState("");
   // useEffect (() => {
   //   dispatch(getRestaurantsAsync());
   // }, [])

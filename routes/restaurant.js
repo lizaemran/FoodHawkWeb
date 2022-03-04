@@ -1,6 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const {Restaurant, validate} = require('../models/restaurants');
+const {Restaurant, validateRR} = require('../models/restaurants');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const restaurantAuth = require('../middleware/restaurantAuth');
@@ -16,17 +16,17 @@ router.get('/:id/products', async (req,res) => {
     res.send(restaurants[0].products);
 });
 router.get('/:id', async (req,res) => {
-    const restaurants = await Restaurant.findById({"_id":req.params.id}).populate("products");
+    const restaurants = await Restaurant.findById({"_id":req.params.id}).populate("products").populate("ratingArray");
     if (!restaurants) return res.status(404).send("RESTAURANT NOT FOUND");
     res.send(restaurants);
 });
 router.get('/dashboard/:username', async (req,res) => {
-    let restaurant = await Restaurant.findOne({username: req.params.username}).populate("products");
+    let restaurant = await Restaurant.findOne({username: req.params.username}).populate("products").populate("ratingArray");
     if (!restaurant) return res.status(404).send("RESTAURANT NOT FOUND");
     res.send(restaurant);
 });
 router.post('/', async(req,res) => {
-    const {error} = validate(req.body);
+    const {error} = validateR(req.body);
     if(error) return res.status(400).send(error.details[0].message);
     let restaurant = await Restaurant.findOne({username: req.body.username});
     if(restaurant){

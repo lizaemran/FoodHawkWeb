@@ -51,6 +51,29 @@ async(payload) => {
         return {restaurants};
     }
 });
+
+export const addRatingAsync = createAsyncThunk('restaurant/addRatingAsync',
+async(payload) => {
+    const response = await fetch(`http://localhost:7000/api/rating/${payload.r_id}/${payload.u_id}`, {
+        method: "POST",
+        headers: {
+            "Content-Type": 'application/json',
+        },
+        body: JSON.stringify({
+            stars: payload.stars,
+            description : payload.description,
+        })
+    });
+
+    if(response.ok){
+        const restaurant = await response.json();
+        return {restaurant};
+    }
+    else{
+        alert("You have already rated this restaurant");
+    }
+});
+
 export const updateRestaurantsAsync = createAsyncThunk('restaurants/updateRestaurantsAsync',
 async(payload) => {
     const response = await fetch(`http://localhost:7000/api/restaurant/${payload.id}`, {
@@ -96,7 +119,7 @@ async(payload) => {
     });
     if(response.ok){
         const restaurant = await response.json();
-        return {id: restaurant.id, status: payload.status};
+        return {restaurant};
     }
 });
 
@@ -114,6 +137,43 @@ async(payload) => {
         return {order};
     }
 });
+
+
+export const addRestaurantsByAdminAsync = createAsyncThunk('restaurant/addRestaurantsByAdminAsync',
+async(payload) => {
+    const response = await fetch('http://localhost:7000/api/admin/restaurant/', {
+        method: "POST",
+        headers: {
+            "Content-Type": 'application/json',
+            "x-auth-token": localStorage.getItem('token')
+        },
+        body: JSON.stringify({
+            username: payload.username,
+            password: payload.password,
+            email: payload.email,
+            name: payload.name,
+            image: payload.image,
+            location: payload.location,
+            phone: payload.phone,
+            rating: payload.rating
+        })
+    });
+
+    if(response.ok){
+        const restaurant = await response.json();
+        return {restaurant};
+    }
+});
+
+export const getRatingAsync = createAsyncThunk('restaurants/getRatingAsync' , 
+async(payload) => {
+    const response = await fetch(`http://localhost:7000/api/rating/${payload.id}`);
+    if(response.ok){
+        const rating = await response.json();
+        return {rating};
+    }
+});
+
 const Slice = createSlice({
     name: "restaurants",
     initialState:
@@ -151,23 +211,35 @@ const Slice = createSlice({
         },
         [addRestaurantsAsync.fulfilled]: (state,action) => {
             console.log("Posted restaurants successfully.");
-            state.unshift(action.payload.restaurants);
+            state.restaurants.push(action.payload.restaurants);
+        },
+        [addRestaurantsByAdminAsync.fulfilled]: (state,action) => {
+            console.log("Posted restaurants successfully.");
+            state.restaurants.push(action.payload.restaurants);
+        },
+        [addRatingAsync.fulfilled]: (state,action) => {
+            console.log("Posted rating successfully.");
+            const index = state.restaurants?.findIndex((r)=> r?._id === action.payload?.restaurant?._id);
+            state.restaurants[index] = action.payload?.restaurant;
+        },
+        [getRatingAsync.fulfilled]: (state,action) => {
+            console.log("Got rating successfully.");
+            state.restaurant.ratingArray.push(action.payload.rating);
         },
         [updateRestaurantsAsync.fulfilled]: (state,action) => {
             console.log("Posted restaurants successfully.");
-            const index = state.findIndex((restaurant)=> restaurant.id === action.payload.id);
-            state[index] = action.payload.restaurants;
+            const index = state.restaurants.findIndex((restaurant)=> restaurant.id === action.payload.id);
+            state.restaurants[index] = action.payload.restaurants;
         },
         [deleteRestaurantAsync.fulfilled]: (state,action) => {
-            return state.filter((restaurant) => restaurant._id !== action.payload.id);
+            return state.restaurants.filter((restaurant) => restaurant._id !== action.payload.id);
         },
         [patchRestaurantAsync.fulfilled]: (state, action) => {
-            const index = state.findIndex((restaurant)=> restaurant.id === action.payload.id);
-            state[index].status = action.payload.status;
+            const index = state.restaurants.findIndex((restaurant)=> restaurant.id === action.payload.id);
+            state.restaurants[index] = action.payload.restaurant;
         },
         [getOrderDetailAsync.fulfilled]: (state, action) => {
             console.log("Fetched Order Detail Successfully.");
-            console.log(action.payload.order);
             state.order_detail.push(action.payload.order);
         },
     },

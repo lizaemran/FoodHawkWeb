@@ -22,7 +22,8 @@ import FormLoginSub from './SignIn/FormLoginSub';
 import { getUserAsync } from '../redux/auth';
 import { useEffect } from 'react';
 import FormSignup from './SignUp/FormSignup';
-import { getRestaurantByUsernameAsync } from '../redux/Slice';
+import { addRatingAsync, getRatingAsync, getRestaurantByUsernameAsync, getRestaurantsAsync } from '../redux/Slice';
+import ReviewForm from '../components/ReviewForm';
 const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
     const [review, setReview] = useState(false);
     const [direction, setDirection] = useState(false);
@@ -37,8 +38,10 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
     const token = useSelector(state => state.auth.token);
     const firstName = useSelector((state) => state.auth.username);
     const restaurant = useSelector((state) => state.restaurants.restaurant);
+    const ratingArray = useSelector((state) => state.restaurants.restaurant?.ratingArray);
     const noRedirection = true;
     const dispatch = useDispatch();
+
     const renderStars = (stars) => {
         let rating = [];
              for(let i=1; i<=5; i++){
@@ -51,13 +54,24 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
             }
             return rating;
     }
+
     var location = useLocation();
     location = location.pathname.split('/')[2];
     useEffect (() => {
         dispatch(getUserAsync());
     }, [token])
+    // const getRatingHandler = (id) => {
+    //             alert('a');
+    //             dispatch(getRatingAsync(
+    //                 {
+    //                     id: id
+    //                 }
+    //             ));
+    // }
     useEffect(() => {
+        dispatch(getRestaurantsAsync());
         dispatch(getRestaurantByUsernameAsync({username: location}));
+        
     }, [])
     const [modalShow, setModalShow] = useState(false);
     function MyVerticallyCenteredModal(props) {
@@ -75,12 +89,10 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
             </Modal.Header>
             <Modal.Body>
               <h6>Review by {firstName} </h6>
-              <p>
-                <Form.Control as="textarea" rows={3} type='text' placeholder='Good...' className='book-form' />
-              </p>
+             <ReviewForm setModalShow={setModalShow} />
             </Modal.Body>
             <Modal.Footer>
-              <Button style={{backgroundColor:'#ef5023', border:'none'}}>Add</Button>
+              
             </Modal.Footer>
           </Modal>
         );
@@ -96,7 +108,7 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
               aria-labelledby="contained-modal-title-vcenter"
               centered
             >
-              <Modal.Header closeButton >
+              <Modal.Header >
                 <Modal.Title id="contained-modal-title-vcenter">
                   {/* <h4>{modalShowLogin ? 'Login to Continue' : 'Register to Continue'}</h4> */}
                 </Modal.Title>
@@ -128,22 +140,23 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
                 }
                 <div className='px-4'>
                 <Breadcrumb>
-                <Breadcrumb.Item href={`${token !== null ? '/dashboard' : '/'}`}>Home</Breadcrumb.Item>
-                <Breadcrumb.Item href={`${token !== null ? '/dashboard' : '/'}`}>
+                <Breadcrumb.Item href={`${token !== null ? '/dashboard' : '/'}`} style={{fontSize:'14px'}}>Home</Breadcrumb.Item>
+                <Breadcrumb.Item href={`${token !== null ? '/dashboard' : '/'}`} style={{fontSize:'14px'}}>
                     Restaurants
                 </Breadcrumb.Item>
-                <Breadcrumb.Item active>{restaurant?.name}</Breadcrumb.Item>
+                <Breadcrumb.Item active style={{fontSize:'14px'}}>{restaurant?.name}</Breadcrumb.Item>
                 </Breadcrumb>
                 <Row className='mb-2'>
                     <Col>
                     <h4 className='text-capitalize'>{restaurant?.name}</h4>
-                    <h6>Fast Food</h6>
-                    <h6><MdOutlineLocationOn className='fs-4'/> {restaurant?.location}</h6>
+                    <p className='' style={{margin: '0px' , fontSize:'15px'}}>Fast Food</p>
+                    <p className='' style={{margin: '0px' , fontSize:'15px'}}>{restaurant?.status ? <span className='text-success'>Open Now</span> : <span className='text-danger'>Closed</span>}</p>
+                    <p className='' style={{margin: '0px' , fontSize:'15px'}}><MdOutlineLocationOn className='fs-4'/> {restaurant?.location}</p>
                     </Col>
                     <Col className='d-flex justify-content-end'>
                     <div id="" className='fs-6 '>
                         {renderStars(restaurant?.rating)} {restaurant?.rating}
-                        <p className='' style={{fontSize:'12px'}}>20 Dining Reviews</p>
+                        <p className='' style={{fontSize:'12px'}}>{restaurant?.ratingArray?.length} Dining Reviews</p>
                     </div>
                     </Col>
                 </Row>
@@ -184,7 +197,7 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
                         <Image src={map} className='' alt='res-map' style={{height:'46.70vh', width:'100%', borderRadius:'10px', objectFit:'cover'}}/>
                         </Col>
                 </Row>
-                <div className='d-flex mt-4'>
+                <div className='d-flex res-tab-menu mt-4'>
                 <div className={!overview ? 'res-tab' : 'res-tab-active'} onClick={() => {setOverview(true); setMenu(false); setGallery(false); setReviews(false); setOrderOnline(false); setBook(false);}} style={{marginRight:'10px', cursor:'pointer'}}>
                     Overview
                 </div>
@@ -194,7 +207,7 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
                 <div className={!gallery ? 'res-tab' : 'res-tab-active'}onClick={() => {setOverview(false); setMenu(false); setGallery(true); setReviews(false); setOrderOnline(false); setBook(false);}} style={{marginRight:'10px', cursor:'pointer'}}>
                    Gallery
                 </div>
-                <div className={!reviews ? 'res-tab' : 'res-tab-active'} onClick={() => {setModalShowLogin(true); setOverview(false); setMenu(false); setGallery(false); setReviews(true); setOrderOnline(false); setBook(false);}}  style={{marginRight:'10px', cursor:'pointer'}}>
+                <div className={!reviews ? 'res-tab' : 'res-tab-active'} onClick={() => { setOverview(false); setMenu(false); setGallery(false); setReviews(true); setOrderOnline(false); setBook(false);}}  style={{marginRight:'10px', cursor:'pointer'}}>
                     Reviews
                 </div>
                 <div className={!orderOnline ? 'res-tab' : 'res-tab-active'} onClick={() => {setOverview(false); setMenu(false); setGallery(false); setReviews(false); setOrderOnline(true); setBook(false);}} style={{marginRight:'10px', cursor:'pointer'}}>
@@ -250,14 +263,22 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
                         <Image src={coke} className='mb-4' alt='res-img' style={{height:'300px', width:'25%', objectFit:'cover'}}/>
                         <Image src={cookies} className='mb-4' alt='res-img-1' style={{height:'300px',width:'25%', objectFit:'cover' }}/>
                         <Image src={coke} className='mb-4' alt='res-img' style={{height:'300px',width:'25%', objectFit:'cover'}}/>
-
                         </Row>
                         {/* </Container> */}
                    </div>}
-                   {(token !== null && token !== '' && reviews) && 
+                   { reviews && 
                     <div className='py-5'>
-                        <Reviews name='Anonymous' stars='5' desc='Lorem, ipsum dolor sit amet consectetur adipisicing elit. Pariatur praesentium sequi eum sed, doloribus nesciunt illum? Nisi omnis odio nobis corrupti ducimus aut corporis soluta dolor sit amet consectetur adipisicing elit. Obcaecati, consequatur?' />
-                        <Reviews name='Anonymous' stars='4' desc='Lorem, ipsum dolor sit amet consectetur adipisicing elit. Pariatur praesentium sequi eum sed, doloribus nesciunt illum? Nisi omnis odio nobis corrupti ducimus Obcaecati, consequatur?' />
+                        {restaurant?.ratingArray.length > 0 ? 
+                        (<>
+                           {restaurant?.ratingArray.map((r) =>
+                            <div key={r._id} className=''>
+                                <Reviews name={r?.user_name} stars={r.stars} desc={r.description} />
+                            </div>
+                        )}</>) 
+                    : 
+                    (<p className='fs-6 poppins text-center'>No reviews yet</p>)
+                    }
+                     
                    </div>}
                    {orderOnline && 
                     <div className='p-4 mt-2' style={{background:'radial-gradient(circle, rgba(177,174,182,1) 0%, rgba(217,190,147,1) 47%, rgba(236,231,187,1) 100%)'}}>
@@ -276,7 +297,7 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
                                         <p>PKR {r.price}</p>
                                         <p>{r.category}</p>
                                         </div>
-                                        <Button onClick={() => setModalShowLogin(true)} className='w-100' style={{backgroundColor:'#ef5023',color:'white', textDecoration:'none', border:'none'}}>
+                                        <Button disabled={restaurant?.status ? false : true} onClick={() => setModalShowLogin(true)} className='w-100' style={{backgroundColor:'#ef5023',color:'white', textDecoration:'none', border:'none'}}>
                                             Order
                                         </Button>
                                         </Col>

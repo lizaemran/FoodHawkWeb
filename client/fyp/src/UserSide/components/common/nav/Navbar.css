@@ -15,10 +15,13 @@ div.navbar-collapse.show{
 }
 .NavBtn:hover{
 background-color: rgba(128, 128, 128, 0.363);
-color: white!important;
-font-weight: 500!important;
 }
+.NavLogo{
+  padding: 5px 10px;
+}
+
 .NavLogo:hover{
+  border-radius: 5px;
   background-color: rgba(128, 128, 128, 0.363);
 
   }

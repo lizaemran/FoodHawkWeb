@@ -31,7 +31,7 @@ const FormLoginSub = ({noRedirection, setModalShowLogin, setModalShowSignUp}) =>
           <div className='d-flex flex-column'>
             <label className='text-white' style={{fontSize:'14px'}}>Username</label>
             <input
-              className='w-75 mb-1 input1 rounded-3 mt-0 border-0 text-muted'
+              className='w-75 mb-1 input1 rounded-3 mt-0 border-0 text-muted bg-light'
               type='text'
               name='username'
               placeholder='Enter your username'
@@ -43,7 +43,7 @@ const FormLoginSub = ({noRedirection, setModalShowLogin, setModalShowSignUp}) =>
           <div className='d-flex flex-column'>
             <label className='text-white' style={{fontSize:'14px'}}>Password</label>
             <input
-              className='input1 w-75 mb-1 p-3 rounded-3 mt-0 border-0 text-muted'
+              className='input1 w-75 mb-1 p-3 rounded-3 mt-0 border-0 text-muted bg-light'
               type='password'
               name='password'
               style={{fontSize:'14px'}}
@@ -53,7 +53,7 @@ const FormLoginSub = ({noRedirection, setModalShowLogin, setModalShowSignUp}) =>
             />
           </div>
          
-          <Button type="submit" className='py-2 px-5 fs-6 form-btn my-2' style={{background:"#EF5023", border:"none"}} type='submit'>
+          <Button type="submit" className='py-2 px-5 fs-6 form-btn my-2' style={{background:"#EF5023", border:"none"}}>
             Login
           </Button>
           {noRedirection  ? (

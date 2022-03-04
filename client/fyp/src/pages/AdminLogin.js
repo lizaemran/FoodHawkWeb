@@ -29,7 +29,7 @@ const AdminLogin = () => {
           <div className='d-flex flex-column'>
             <label className='text-white'>Username</label>
             <input
-              className='w-100 mb-3 input1 fs-6 rounded-3 mt-0 border-0 text-muted'
+              className='w-100 mb-3 input1 fs-6 rounded-3 mt-0 border-0 text-muted bg-light'
               type='text'
               name='username'
               placeholder='Enter your username'
@@ -40,7 +40,7 @@ const AdminLogin = () => {
           <div className='d-flex flex-column'>
             <label className='text-white'>Password</label>
             <input
-              className='w-100 mb-3 p-3 input1 fs-6 rounded-3 mt-0 border-0 text-muted'
+              className='w-100 mb-3 p-3 input1 fs-6 rounded-3 mt-0 border-0 text-muted bg-light'
               type='password'
               name='password'
               placeholder='Enter your password'
@@ -49,7 +49,7 @@ const AdminLogin = () => {
             />
           </div>
          
-          <Button type="submit" className='py-2 px-5 fs-6 form-btn' style={{background:"#EF5023", border:"none"}} type='submit'>
+          <Button type="submit" className='py-2 px-5 fs-6 form-btn' style={{background:"#EF5023", border:"none"}}>
             Login
           </Button>
           {/* <span className='text-white '>

@@ -4,9 +4,11 @@ import { Button } from "react-bootstrap";
 import "./SearchBar.css";
 import {useHistory} from 'react-router-dom';
 import { useEffect } from "react";
+import {BsSearch} from 'react-icons/bs';
 function Searchbar(props) {
   const { 
-    onSearch 
+    onSearch ,
+    inNav
   } = props;
 
   const [searchText, setSearchText] = useState('')
@@ -28,15 +30,18 @@ function Searchbar(props) {
 
 return (
     <div className="d-flex justify-content-center align-items-center">
-        <input className=''
+        <input
           onChange={handleInput}
           onKeyPress={handleEnterKeyPressed}
           type="text"
           value={searchText}
           placeholder="Search restaurants, food items..."
           className="p-3"
-          style={{fontSize:"14px",borderRadius:"10px 0px 0px 10px", border:"none",marginTop:"0px"}}/>
-          <Button onClick={handleClicked} className="text-white p-3" style={{height:"fit-content", backgroundColor:"#ef5023" , border:"none", fontSize:"14px", borderRadius:"0px 10px 10px 0px"}}>Search</Button>
+          style={{fontSize:"14px",borderRadius:"10px 0px 0px 10px", border:"none",marginTop:"0px", height: inNav && '40px'}}/>
+          <Button onClick={handleClicked} className="text-white p-3 d-flex justify-content-center align-items-center" 
+          style={{ height: inNav ? '40px' : 'fit-content', backgroundColor:"#ef5023" , border:"none", fontSize:"14px", borderRadius:"0px 10px 10px 0px"}}>
+            <BsSearch className="text-white fs-5"/>
+          </Button>
       </div>
     
   );
