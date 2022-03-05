@@ -25,7 +25,7 @@ const ReviewForm = ({setModalShow}) => {
         <div>
             <StarRatings
                 rating={rating}
-                starRatedColor="blue"
+                starRatedColor="yellow"
                 changeRating={changeRating}
                 numberOfStars={5}
                 name='rating'

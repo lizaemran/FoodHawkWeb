@@ -2,6 +2,9 @@
   transform: scale(1.0);
   color: black;
 }
+.breadcrumb{
+  margin-bottom: 0px!important;
+}
 .nav-scroll .show {
   flex-direction: column!important;
 }

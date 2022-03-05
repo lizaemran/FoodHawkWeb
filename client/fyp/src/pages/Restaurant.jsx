@@ -5,7 +5,7 @@ import {MdOutlineDirections} from 'react-icons/md';
 import {BsBookmarkPlus, BsShare} from 'react-icons/bs'
 import {MdOutlineLocationOn} from 'react-icons/md';
 import SideNav from '../components/SideNav/SideNav'
-import coke from '../img/reddrink.jpeg';
+import coke from '../img/BurgerS.jpeg';
 import cookies from '../img/log-in.jpg';
 import map from '../img/googlemaps.jfif';
 import BookTableForm from '../components/BookTableForm';
@@ -39,6 +39,7 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
     const firstName = useSelector((state) => state.auth.username);
     const restaurant = useSelector((state) => state.restaurants.restaurant);
     const ratingArray = useSelector((state) => state.restaurants.restaurant?.ratingArray);
+    const user = useSelector((state) => state.auth.user);
     const noRedirection = true;
     const dispatch = useDispatch();
 
@@ -92,7 +93,7 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
              <ReviewForm setModalShow={setModalShow} />
             </Modal.Body>
             <Modal.Footer>
-              
+              <Button onClick={()=> setModalShow(false)} style={{backgroundColor:'#ef5023', border:'none'}}>Close</Button>
             </Modal.Footer>
           </Modal>
         );
@@ -139,19 +140,23 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
                 <Nav search={search} setSearch={setSearch} />
                 }
                 <div className='px-4'>
-                <Breadcrumb>
+                <Breadcrumb >
                 <Breadcrumb.Item href={`${token !== null ? '/dashboard' : '/'}`} style={{fontSize:'14px'}}>Home</Breadcrumb.Item>
                 <Breadcrumb.Item href={`${token !== null ? '/dashboard' : '/'}`} style={{fontSize:'14px'}}>
                     Restaurants
                 </Breadcrumb.Item>
                 <Breadcrumb.Item active style={{fontSize:'14px'}}>{restaurant?.name}</Breadcrumb.Item>
                 </Breadcrumb>
-                <Row className='mb-2'>
-                    <Col>
-                    <h4 className='text-capitalize'>{restaurant?.name}</h4>
-                    <p className='' style={{margin: '0px' , fontSize:'15px'}}>Fast Food</p>
-                    <p className='' style={{margin: '0px' , fontSize:'15px'}}>{restaurant?.status ? <span className='text-success'>Open Now</span> : <span className='text-danger'>Closed</span>}</p>
-                    <p className='' style={{margin: '0px' , fontSize:'15px'}}><MdOutlineLocationOn className='fs-4'/> {restaurant?.location}</p>
+                <Row className=''>
+                    <Col className='my-auto'>
+                    <div className='d-flex justify-content-start align-items-center'>
+                    <h4 className='my-auto text-capitalize'>{restaurant?.name}</h4>
+                    <p className='' style={{marginBottom: '0px' , fontSize:'15px'}}>
+                        {restaurant?.status ? <span className='text-white rounded-3 mx-1 px-1' style={{backgroundColor:'#25D366'}}>Open Now</span>
+                     : 
+                     <span className=' text-white rounded-3 mx-1 px-1 ' style={{backgroundColor:'#E33800'}}>Closed</span>}</p>
+                    </div>
+                    {/* <p className='' style={{margin: '0px' , fontSize:'15px'}}>Fast Food</p> */}
                     </Col>
                     <Col className='d-flex justify-content-end'>
                     <div id="" className='fs-6 '>
@@ -160,15 +165,16 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
                     </div>
                     </Col>
                 </Row>
+
+                <section className='d-flex justify-content-start align-items-center'>
                 <Button className={!review ? 'res-but' : 'res-but-active'} onClick={()=> {setModalShowLogin(true); setReview(true); setDirection(false); setBookmark(false); setShare(false); setModalShow(true);}} style={{marginRight:'10px'}}>
                     <AiOutlineStar className='fs-5' style={{color: review ? 'white' : '#EF5023'}} /> Add a review
                 </Button>
-                {token !== null && 
+                {token !== null  &&
                 <MyVerticallyCenteredModal
                     show={modalShow}
                     onHide={() => setModalShow(false)}
-                />
-                }
+                />}
                 {token === null && 
                  <MyVerticallyCenteredModal2
                     show={modalShowLogin}
@@ -178,23 +184,26 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
                 <Button className={!direction ? 'res-but' : 'res-but-active'} onClick={()=> {setReview(false); setDirection(true); setBookmark(false); setShare(false);}} style={{marginRight:'10px'}}>
                     <MdOutlineDirections className='fs-5' style={{color: direction ? 'white' : '#EF5023'}} /> Direction
                 </Button>
-                <Button className={!bookmark ? 'res-but' : 'res-but-active'} onClick={()=> {setReview(false); setDirection(false); setBookmark(true); setShare(false);}} style={{marginRight:'10px'}}>
+                {/* <p>{user?.allOrders[0].filter((o) => o?.restaurant_id === restaurant?._id) && 'plllll'}</p> */}
+                {/* <Button className={!bookmark ? 'res-but' : 'res-but-active'} onClick={()=> {setReview(false); setDirection(false); setBookmark(true); setShare(false);}} style={{marginRight:'10px'}}>
                     <BsBookmarkPlus className='fs-5' style={{color: bookmark ? 'white' : '#EF5023'}}/> Bookmark
-                </Button>
-                <WhatsappShareButton url={`http://localhost:3000/restaurant/${restaurant?.username}`} separator=" "  title={'Place order from your favourite restaurant! ' + restaurant?.name}  style={{marginRight:'5px'}}>
+                </Button> */}
+                <WhatsappShareButton className='mb-2' url={`http://localhost:3000/restaurant/${restaurant?.username}`} separator=" "  title={'Place order from your favourite restaurant! ' + restaurant?.name}  style={{marginRight:'5px'}}>
                     {/* <BsShare className='fs-5' style={{color: share ? 'white' : '#EF5023'}}/> Share */}
                     <WhatsappIcon size={32} round={true} />
                 </WhatsappShareButton>
-                <TwitterShareButton url={`http://localhost:3000/restaurant/${restaurant?.username}`} hashtags={['#FoodHawk','#Food', '#OnlineOrder']} title={'Place order from your favourite restaurant! ' + restaurant?.name}>
+                <TwitterShareButton className='mb-2' url={`http://localhost:3000/restaurant/${restaurant?.username}`} hashtags={['#FoodHawk','#Food', '#OnlineOrder']} title={'Place order from your favourite restaurant! ' + restaurant?.name}>
                     {/* <BsShare className='fs-5' style={{color: share ? 'white' : '#EF5023'}}/> Share */}
                     <TwitterIcon size={32} round={true} />
                 </TwitterShareButton>
-                <Row className='py-2' style={{}}>
+                </section>
+                <Row className='py-1' style={{}}>
                         <Col xl={7} lg={7} md={7} sm={12} xs={12} style={{height:'fit-content'}}>
-                        <Image src={coke} className='' alt='res-img' style={{height:'50.85vh', width:'100%', borderRadius:'10px', objectFit:'cover'}}/>
+                        <Image src={coke} className='' alt='res-img' style={{height:'45vh', width:'100%', borderRadius:'10px', objectFit:'cover'}}/>
                         </Col>
                         <Col className='bg-light p-3' xl={5} lg={5} md={5} sm={12} xs={12} style={{borderRadius:'10px', height:'fit-content'}}>
-                        <Image src={map} className='' alt='res-map' style={{height:'46.70vh', width:'100%', borderRadius:'10px', objectFit:'cover'}}/>
+                        <p className='' style={{margin: '0px' , fontSize:'15px'}}><MdOutlineLocationOn className='fs-4'/> {restaurant?.location}</p>
+                        <Image src={map} className='' alt='res-map' style={{height:'37.5vh', width:'100%', borderRadius:'10px', objectFit:'cover'}}/>
                         </Col>
                 </Row>
                 <div className='d-flex res-tab-menu mt-4'>
@@ -218,29 +227,29 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
                 </div>
                 </div>
                {overview && 
-                    <div className='py-5'>
-                        <h5>Known For</h5>
-                        <p>
+                    <div className='py-3'>
+                        <h6>Known For</h6>
+                        <p className='' style={{fontSize:'14px'}}>
                             Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum nulla iste maiores optio, vero odit ab aliquid, voluptate necessitatibus similique perferendis. Iste delectus suscipit repudiandae!
                         </p>
-                        <p>
+                        <p style={{fontSize:'14px'}}>
                             Lorem ipsum dolor sit amet consectetur, adipisicing elit. Libero itaque, <b>molestias officiis fugit</b> modi facere.
                         </p>
-                        <p>
+                        <p style={{fontSize:'14px'}}>
                             Lorem ipsum dolor sit amet consectetur adipisicing elit. In qui esse sint cupiditate quos quod libero perferendis, magnam quis quasi delectus atque, officia nisi beatae aliquam corrupti voluptates, consectetur neque? Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus est tempore nobis nostrum officiis sed natus sit perspiciatis aut alias.
                         </p>
                    </div>}
                    {menu && 
-                    <div className='py-5'>
+                    <div className='py-3'>
                             <Row className='flex-wrap'> 
                                     {restaurant?.products.map((r) =>
                                     <Col key={r._id} xl={3} lg={4} md={3} sm={12} xs={12}>
                                         <Col className='bg-light p-2 d-flex flex-column justify-content-between align-items-center w-100 mb-3' style={{borderRadius:'15px'}} xl={4} lg={4} md={4} sm={12} xs={12}>
                                             <Row>
-                                                <Col>
-                                                    <Image src={r.image} style={{height:'auto', width:'10vw', }} />
+                                                <Col  xl={6} lg={6} md={6} sm={12} xs={12}>
+                                                    <Image  src={r.image} style={{height:'auto', width:'100%', }} />
                                                 </Col>
-                                                <Col className='d-flex flex-column justify-content-center align-items-center'>
+                                                <Col  xl={6} lg={6} md={6} sm={12} xs={12} className='d-flex flex-column justify-content-center align-items-center'>
                                                     <p className=''>{r.name}</p>
                                                     <p style={{fontSize:'14px'}}>{r.category}</p>
                                                     <p style={{fontSize:'14px'}}><b>PKR {r.price}</b></p>
@@ -257,17 +266,25 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
                         {/* <Container> */}
                         <p className='fs-5 poppins'>6 photos</p>
                         <Row className='flex-wrap' style={{}}>
-                        <Image src={coke} className='mb-4' alt='res-img' style={{height:'300px', width:'25%', objectFit:'cover'}}/>
-                        <Image src={cookies} className='mb-4' alt='res-img-1' style={{height:'300px',width:'25%', objectFit:'cover' }}/>
-                        <Image src={coke} className='mb-4' alt='res-img' style={{height:'300px',width:'25%', objectFit:'cover'}}/>
-                        <Image src={coke} className='mb-4' alt='res-img' style={{height:'300px', width:'25%', objectFit:'cover'}}/>
-                        <Image src={cookies} className='mb-4' alt='res-img-1' style={{height:'300px',width:'25%', objectFit:'cover' }}/>
-                        <Image src={coke} className='mb-4' alt='res-img' style={{height:'300px',width:'25%', objectFit:'cover'}}/>
+                        <Col xl={4} lg={4} md={6} sm={12} xs={12}>
+                        <Image src={coke} className='mb-4' alt='res-img' style={{height:'300px', width:'100%', objectFit:'cover'}}/>
+                        </Col>
+                        <Col xl={4} lg={4} md={6} sm={12} xs={12}>
+                        <Image src={cookies} className='mb-4' alt='res-img-1' style={{height:'300px',width:'100%', objectFit:'cover' }}/>
+                        </Col >
+                        <Col xl={4} lg={4} md={6} sm={12} xs={12}>
+                        <Image src={coke} className='mb-4' alt='res-img' style={{height:'300px',width:'100%', objectFit:'cover'}}/>
+                        </Col>
+                        <Col xl={4} lg={4} md={6} sm={12} xs={12}>
+                        <Image src={coke} className='mb-4' alt='res-img' style={{height:'300px', width:'100%', objectFit:'cover'}}/>
+                        </Col>
+                        {/* <Image src={cookies} className='mb-4' alt='res-img-1' style={{height:'300px',width:'100%', objectFit:'cover' }}/>
+                        <Image src={coke} className='mb-4' alt='res-img' style={{height:'300px',width:'100%', objectFit:'cover'}}/> */}
                         </Row>
                         {/* </Container> */}
                    </div>}
                    { reviews && 
-                    <div className='py-5'>
+                    <div className='py-3'>
                         {restaurant?.ratingArray.length > 0 ? 
                         (<>
                            {restaurant?.ratingArray.map((r) =>
