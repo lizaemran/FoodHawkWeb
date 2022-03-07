@@ -21,7 +21,7 @@ router.get('/:id', async (req,res) => {
     res.send(restaurants);
 });
 router.get('/dashboard/:username', async (req,res) => {
-    let restaurant = await Restaurant.findOne({username: req.params.username}).populate("products").populate("ratingArray");
+    let restaurant = await Restaurant.findOne({username: req.params.username}).populate("products").populate("ratingArray").populate("orders").sort({"date": -1 });	
     if (!restaurant) return res.status(404).send("RESTAURANT NOT FOUND");
     res.send(restaurant);
 });

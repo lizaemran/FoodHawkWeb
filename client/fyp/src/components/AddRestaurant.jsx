@@ -38,7 +38,9 @@ const AddRestaurant = () => {
 
 	return (
 <>      
-
+		<div className="form-image">
+			<img src={imageValue || 'https://peacehumanity.org/wp-content/uploads/2021/10/placeholder-286.png'} alt="product-image"/>
+		</div>
 		<form onClick={(e) => {e.stopPropagation()}} onSubmit={onSubmit} className='form-inline mt-3 mb-3'>
 			
 		<label className='sr-only'>Username</label>

@@ -37,10 +37,10 @@ function App() {
         <Route path='/track-order/:id' component={TrackOrder} />
         <Route path='/admin-login' component={AdminLogin} />
         <Route path='/account' component={Account}/>
-        <Route exact path='/restaurant/:name' component={()=> <Restaurant pId={pId} setPId={setPId} isEditP={isEditP} setIsEditP={setIsEditP} search={search} setSearch={setSearch} />}/>
+        <Route exact path='/restaurant/:username' component={()=> <Restaurant pId={pId} setPId={setPId} isEditP={isEditP} setIsEditP={setIsEditP} search={search} setSearch={setSearch} />}/>
         <Route exact path='/restaurant/register' component={RestaurantSignUp} />
-        <Route exact path='/restaurant/login' component={RestaurantLogin} />
-        <Route exact path='/restaurant/dashboard/:username' component={RestaurantDashboard} />
+        <Route exact path='/login/restaurant' component={RestaurantLogin} />
+        <Route exact path='/restaurant/dashboard/:username' component={() => <RestaurantDashboard pId={pId} setPId={setPId} isEditP={isEditP} setIsEditP={setIsEditP} />} />
         <Route exact path='/rider/register' component={RiderSignUp} />
         <Route exact path='/rider/login' component={RiderLogin} />
         <Route exact path='/rider/dashboard/' component={RiderDashboard} />

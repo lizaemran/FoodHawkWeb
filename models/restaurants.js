@@ -34,6 +34,12 @@ const restaurantSchema = new mongoose.Schema({
             ref: "Order"
         }
     ],
+    bookings: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Booking"
+        }
+    ],
     location: {
         type: String,
         required: true

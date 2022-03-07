@@ -4,7 +4,7 @@
     left:0;
     background-color: rgba(0, 0, 0, 0.541);
     width: 100vw;
-    height: 100vh;
+    height: fit-content;
     backdrop-filter: blur(10px);
     z-index: 50;
     overflow-y: scroll;

@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import { addProductsAsync } from '../redux/ProductSlice';
+import { getRestaurantsAsync } from '../redux/Slice';
 
 const AddProduct = ({rId}) => {
+	useEffect(() => {
+		dispatch(getRestaurantsAsync());
+	} , [])
     const restaurants = useSelector((state)=> state.restaurants.restaurants);
 	const [nameValue, setNameValue] = useState('');
     const [priceValue, setPriceValue] = useState('');

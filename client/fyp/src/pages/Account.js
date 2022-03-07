@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
-import { Col, Container, Row, Table } from 'react-bootstrap'
+import { Col, Container, Row, Table, Image } from 'react-bootstrap'
 import SideNav from '../components/SideNav/SideNav'
+import {Link} from 'react-router-dom';
 import Footer from '../UserSide/components/common/Footer/Footer'
 import { useSelector } from 'react-redux';
 import {BiRestaurant} from 'react-icons/bi';
@@ -47,32 +48,32 @@ const Account = () => {
             </Col>
             <Col xl={11} lg={11} md={11} sm={12} xs={12}>
            <Container className='p-4'>
-               <div className='p-5 bg-danger bg-opacity-10 text-white' style={{borderRadius:"10px"}}>
-                    <p className='fs-4'>Hello, {auth.firstName || auth.username}</p>
+               <div className='px-4 py-3 bg-danger bg-opacity-10 text-white w-25 d-flex justify-content-start align-items-center' style={{borderRadius:"5px"}}>
+                    <p className='fs-4' style={{marginBottom:'0px'}}>Hello, {auth.firstName || auth.username}</p>
                </div>
                {decoded.isAdmin === true && 
-               (<><Row className='py-5 text-white' >
-                   <Col xl={2} lg={2} md={2} sm={12} xs={12} onClick={() => {setIsRestaurant(true); setIsRider(false); setIsUser(false); setIsOrder(false);}} className='bg-success p-2 m-2 d-flex flex-column justify-content-center align-items-center' style={{borderRadius:"15px", cursor:'pointer'}}>
+               (<><Row className='py-3 text-white' >
+                   <Col xl={2} lg={2} md={2} sm={12} xs={12} onClick={() => {setIsRestaurant(true); setIsRider(false); setIsUser(false); setIsOrder(false);}} className='bg-success p-2 m-2 d-flex flex-column justify-content-center align-items-center' style={{borderRadius:"5px", cursor:'pointer' , boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px'}}>
                    <BiRestaurant className='fs-1 text-white'/>
                    <p style={{marginBottom:"0px"}}>{restaurants?.length}</p>
                    <p className=''>Restaurants</p>
                    </Col>
-                   <Col xl={2} lg={2} md={2} sm={12} xs={12} onClick={() => {setIsRestaurant(false); setIsRider(false); setIsUser(true); setIsOrder(false);}} className='bg-primary p-2 m-2 d-flex flex-column justify-content-center align-items-center' style={{borderRadius:"15px", cursor:'pointer'}}>
+                   <Col xl={2} lg={2} md={2} sm={12} xs={12} onClick={() => {setIsRestaurant(false); setIsRider(false); setIsUser(true); setIsOrder(false);}} className='bg-primary p-2 m-2 d-flex flex-column justify-content-center align-items-center' style={{borderRadius:"5px", cursor:'pointer' , boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px'}}>
                    <FiUsers className='fs-1 text-white'/>
                    <p style={{marginBottom:"0px"}}>{users.length}</p>
                    <p className=''>Users</p>
                    </Col>
-                   <Col xl={2} lg={2} md={2} sm={12} xs={12} className='bg-secondary p-2 m-2 d-flex flex-column justify-content-center align-items-center' style={{borderRadius:"15px"}}>
+                   <Col xl={2} lg={2} md={2} sm={12} xs={12} className='bg-secondary p-2 m-2 d-flex flex-column justify-content-center align-items-center' style={{borderRadius:"5px" , boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px'}}>
                    <GiCash className='fs-1 text-white'/>
                    <p style={{marginBottom:"0px"}}>PKR 0</p>
                    <p className=''>Sales</p>
                    </Col>
-                   <Col xl={2} lg={2} md={2} sm={12} xs={12} onClick={() => {setIsRestaurant(false); setIsRider(false); setIsUser(false); setIsOrder(true);}} className='bg-info p-2 m-2 d-flex flex-column justify-content-center align-items-center' style={{borderRadius:"15px", cursor:'pointer'}}>
+                   <Col xl={2} lg={2} md={2} sm={12} xs={12} onClick={() => {setIsRestaurant(false); setIsRider(false); setIsUser(false); setIsOrder(true);}} className='bg-info p-2 m-2 d-flex flex-column justify-content-center align-items-center' style={{borderRadius:"5px", cursor:'pointer' , boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px'}}>
                    <GiNotebook className='fs-2 text-white' style={{}}/>
                    <p style={{marginBottom:"0px"}}>{orders?.length}</p>
                    <p className=''>Orders</p>
                    </Col>
-                   <Col xl={2} lg={2} md={2} sm={12} xs={12} onClick={() => {setIsRestaurant(false); setIsRider(true); setIsUser(false); setIsOrder(false);}} className='bg-warning p-2 m-2 d-flex flex-column justify-content-center align-items-center' style={{borderRadius:"15px", cursor:'pointer'}}>
+                   <Col xl={2} lg={2} md={2} sm={12} xs={12} onClick={() => {setIsRestaurant(false); setIsRider(true); setIsUser(false); setIsOrder(false);}} className='bg-warning p-2 m-2 d-flex flex-column justify-content-center align-items-center' style={{borderRadius:"5px", cursor:'pointer' , boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px'}}>
                    <GiFullMotorcycleHelmet className='fs-2 text-white' style={{}}/>
                    <p style={{marginBottom:"0px"}}> {riders?.length}</p>
                    <p className=''>Riders</p>
@@ -181,7 +182,7 @@ const Account = () => {
                                 {index}
                            </td>
                            <td>
-                               {u?.products?.map((p, index)=> <div key={index}>{p} <span> , </span></div> )}
+                               {u?.products?.map((p, index)=> <div key={index}><Image src={p.image} style={{width:'40px', height:'auto'}} /> {p.name}<span className='mx-2'><b>{p.price}</b></span> {index < p.length && <span> , </span>}</div> )}
                            </td>
                            <td>
                                {u.user_id}
@@ -189,7 +190,7 @@ const Account = () => {
                            <td>
                                {u.restaurant_id}
                            </td>
-                           <td>
+                           <td className={`${u.status === 'pending' ? 'text-warning' : 'text-success'}`}>
                                {u.status}
                            </td>
                            <td>
@@ -261,13 +262,17 @@ const Account = () => {
                     </thead>
                     <tbody>
                        {allOrders[0]?.map((u, index)=> 
+                       
                        <tr>
                            <td>
                                 {index}
                            </td>
-                           <td>
-                               {u.products?.map((p, index)=> <div>{p} <span>, </span></div> )}
+                           <Link to = {`/track-order/${u._id}`} className='text-decoration-none text-dark'>
+                               <td>
+                               {u.products?.map((p, index)=> 
+                               <div><Image src={p.image} className='' style={{width:'50px', height:'auto'}} /> {p.name} <span className='fw-bold'>{p.price}</span> <span>, </span></div> )}
                            </td>
+                           </Link>
                            <td>
                                {u.total_price}
                            </td>

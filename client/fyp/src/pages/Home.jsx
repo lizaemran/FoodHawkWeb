@@ -78,7 +78,7 @@ const Home = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
    const userType = useSelector((state)=> state.auth?.user_type);
     return (
         <>
-            <Row className='' style={{backgroundColor:'#e5e5e5'}}>
+            <Row className=''>
             <Col xl={1} lg={1} md={1} sm={12} xs={12} >
             <SideNav />
             </Col>

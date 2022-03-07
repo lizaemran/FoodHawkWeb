@@ -11,7 +11,7 @@ const Nav = ({setSearch, search}) => {
     const products = useSelector((state)=> state.products);
     const [isCart, setIsCart] = useState(false);
     const token = useSelector((state)=> state.auth.token);
-    const firstName = useSelector((state) => state.auth.username);
+    const auth = useSelector((state) => state.auth);
     const [cart, setCart] = useState([]);
     useEffect(()=> {
          setCart(cartItems.map((cI)=> ( {item: products.filter((p) => cI.id === p._id), count: cI.countItems})));
@@ -73,11 +73,13 @@ const Nav = ({setSearch, search}) => {
                     </div>
                     
                     
-                    <div className='nav-date fs-5' style={{marginLeft:'10px'}}>
-                        <FaUserCircle className='fs-3' /> {firstName}
-                    </div>
+                    
                     </>
                     }
+                    {(decoded.isUser || decoded.isAdmin) && 
+                    <div className='nav-date fs-5' style={{marginLeft:'10px'}}>
+                    <FaUserCircle className='fs-3' /> {auth.firstName || auth.username}
+                    </div>}
                     </div>
         </div>
         

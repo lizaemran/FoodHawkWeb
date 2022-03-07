@@ -51,7 +51,7 @@ router.get('/riders', adminAuth, async (req,res) => {
 });
 
 router.get('/orders', adminAuth, async (req,res) => {
-    let order = await Order.find({});
+    let order = await Order.find({}).populate("products").sort({"date": -1 });
     res.send(order);
 });
 

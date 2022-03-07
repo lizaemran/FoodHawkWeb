@@ -42,12 +42,12 @@ router.get('/', userAuth, async(req, res)=> {
 });
 
 router.get('/:id/orders', userAuth, async(req, res)=> {
-    let orders = await Order.find({user_id: req.user._id});
+    let orders = await Order.find({user_id: req.user._id}).sort({"date": -1 }).populate("products");
     if (!orders) return res.status(404).send("ORDERS NOT FOUND");
     res.send(orders);
 });
 router.get('/order/:id', userAuth, async (req,res) => {
-    const order = await Order.findById({"_id":req.params.id});
+    const order = await Order.findById({"_id":req.params.id}).populate("products");
     if (!order) return res.status(404).send("ORDER NOT FOUND");
     res.send(order);
 });

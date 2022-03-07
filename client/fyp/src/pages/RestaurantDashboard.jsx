@@ -8,7 +8,8 @@ import FormPopUp from '../components/FormPopUp';
 import UpdateStatus from '../components/UpdateStatus';
 import AddProduct from '../components/AddProduct';
 import {getOrderDetailAsync} from '../redux/Slice';
-const RestaurantDashboard = () => {
+import UpdateProduct from '../components/UpdateProduct';
+const RestaurantDashboard = ({pId, setPId,isEditP, setIsEditP}) => {
     const dispatch = useDispatch();
     const [isEditStatus, setIsEditStatus] = useState(false);
     const [isAdd, setIsAdd] = useState(false);
@@ -29,28 +30,28 @@ const RestaurantDashboard = () => {
     useEffect(()=> {
         dispatch(getRestaurantDashboardAsync(username))
     }, []) //have to re-render on status change
-    useEffect(()=> {
-        for(let i = 0; i < orders?.length; i++){
-            dispatch(getOrderDetailAsync({
-                id : orders[i]
-            }));
-        }
-    }, [orders]) //have to re-render on status change
+    // useEffect(()=> {
+    //     for(let i = 0; i < orders?.length; i++){
+    //         dispatch(getOrderDetailAsync({
+    //             id : orders[i]
+    //         }));
+    //     }
+    // }, [orders]) //have to re-render on status change
     const logOut = (e) => {
         e.preventDefault();
         dispatch(logoutUser());
     }
-    const order_detail = useSelector((state) => state?.restaurants?.order_detail);
+    // const order_detail = useSelector((state) => state?.restaurants?.order_detail);
 
     return (
-        <div className='dashboard__bg' >
+        <div className='bg-dark' >
             <section>
                 <Container  className='p-3'>
                     <Row className='' style={{backgroundColor:'rgba(255, 255, 255, 0.5)', borderRadius:'20px', backdropFilter:'2px'}}>
                         <Col className='d-flex flex-column p-3 text-white'>
-                            <p className='fs-5'>Hello, {name}</p>
-                            <p>{date}</p>
-                            <p>{time}</p>
+                            <p className='fs-4'>Hello, <b>{name}</b></p>
+                            <p>Date: <b>{date}</b></p>
+                            <p>Time: <b>{time}</b></p>
                             <p>You are currently <span className='fw-bold' style={{color: status ? '#37d339' : 'red'}}>{status ? 'Active' : 'Inactive'}</span> <span className='' onClick={() => setIsEditStatus(true)} style={{fontSize:'11px', cursor:'pointer', color:'#2121d1'}}><u>Change</u></span></p>
                         </Col>
                         <Col className='d-flex justify-content-center align-items-center'>
@@ -75,6 +76,7 @@ const RestaurantDashboard = () => {
                         <Col className='d-flex justify-content-end align-items-center p-3'>
                         <p className='py-1 px-2 text-white rounded-3' onClick={() => setIsAdd(true)} style={{backgroundColor:'#ef5023', marginBottom:'0px', cursor:'pointer'}} >Add Product</p>
                         </Col>
+                       
                         <Row>
                         <Table striped bordered hover responsive>
                     <thead className='text-white' >
@@ -85,6 +87,7 @@ const RestaurantDashboard = () => {
                         <th>Price</th>
                         <th>Discount</th>
                         <th>Category</th>
+                        <th>Edit</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -94,7 +97,7 @@ const RestaurantDashboard = () => {
                                {index+1}
                            </td>
                            <td>
-                                <Image src={u?.image} className='w-25 h-auto'/>
+                                <Image src={u?.image} className='' style={{height:'70px', width:'70px'}}/>
                            </td>
                            <td className=''>
                                {u?.name}
@@ -108,6 +111,11 @@ const RestaurantDashboard = () => {
                            <td className=''>
                                {u?.category}
                            </td>
+                           <td>
+                           <Col className='d-flex justify-content-end align-items-center p-3'>
+                            <p className='py-1 px-2 text-white rounded-3' onClick={() => {setPId(u._id); setIsEditP(true);  }} style={{backgroundColor:'#ef5023', marginBottom:'0px', cursor:'pointer'}} >Edit Product</p>
+                           </Col>
+                           </td>
                        </tr>
                        )}
                     </tbody>
@@ -117,13 +125,13 @@ const RestaurantDashboard = () => {
                     </Row>
                 </Container>
                 {isAdd && <FormPopUp title="Add Product" setIsOpen={setIsAdd}><AddProduct rId={r_id}/></FormPopUp> }
-
+                {isEditP && <FormPopUp title="UpdateProduct" setIsOpen={setIsEditP}><UpdateProduct rId={r_id} pId={pId} setPId={setPId}/></FormPopUp>}
             </section>
 
             <section>
                 <Container className='p-3'>
                     <Row className='text-white p-2' style={{backgroundColor:'rgba(255, 255, 255, 0.5)', borderRadius:'20px', backdropFilter:'2px'}}>
-                        Total Sales: PKR 0
+                       <p>Total Sales: PKR <b>0</b></p> 
                     </Row>
                 </Container>
             </section>
@@ -131,7 +139,7 @@ const RestaurantDashboard = () => {
             <section>
                 <Container className='p-3'>
                     <Row className='text-white p-3' style={{backgroundColor:'rgba(255, 255, 255, 0.5)', borderRadius:'20px', backdropFilter:'2px'}}>
-                        Orders: {orders?.length}
+                        <p>Orders: <b>{orders?.length}</b> </p>
                         <Table striped bordered hover responsive>
                     <thead className='text-white' >
                         <tr>
@@ -144,15 +152,15 @@ const RestaurantDashboard = () => {
                         </tr>
                     </thead>
                     <tbody>
-                       {order_detail?.map((u, index)=> 
+                       {orders?.map((u, index)=> 
                        <tr className='text-white'>
                            <td>
                                {index+1}
                            </td>
                            <td>
-                                {u.products?.map((p, index)=> <div>{p} <span>, </span></div>)}
+                                {u.products?.map((p, index)=> <div>{p} {index > p.length && <span>, </span>}</div>)}
                            </td>
-                           <td className=''>
+                           <td className={`${u?.status === 'pending' ? 'text-warning' : 'text-danger'}`}>
                                {u?.status}
                            </td>
                            <td className=''>

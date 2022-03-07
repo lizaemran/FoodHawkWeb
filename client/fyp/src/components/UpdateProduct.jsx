@@ -1,19 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import { updateProductsAsync } from '../redux/ProductSlice';
-
-const UpdateProduct = ({pId, setPId}) => {
-    const products = useSelector((state)=> state.products);
+import { getProductsAsync, updateProductsAsync } from '../redux/ProductSlice';
+import jwt_decode from "jwt-decode";
+import { getRestaurantAsync } from '../redux/Slice';
+const UpdateProduct = ({rId, pId, setPId}) => {
+	const dispatch = useDispatch();
+	useEffect(() => {
+		dispatch(getProductsAsync({id:rId}));
+	}, []);
+	const products = useSelector((state)=> state.products);
 	const [nameValue, setNameValue] = useState('');
     const [priceValue, setPriceValue] = useState('');
     const [imageValue, setImageValue] = useState('');
     const [discountValue, setDiscountValue] = useState('');
     const [categoryValue, setCategoryValue] = useState('');
-	const dispatch = useDispatch();
+	
     let product = {}
 	useEffect(()=>{
-		product = products.filter((p) => p._id == pId);
-		product = product[0];
+		product = products.filter((p) => p._id === pId);
 		setNameValue(product.name);
         setPriceValue(product.price);
 		setImageValue(product.image);

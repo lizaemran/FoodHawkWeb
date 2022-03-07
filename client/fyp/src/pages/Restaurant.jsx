@@ -3,6 +3,7 @@ import { Breadcrumb, Button, Col, Container, Image, Row, Modal, Form, } from 're
 import {AiOutlineStar} from 'react-icons/ai';
 import {MdOutlineDirections} from 'react-icons/md';
 import {BsBookmarkPlus, BsShare} from 'react-icons/bs'
+import {ImCancelCircle} from 'react-icons/im';
 import {MdOutlineLocationOn} from 'react-icons/md';
 import SideNav from '../components/SideNav/SideNav'
 import coke from '../img/BurgerS.jpeg';
@@ -25,6 +26,7 @@ import FormSignup from './SignUp/FormSignup';
 import { addRatingAsync, getRatingAsync, getRestaurantByUsernameAsync, getRestaurantsAsync } from '../redux/Slice';
 import ReviewForm from '../components/ReviewForm';
 const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
+    const [bookingModalShow, setBookingModalShow] = useState(false);
     const [review, setReview] = useState(false);
     const [direction, setDirection] = useState(false);
     const [bookmark, setBookmark] = useState(false);
@@ -35,6 +37,7 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
     const [reviews, setReviews] = useState(false);
     const [orderOnline, setOrderOnline] = useState(false);
     const [book, setBook] = useState(false);
+    const [booking, setBooking] = useState(false);
     const token = useSelector(state => state.auth.token);
     const firstName = useSelector((state) => state.auth.username);
     const restaurant = useSelector((state) => state.restaurants.restaurant);
@@ -42,7 +45,9 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
     const user = useSelector((state) => state.auth.user);
     const noRedirection = true;
     const dispatch = useDispatch();
-
+    const selectBookingMenu = (r) => {
+        alert(r.name + ' is selected');
+    }
     const renderStars = (stars) => {
         let rating = [];
              for(let i=1; i<=5; i++){
@@ -74,6 +79,30 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
         dispatch(getRestaurantByUsernameAsync({username: location}));
         
     }, [])
+    function BookingModal(props) {
+        return (
+          <Modal
+            {...props}
+            size="lg"
+            aria-labelledby="contained-modal-title-vcenter"
+            centered
+          >
+            <Modal.Header >
+              <Modal.Title id="contained-modal-title-vcenter">
+                Please Choose Your Order
+              </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <p>
+               You have entered the details. Now its time to select your order. 
+              </p>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button style={{border: 'none', backgroundColor:'#ef5023'}} onClick={() => {setBooking(true); setBookingModalShow(false);}}>Open Menu</Button>
+            </Modal.Footer>
+          </Modal>
+        );
+      }
     const [modalShow, setModalShow] = useState(false);
     function MyVerticallyCenteredModal(props) {
         return (
@@ -264,7 +293,7 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
                    {gallery && 
                     <div className='py-3'>
                         {/* <Container> */}
-                        <p className='fs-5 poppins'>6 photos</p>
+                        <p className='fs-5 poppins'>4 photos</p>
                         <Row className='flex-wrap' style={{}}>
                         <Col xl={4} lg={4} md={6} sm={12} xs={12}>
                         <Image src={coke} className='mb-4' alt='res-img' style={{height:'300px', width:'100%', objectFit:'cover'}}/>
@@ -327,12 +356,45 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
                     </div>}
                    {(token !== null && token !== '' && book) && 
                     <div className='py-3' >
-                        <BookTableForm />
+                        {booking ? (
+                            <>
+                            <div className='d-flex justify-content-end align-items-center'>
+                             <Button onClick={() => setBooking(false)} className='w-25 h-25' style={{backgroundColor:'red',color:'white', textDecoration:'none', border:'none'}}>
+                                        <ImCancelCircle className='text-white' /> Cancel Booking
+                             </Button>
+                             </div>
+                                 <Row className='flex-wrap'> 
+                                 {restaurant?.products.map((r) =>
+                                 <Col key={r._id} xl={3} lg={4} md={3} sm={12} xs={12}>
+                                     <Col className='bg-light p-2 d-flex flex-column justify-content-between align-items-center w-100 mb-3' style={{borderRadius:'5px'}} xl={4} lg={4} md={4} sm={12} xs={12}>
+                                     <Image src={r.image} style={{height:'auto', width:'10vw', }} />
+                                     <div className='d-flex flex-column justify-content-center align-items-center'>
+                                     <p className='fs-5 fw-bold'>{r.name}</p>
+                                     <p>PKR {r.price}</p>
+                                     <p>{r.category}</p>
+                                     </div>
+                                     <Button onClick={() => selectBookingMenu(r)} className='w-100' style={{backgroundColor:'#ef5023',color:'white', textDecoration:'none', border:'none'}}>
+                                         Select
+                                     </Button>
+                                     </Col>
+                                 </Col>
+                                 )}
+                             </Row>
+                            
+                             </>
+
+                        ) : (
+                            <BookTableForm setOrderOnline={setOrderOnline} setBook={setBook} setBookingModalShow={setBookingModalShow} />
+                        )}
                    </div>}
                 </div>
                 </Col>
             </Row>
             {token === null && <Footer />}
+            <BookingModal
+                    show={bookingModalShow}
+                    onHide={() => setBookingModalShow(false)}
+                />
         </div>
     )
 }

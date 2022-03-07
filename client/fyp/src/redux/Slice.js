@@ -206,7 +206,7 @@ const Slice = createSlice({
             console.log("Fetched Restaurant By Username Successfully.");
             return {
                 ...state,
-                restaurant: action.payload.restaurant,
+                restaurant: action.payload?.restaurant,
             }
         },
         [addRestaurantsAsync.fulfilled]: (state,action) => {

@@ -1,7 +1,7 @@
 .form-pop-up{
     width: 30vw!important;
     position: fixed;
-    height: 60vh!important;
+    height: fit-content!important;
     overflow-y: hidden;
     top: 10%;
     right: 10%;
