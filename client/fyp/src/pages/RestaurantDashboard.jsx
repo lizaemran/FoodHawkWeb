@@ -124,8 +124,7 @@ const RestaurantDashboard = ({pId, setPId,isEditP, setIsEditP}) => {
 
                     </Row>
                 </Container>
-                {isAdd && <FormPopUp title="Add Product" setIsOpen={setIsAdd}><AddProduct rId={r_id}/></FormPopUp> }
-                {isEditP && <FormPopUp title="UpdateProduct" setIsOpen={setIsEditP}><UpdateProduct rId={r_id} pId={pId} setPId={setPId}/></FormPopUp>}
+               
             </section>
 
             <section>
@@ -179,7 +178,8 @@ const RestaurantDashboard = ({pId, setPId,isEditP, setIsEditP}) => {
                     </Row>
                 </Container>
             </section>
-            
+            {isAdd && <FormPopUp title="Add Product" setIsOpen={setIsAdd}><AddProduct rId={r_id}/></FormPopUp> }
+            {isEditP && <FormPopUp title="UpdateProduct" setIsOpen={setIsEditP}><UpdateProduct rId={r_id} pId={pId} setPId={setPId}/></FormPopUp>}
         </div>
     )
 }

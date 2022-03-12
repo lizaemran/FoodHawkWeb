@@ -1,4 +1,5 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
+import { toast } from 'react-toastify';
 export const getRestaurantsAsync = createAsyncThunk('restaurants/getRestaurantsAsync' , 
 async() => {
     const response = await fetch('http://localhost:7000/api/restaurant');
@@ -40,6 +41,8 @@ async(payload) => {
             name: payload.name,
             image: payload.image,
             location: payload.location,
+            lat: payload.lat,
+            lng: payload.lng,
             phone: payload.phone,
             rating: payload.rating
         })
@@ -49,6 +52,10 @@ async(payload) => {
         const restaurants = await response.json();
         window.location.href = `/restaurant/dashboard/${payload.username}`
         return {restaurants};
+    }
+    else{
+        var error = true;
+        return {error};
     }
 });
 
@@ -93,6 +100,10 @@ async(payload) => {
         const restaurants = await response.json();
         return {restaurants};
     }
+    else{
+        var error = true;
+        return {error};
+    }
 });
 export const deleteRestaurantAsync = createAsyncThunk('restaurants/deleteRestaurantAsync',
 async(payload) => {
@@ -107,6 +118,10 @@ async(payload) => {
         const restaurants = await response.json();
         return {id: payload.id};
     }
+    else{
+        var error = true;
+        return {error};
+    }
 });
 export const patchRestaurantAsync = createAsyncThunk('restaurants/patchRestaurantAsync',
 async(payload) => {
@@ -120,6 +135,10 @@ async(payload) => {
     if(response.ok){
         const restaurant = await response.json();
         return {restaurant};
+    }
+    else{
+        var error = true;
+        return {error};
     }
 });
 
@@ -136,6 +155,7 @@ async(payload) => {
         const order = await response.json();
         return {order};
     }
+    
 });
 
 
@@ -162,6 +182,10 @@ async(payload) => {
     if(response.ok){
         const restaurant = await response.json();
         return {restaurant};
+    }
+    else{
+        var error = true;
+        return {error};
     }
 });
 
@@ -214,8 +238,16 @@ const Slice = createSlice({
             state.restaurants.push(action.payload.restaurants);
         },
         [addRestaurantsByAdminAsync.fulfilled]: (state,action) => {
+            if(action?.payload?.error){
+                toast("Invalid Input", {
+                    position: "top-right",
+                    autoClose: 5000,
+                });
+            }
+            else{
             console.log("Posted restaurants successfully.");
-            state.restaurants.push(action.payload.restaurants);
+            state?.restaurants.push(action.payload?.restaurant);
+            }
         },
         [addRatingAsync.fulfilled]: (state,action) => {
             console.log("Posted rating successfully.");

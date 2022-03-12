@@ -11,15 +11,21 @@ import { getOrderAsync, getProductAsync } from '../redux/user';
 import { Col, Row , Container, Image} from 'react-bootstrap';
 import SideNav from '../components/SideNav/SideNav';
 import map from '../img/gmaps.gif';
-
+import jwt_decode from "jwt-decode";
+import { getUserAsync } from '../redux/auth';
 const TrackOrder = () => {
     const auth = useSelector((state) => state.auth);
     const dispatch = useDispatch();
     var location = useLocation();
     location = location.pathname;
+    const token = useSelector((state)=> state.auth.token);
+    var decoded = jwt_decode(token);
     const order_id = location.split('/')[2];
     useEffect(() => {
         dispatch(getOrderAsync(order_id)); 
+        if(decoded.isUser === true){
+            dispatch(getUserAsync());
+        }
         // for(let i = 0; i < order?.products?.length; i++){ 
         //     dispatch(getProductAsync(order.products[i]));
         // }

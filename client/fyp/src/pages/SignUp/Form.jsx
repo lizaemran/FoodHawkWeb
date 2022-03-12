@@ -6,11 +6,13 @@ import BurgerS from "../../img/loginpage.jpg";
 import { Col, Row, Image } from 'react-bootstrap';
 import NavBar from '../../UserSide/components/common/nav/NavBar';
 import Footer from '../../UserSide/components/common/Footer/Footer';
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const Form = () => {
 
   return (
     <>
+    <ToastContainer />
     <NavBar/>
     <Row className='bg-dark'>
       <Col xl={6} lg={6} md={6} sm={12} xs={12}>

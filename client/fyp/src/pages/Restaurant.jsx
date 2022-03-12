@@ -25,6 +25,8 @@ import { useEffect } from 'react';
 import FormSignup from './SignUp/FormSignup';
 import { addRatingAsync, getRatingAsync, getRestaurantByUsernameAsync, getRestaurantsAsync } from '../redux/Slice';
 import ReviewForm from '../components/ReviewForm';
+import GoogleMapReact from 'google-map-react';
+
 const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
     const [bookingModalShow, setBookingModalShow] = useState(false);
     const [review, setReview] = useState(false);
@@ -79,6 +81,15 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
         dispatch(getRestaurantByUsernameAsync({username: location}));
         
     }, [])
+    // const AnyReactComponent = ({ text }) => <div>{text}</div>;
+    const defaultProps = {
+        center: {
+            lat : restaurant?.lat,
+            lng : restaurant?.lng
+        },
+        zoom: 16
+      };
+
     function BookingModal(props) {
         return (
           <Modal
@@ -180,10 +191,10 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
                     <Col className='my-auto'>
                     <div className='d-flex justify-content-start align-items-center'>
                     <h4 className='my-auto text-capitalize'>{restaurant?.name}</h4>
-                    <p className='' style={{marginBottom: '0px' , fontSize:'15px'}}>
-                        {restaurant?.status ? <span className='text-white rounded-3 mx-1 px-1' style={{backgroundColor:'#25D366'}}>Open Now</span>
+                    <p className='' style={{marginBottom: '0px' , fontSize:'10px'}}>
+                        {restaurant?.status ? <span className='text-white rounded-3 mx-1 p-1' style={{backgroundColor:'#25D366'}}>Open Now</span>
                      : 
-                     <span className=' text-white rounded-3 mx-1 px-1 ' style={{backgroundColor:'#E33800'}}>Closed</span>}</p>
+                     <span className=' text-white rounded-3 mx-1 p-1 ' style={{backgroundColor:'#E33800'}}>Closed</span>}</p>
                     </div>
                     {/* <p className='' style={{margin: '0px' , fontSize:'15px'}}>Fast Food</p> */}
                     </Col>
@@ -221,20 +232,41 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
                     {/* <BsShare className='fs-5' style={{color: share ? 'white' : '#EF5023'}}/> Share */}
                     <WhatsappIcon size={32} round={true} />
                 </WhatsappShareButton>
-                <TwitterShareButton className='mb-2' url={`http://localhost:3000/restaurant/${restaurant?.username}`} hashtags={['#FoodHawk','#Food', '#OnlineOrder']} title={'Place order from your favourite restaurant! ' + restaurant?.name}>
+                <TwitterShareButton className='mb-2' url={`http://localhost:3000/restaurant/${restaurant?.username}`} hashtags={['FoodHawk','Food', 'OnlineOrder', 'BookTable']} title={'Place order from your favourite restaurant! ' + restaurant?.name}>
                     {/* <BsShare className='fs-5' style={{color: share ? 'white' : '#EF5023'}}/> Share */}
                     <TwitterIcon size={32} round={true} />
                 </TwitterShareButton>
                 </section>
-                <Row className='py-1' style={{}}>
+                <div className='position-relative '>
+                    <div className='position-absolute res__img__map__div' style={{width:'100%', height:'400px', zIndex:'-1'}}>
+
+                    </div>
+                <Row className='py-1 align-items-center px-5' style={{height:'400px'}}>
                         <Col xl={7} lg={7} md={7} sm={12} xs={12} style={{height:'fit-content'}}>
                         <Image src={coke} className='' alt='res-img' style={{height:'45vh', width:'100%', borderRadius:'10px', objectFit:'cover'}}/>
                         </Col>
-                        <Col className='bg-light p-3' xl={5} lg={5} md={5} sm={12} xs={12} style={{borderRadius:'10px', height:'fit-content'}}>
-                        <p className='' style={{margin: '0px' , fontSize:'15px'}}><MdOutlineLocationOn className='fs-4'/> {restaurant?.location}</p>
-                        <Image src={map} className='' alt='res-map' style={{height:'37.5vh', width:'100%', borderRadius:'10px', objectFit:'cover'}}/>
+                        <Col className=' p-3' xl={5} lg={5} md={5} sm={12} xs={12} style={{borderRadius:'5px', height:'fit-content', backgroundColor:'rgba(0,0,0,0.2)', backdropFilter:'blur(10px)'}}>
+                        <p className='mb-2 text-white' style={{margin: '0px' , fontSize:'15px'}}><MdOutlineLocationOn className='fs-4'/> {restaurant?.location}</p>
+                        {/* <Image src={map} className='' alt='res-map' style={{height:'37.5vh', width:'100%', borderRadius:'10px', objectFit:'cover'}}/> */}
+                        {(restaurant?.lat && restaurant?.lng) && 
+                                  <div style={{ height: '260px', width: '100%', }}>
+                                  <GoogleMapReact
+                                      bootstrapURLKeys={{ key: "AIzaSyAyt8jyJ3uk_s1p6e6qtvI50OmLq8e4z0w" }}
+                                      defaultCenter={defaultProps.center}
+                                      defaultZoom={defaultProps.zoom}
+                                  >
+                                      <MdOutlineLocationOn className='fs-4'
+                                      lat={restaurant?.lat}
+                                      lng={restaurant?.lng}
+                                      text="My Marker"
+                                      />
+                                  </GoogleMapReact>
+                                  </div>
+                        }
+              
                         </Col>
                 </Row>
+                </div>
                 <div className='d-flex res-tab-menu mt-4'>
                 <div className={!overview ? 'res-tab' : 'res-tab-active'} onClick={() => {setOverview(true); setMenu(false); setGallery(false); setReviews(false); setOrderOnline(false); setBook(false);}} style={{marginRight:'10px', cursor:'pointer'}}>
                     Overview
@@ -340,6 +372,7 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
                                         <Image src={r.image} style={{height:'auto', width:'10vw', }} />
                                         <div className='d-flex flex-column justify-content-center align-items-center'>
                                         <p className='fs-5 fw-bold'>{r.name}</p>
+                                        <p className='text-center' style={{fontSize:'11px'}}>{r?.description}</p>
                                         <p>PKR {r.price}</p>
                                         <p>{r.category}</p>
                                         </div>

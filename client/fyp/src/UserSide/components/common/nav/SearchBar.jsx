@@ -5,6 +5,10 @@ import "./SearchBar.css";
 import {useHistory} from 'react-router-dom';
 import { useEffect } from "react";
 import {BsSearch} from 'react-icons/bs';
+import * as yup from 'yup';
+import {ToastContainer, toast} from 'react-toastify';
+import { useDispatch } from 'react-redux';
+import 'react-toastify/dist/ReactToastify.css';
 function Searchbar(props) {
   const { 
     onSearch ,
@@ -18,17 +22,34 @@ function Searchbar(props) {
     setSearchText(text)
   }
   const history = useHistory();
+  let schemaSearch = yup.object().shape({
+    searchText: yup.string().required('Please enter restaurant to search'),
+  });
   const handleEnterKeyPressed = (e) => {
+  schemaSearch
+    .validate({ searchText: searchText })
+    .then(function (valid) {
     if(e.key=== 'Enter') {
       history.push(`/results/${searchText}`);
     }
+  }).catch((e) => {
+      toast.error(e.errors[0].toString());
+    });
     
   }
   const handleClicked= (e) => {
+    schemaSearch
+    .validate({ searchText: searchText })
+    .then(function (valid) {
       history.push(`/results/${searchText}`);
+    }).catch((e) => {
+      toast.error(e.errors[0].toString());
+    });
   }
 
 return (
+  <>
+    <ToastContainer />
     <div className="d-flex justify-content-center align-items-center">
         <input
           onChange={handleInput}
@@ -43,7 +64,7 @@ return (
             <BsSearch className="text-white fs-5"/>
           </Button>
       </div>
-    
+  </>
   );
 }
 

@@ -44,6 +44,14 @@ const restaurantSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    lat: {
+        type: Number,
+        required: true
+    },
+    lng: {
+        type: Number,
+        required: true
+    },
     phone: {
         type: String,
         required: true
@@ -76,6 +84,8 @@ function validateRestaurant(restaurant){
         name : Joi.string().required(),
         image : Joi.string().required(),
         location: Joi.string().required(),
+        lat: Joi.number().required(),
+        lng: Joi.number().required(),
         phone: Joi.string().required(),
         rating: Joi.required(),
     })

@@ -38,7 +38,7 @@ function App() {
         <Route path='/admin-login' component={AdminLogin} />
         <Route path='/account' component={Account}/>
         <Route exact path='/restaurant/:username' component={()=> <Restaurant pId={pId} setPId={setPId} isEditP={isEditP} setIsEditP={setIsEditP} search={search} setSearch={setSearch} />}/>
-        <Route exact path='/restaurant/register' component={RestaurantSignUp} />
+        <Route exact path='/register/restaurant' component={RestaurantSignUp} />
         <Route exact path='/login/restaurant' component={RestaurantLogin} />
         <Route exact path='/restaurant/dashboard/:username' component={() => <RestaurantDashboard pId={pId} setPId={setPId} isEditP={isEditP} setIsEditP={setIsEditP} />} />
         <Route exact path='/rider/register' component={RiderSignUp} />

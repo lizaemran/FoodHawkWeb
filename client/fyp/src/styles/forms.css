@@ -65,3 +65,21 @@
     
     
 }
+.pwd-container {
+    position: relative;
+  }
+  
+  .pwd-container input {
+    padding: 10px !important;
+    font-size: 16px!important;
+  }
+  
+  .pass-show {
+    cursor: pointer;
+    position: absolute!important;
+    width: 20px!important;
+    left: 29rem!important;
+    top: 5px!important;
+    font-size: 2rem!important;
+    color: rgb(92, 83, 83);
+  }

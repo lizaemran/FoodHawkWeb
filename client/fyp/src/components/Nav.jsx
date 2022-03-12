@@ -43,7 +43,7 @@ const Nav = ({setSearch, search}) => {
 
             {decoded.isUser === true && <>
             <div onMouseLeave={()=> setIsCart(false)} >
-            <div onMouseEnter={()=> setIsCart(true)}  className = {isCart ?  `cart-icon-activate  cart-icon nav-date`: `cart-icon nav-date`}><i className="fas fa-shopping-basket fs-2"></i>
+            <div onMouseEnter={()=> setIsCart(true)}  className = {isCart ?  `cart-icon-activate  cart-icon nav-date`: `cart-icon nav-date`}><i className="fas fa-shopping-basket fs-3"></i>
                 <div className="cart-number"><p>{total}</p></div>
                 
             </div>
@@ -77,8 +77,8 @@ const Nav = ({setSearch, search}) => {
                     </>
                     }
                     {(decoded.isUser || decoded.isAdmin) && 
-                    <div className='nav-date fs-5' style={{marginLeft:'10px'}}>
-                    <FaUserCircle className='fs-3' /> {auth.firstName || auth.username}
+                    <div className='nav-date fs-6' style={{marginLeft:'10px'}}>
+                    <FaUserCircle className='fs-4' /> {auth.firstName || auth.username}
                     </div>}
                     </div>
         </div>

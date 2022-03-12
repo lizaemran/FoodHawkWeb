@@ -29,6 +29,7 @@ const ProductPopUp = ({id, image, name, setIsPopUp, setPId, setIsEditP}) => {
                 image={product.image} 
                 name={product.name} 
                 price={product.price} 
+                description={product?.description}
                 discount={product.discount} 
                 category={product.category}
                 setPId={setPId}

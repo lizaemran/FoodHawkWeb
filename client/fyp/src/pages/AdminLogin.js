@@ -3,28 +3,43 @@ import { Container, Form, Row, Button } from 'react-bootstrap'
 import { loginAdminAsync } from '../redux/auth'
 import Footer from '../UserSide/components/common/Footer/Footer'
 import NavBar from '../UserSide/components/common/nav/NavBar'
+import * as yup from 'yup';
+import {toast} from 'react-toastify';
 import { useDispatch } from 'react-redux';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const AdminLogin = () => {
   const dispatch = useDispatch();
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
+  let schemaSignIn = yup.object().shape({
+    username: yup.string().required('Please enter username'),
+    password: yup.string().required('Please enter password').min(5).label('Password')
+  });
 	const onSubmit = (event) => {
 		event.preventDefault();
+    schemaSignIn
+    .validate({ username: userName, password: password })
+    .then(function (valid) {
 		dispatch(loginAdminAsync({
             username: userName,
             password: password,
 		}));
 		setUserName("");
         setPassword("");
+    }).catch((e) => {
+        toast.error(e.errors[0].toString());
+    });
 	};
     return (
         <>
+           <ToastContainer />
            <NavBar />
            <div className='bg-dark '>
            <Container className='p-5 d-flex justify-content-center align-items-center '>
            <Form  className='p-5 rounded-3' noValidate onSubmit={onSubmit} style={{border:'1px solid white'}}>
           <h1 className='text-white'>
-            Log In
+            Log In...
           </h1>
           <div className='d-flex flex-column'>
             <label className='text-white'>Username</label>

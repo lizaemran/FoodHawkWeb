@@ -11,7 +11,7 @@ const RestaurantSignUp = ({name, stars, desc}) => {
         <div className='restaurant__register__bg text-white  p-5' >
             <div className='restaurant__register__form__bg  d-flex flex-column justify-content-center align-items-center py-5'>
                 <h3>Restaurant</h3>
-                <h5><u>Registeration Form</u></h5>
+                <h5>Registeration...</h5>
                 <RestaurantSignUpForm />
                 <ToastContainer />
             </div>

@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import { addRestaurantsAsync, addRestaurantsByAdminAsync } from '../redux/Slice';
 import jwt_decode from "jwt-decode";
+import * as yup from 'yup';
+import {toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const AddRestaurant = () => {
 	const [nameValue, setNameValue] = useState('');
 	const [username, setUsername] = useState('');
@@ -14,8 +17,21 @@ const AddRestaurant = () => {
 	const token = useSelector((state)=> state.auth.token);
 	var decoded = jwt_decode(token);
 	const dispatch = useDispatch();
+	let schemaAddRestaurant = yup.object().shape({
+		username: yup.string().required('Please enter username'),
+		password: yup.string().required('Please enter password'),
+		email: yup.string().required('Please enter email').email(),
+        name: yup.string().required('Please enter name'),
+        image: yup.string().required('Please enter imgbb Link'),
+		location: yup.string().required('Please enter location'),
+		phone: yup.string().required('Please enter phone').matches(/^[0-9]+$/).length(11),
+		rating: yup.string().required('Please enter rating'),
+      });
 	const onSubmit = (event) => {
 		event.preventDefault();
+		schemaAddRestaurant
+		.validate({ username: username, password: password, email: email, name: nameValue, image: imageValue, location: locationValue, phone: phone, rating: ratingValue, })
+		.then(function (valid) {
 		dispatch(addRestaurantsByAdminAsync({
 			username: username,
 			password: password,
@@ -34,6 +50,9 @@ const AddRestaurant = () => {
         setImageValue("");
         setLocationValue("");
         setRatingValue("");
+		}).catch((e) => {
+		toast.error(e.errors[0].toString());
+	  });
 	};
 
 	return (

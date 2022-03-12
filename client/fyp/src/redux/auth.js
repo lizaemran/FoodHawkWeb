@@ -1,4 +1,5 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
+import { toast } from 'react-toastify';
 import { getRestaurantAsync } from './Slice';
 export const registerUserAsync = createAsyncThunk('auth/registerUserAsync',
 async(payload) => {
@@ -43,6 +44,10 @@ async(payload) => {
         // console.log(token);
         return {token};
     }
+    else{
+        var error = true;
+        return {error};
+    }
 });
 
 export const registerRiderAsync = createAsyncThunk('auth/registerRiderAsync',
@@ -83,6 +88,10 @@ async(payload) => {
         const token = await response.json();
         return {token};
     }
+    else{
+        var error = true;
+        return {error};
+    }
 });
 
 
@@ -103,6 +112,10 @@ async(payload) => {
         // console.log(token);
         return {token};
     }
+    else{
+        var error = true;
+        return {error};
+    }
 });
 
 export const loginRestaurantAsync = createAsyncThunk('auth/loginRestaurantAsync',
@@ -121,6 +134,10 @@ async(payload) => {
         const data = await response.json();
         // window.location.href = `/restaurant/dashboard/${payload.username}`
         return {data};
+    }
+    else{
+        var error = true;
+        return {error};
     }
 })
 
@@ -241,27 +258,59 @@ const AuthSlice = createSlice({
             return action.payload.rider;
         },
         [loginUserAsync.fulfilled]: (state,action) => {
-            console.log("User logged in successfully.");
-            localStorage.setItem('token', action?.payload?.token?.token);
-            // console.log(action?.payload?.token?.noRedirection);
-            if(!action?.payload?.token?.noRedirection){
-                window.location.href = '/dashboard';
+            if(action?.payload?.error){
+                toast("Invalid username or password", {
+                    position: "top-right",
+                    autoClose: 5000,
+                });
             }
+            else{
+                console.log("User logged in successfully.");
+                localStorage.setItem('token', action?.payload?.token?.token);
+                console.log(action?.payload?.token?.noRedirection);
+                if(!action?.payload?.token?.noRedirection){
+                    window.location.href = '/dashboard';
+                }
+            }
+        
             return{...state, registered: false,  token : action?.payload?.token?.token}
         },
         [loginRiderAsync.fulfilled]: (state,action) => {
+            if(action?.payload?.error){
+                toast("Invalid username or password", {
+                    position: "top-right",
+                    autoClose: 5000,
+                });
+            }
+            else{
             console.log("Rider logged in successfully.");
             localStorage.setItem('token', action?.payload?.token?.token)
             window.location.href = '/rider/dashboard';
             return{...state, token : action?.payload?.token?.token}
+            }
         },
         [loginAdminAsync.fulfilled]: (state,action) => {
+            if(action?.payload?.error){
+                toast("Invalid username or password", {
+                    position: "top-right",
+                    autoClose: 5000,
+                });
+            }
+            else{
             console.log("Admin logged in successfully.");
             localStorage.setItem('token', action?.payload?.token?.token)
             window.location.href = '/dashboard';
+            }
             return{...state, token : action?.payload?.token?.token}
         },
         [loginRestaurantAsync.fulfilled]: (state,action) => {
+            if(action?.payload?.error){
+                toast("Invalid username or password", {
+                    position: "top-right",
+                    autoClose: 5000,
+                });
+            }
+            else{
             console.log("Restaurant logged in successfully.");
             localStorage.setItem('token', action?.payload?.data?.token)
             window.location.href = `/restaurant/dashboard/${action.payload?.data?.restaurant?.username}`
@@ -278,6 +327,7 @@ const AuthSlice = createSlice({
                 status: action?.payload?.data?.restaurant?.status,
                 user_type: 'Restaurant'
             }
+        }
         },
         [getRestaurantDashboardAsync.fulfilled]: (state, action) => {
             console.log("Got Restaurant successfully.");

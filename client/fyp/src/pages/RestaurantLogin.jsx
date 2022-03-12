@@ -7,13 +7,14 @@ import RestaurantLoginForm from '../components/RestaurantLoginForm';
 const RestaurantLogin = () => {
     return (
         <div>
+        <ToastContainer />
         <NavBar />
         <div className='restaurant__register__bg text-white p-5' >
             <div className='restaurant__register__form__bg  d-flex flex-column justify-content-center align-items-center py-5'>
                 <h3>Restaurant</h3>
-                <h5><u>Login Form</u></h5>
+                <h5>Login...</h5>
                 <RestaurantLoginForm />
-                <ToastContainer />
+                
             </div>
         </div>
         <Footer />

@@ -7,13 +7,14 @@ import RiderSignUpForm from '../components/RiderSignUpForm';
 const RiderSignUp = ({}) => {
     return ( 
     <div>
+         <ToastContainer />
         <NavBar />
         <div className='rider__register__bg text-white  p-5' >
             <div className='restaurant__register__form__bg  d-flex flex-column justify-content-center align-items-center py-5'>
                 <h3>Rider</h3>
-                <h5><u>Registeration Form</u></h5>
+                <h5>Registeration...</h5>
                 <RiderSignUpForm />
-                <ToastContainer />
+               
             </div>
         </div>
         <Footer />

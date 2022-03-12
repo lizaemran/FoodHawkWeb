@@ -20,9 +20,8 @@ import { getUserAsync, getAdminAsync } from '../redux/auth';
 import jwt_decode from "jwt-decode";
 import Cart from './Cart';
 import CartHome from '../components/CartHome';
-// import { Swiper, SwiperSlide } from "swiper/react";
-// import 'swiper/swiper-bundle.min.css'
-// import 'swiper/swiper.min.css'
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const Home = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
     const {cartItems, total} = useSelector((state)=> state.cart);
     const cart = useSelector((state)=> state.cart);
@@ -70,7 +69,7 @@ const Home = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
         if(search!== null && search.length > 1 && search !== ''){
         setSearched(restaurants.filter((r)=> r.name.toLowerCase().includes(search.toLowerCase())));
     }
-    else{
+    else if(search === ''){
         setSearched(restaurants);
     }
     },[search.length > 1])
@@ -78,6 +77,7 @@ const Home = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
    const userType = useSelector((state)=> state.auth?.user_type);
     return (
         <>
+        <ToastContainer />
             <Row className=''>
             <Col xl={1} lg={1} md={1} sm={12} xs={12} >
             <SideNav />
@@ -92,7 +92,7 @@ const Home = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
             <Container  className="home-container">
             <Row>
             {/* <Swiper className="mySwiper " slidesPerView={3} spaceBetween={10}  breakpoints = {{ 300 : {slidesPerView : 1} ,499 : {slidesPerView : 1} , 800 : {slidesPerView : 2}, 1024: {slidesPerView : 3}}}> */}
-           {!searched ?  <>
+           {searched !== '' ?  <>
            {restaurants?.map((restaurant) => (
                 <div key={restaurant._id}>
                 {/* <SwiperSlide  style={{width: "426px", height:"410px"}}> */}

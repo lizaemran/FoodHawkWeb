@@ -20,6 +20,7 @@ async(payload) => {
             name: payload.name,
             price: payload.price,
             image: payload.image,
+            description: payload.description,
             discount: payload.discount,
             category: payload.category
         })
@@ -42,6 +43,7 @@ async(payload) => {
             name: payload.name,
             price: payload.price,
             image: payload.image,
+            description: payload.description,
             discount: payload.discount,
             category: payload.category
         })
@@ -75,6 +77,7 @@ const ProductSlice = createSlice({
             name:"Value Bucket", 
             price:"1250", 
             image:"https://i.ibb.co/g6PDrG5/kfc.jpg", 
+            description:"The Value Bucket is a classic burger with a double patty, a double cheese, and a double pickle. It is topped with lettuce, tomato, onion, and pickles.",
             discount:0, 
             category:"Fast Food"
         }

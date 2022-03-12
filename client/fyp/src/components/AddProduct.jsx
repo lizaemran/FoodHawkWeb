@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import { addProductsAsync } from '../redux/ProductSlice';
 import { getRestaurantsAsync } from '../redux/Slice';
-
+import * as yup from 'yup';
+import {toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const AddProduct = ({rId}) => {
 	useEffect(() => {
 		dispatch(getRestaurantsAsync());
@@ -11,30 +13,45 @@ const AddProduct = ({rId}) => {
 	const [nameValue, setNameValue] = useState('');
     const [priceValue, setPriceValue] = useState('');
     const [imageValue, setImageValue] = useState('');
+	const [descriptionValue, setDescriptionValue] = useState('');
     const [discountValue, setDiscountValue] = useState('');
     const [categoryValue, setCategoryValue] = useState('Fast Food');
 	const dispatch = useDispatch();
+	let schemaAddProduct = yup.object().shape({
+        name: yup.string().required('Please enter name').matches(/^[a-zA-Z]+$/),
+        price: yup.string().required('Please enter price').label('Price'),
+        image: yup.string().required('Please enter imgbb Link'),
+        discount: yup.string().required(),
+      });
     let restaurant = {}
 	useEffect(()=>{
 		restaurant = restaurants?.filter((r) => r._id === rId);
 		restaurant = restaurant[0];
-		setImageValue(restaurant.image);
+		setImageValue(restaurant?.image);
 	},[restaurants]);
 	const onSubmit = (event) => {
 		event.preventDefault();
+		schemaAddProduct
+		.validate({ name: nameValue, price: priceValue, image: imageValue, discount: discountValue, })
+		.then(function (valid) {
 		dispatch(addProductsAsync({
             id: rId,
             name: nameValue,
             price: priceValue,
             image: imageValue,
+			description: descriptionValue,
             discount: discountValue,
             category: categoryValue,
 		}));
 		setNameValue("");
         setPriceValue("");
         setImageValue("");
+		setDescriptionValue("");
         setDiscountValue("");
         setCategoryValue("");
+		}).catch((e) => {
+		toast.error(e.errors[0].toString());
+	  });
 	};
 
 	return (
@@ -66,6 +83,14 @@ const AddProduct = ({rId}) => {
 				placeholder='Add Image...'
 				value={imageValue}
 				onChange={(event) => setImageValue(event.target.value)}
+			></input>
+			<label className='sr-only'>Description</label>
+			<input
+				type='text'
+				className='form-control mb-2 mr-sm-2'
+				placeholder='Add Description...'
+				value={descriptionValue}
+				onChange={(event) => setDescriptionValue(event.target.value)}
 			></input>
             <label className='sr-only'>Discount</label>
 			<input

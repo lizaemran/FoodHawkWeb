@@ -1,6 +1,9 @@
 import React, {useState} from 'react';
 import './Form.css';
 import {useDispatch, useSelector} from 'react-redux';
+import * as yup from 'yup';
+import {toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { Button, Container, Form } from 'react-bootstrap';
 import { registerUserAsync } from '../../redux/auth';
 
@@ -14,8 +17,20 @@ const FormSignup = ({noRedirection, setModalShowLogin, setModalShowSignUp}) => {
   const [address, setAddress] = useState('');
   const token = useSelector((state) => state.auth.token);
   const dispatch = useDispatch();
+  let schemaSignIn = yup.object().shape({
+    username: yup.string().required('Please enter username'),
+    firstName: yup.string().required('Please enter first name'),
+    lastName: yup.string().required('Please enter last name'),
+    email: yup.string().required().email().label('Email'),
+    password: yup.string().required('Please enter password').min(5).label('Password'),
+    contact: yup.string().required('Please enter contact number').matches(/^[0-9]+$/).length(11),
+    address: yup.string().required('Please enter address'),
+  });
 	const onSubmit = (event) => {
 		event.preventDefault();
+    schemaSignIn
+    .validate({ username: userName, password: password, firstName: firstName, lastName: lastName, email: email, contact: contact, address: address })
+    .then(function (valid) {
 		dispatch(registerUserAsync({
             username: userName,
             firstname: firstName,
@@ -32,12 +47,15 @@ const FormSignup = ({noRedirection, setModalShowLogin, setModalShowSignUp}) => {
         setPassword("");
         setContact("");
         setAddress("");
+      }).catch((e) => {
+        toast.error(e.errors[0].toString());
+      });
 	};
   return (
     <Container className='p-5 '>
       <Form  className='' noValidate onSubmit={onSubmit}>
         <h3 className='text-white'>
-          Create Account
+          Register...
         </h3>
         <div className='d-flex flex-column'>
           <label className='text-white' style={{fontSize:'14px'}}>Username</label>

@@ -1,6 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const {Restaurant, validateRR} = require('../models/restaurants');
+const {Restaurant, validateR} = require('../models/restaurants');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const restaurantAuth = require('../middleware/restaurantAuth');
@@ -45,6 +45,8 @@ router.post('/', async(req,res) => {
         name : req.body.name,
         image: req.body.image,
         location: req.body.location,
+        lat: req.body.lat,
+        lng: req.body.lng,
         phone: req.body.phone,
         rating: req.body.rating,
         status: false

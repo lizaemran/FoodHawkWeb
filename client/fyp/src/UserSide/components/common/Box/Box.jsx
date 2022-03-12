@@ -27,7 +27,7 @@ function Box() {
               </Col>
               <Col  className='d-flex justify-content-center align-items-end'>
               <Button className="position-absolute shadow-lg" style={{borderRadius:"50%", backgroundColor:"#ef5023", border:"none", height:"60px", width:"60px", bottom:"0px", zIndex:"3"}}>
-                <AiOutlineArrowDown   onClick={() => { scrollDown();}}  style={{ transitionDelay: "3s", cursor: "pointer"  }} className='down text-white' style={{fontSize:"2rem"}}/>
+                <AiOutlineArrowDown   onClick={() => { scrollDown();}}  className='down text-white' style={{fontSize:"2rem",  transitionDelay: "3s", cursor: "pointer" }}/>
               </Button></Col>
               <Col  className='d-flex justify-content-end align-items-end'>
                 {/* <Image className='w-75 h-auto' src={burger} alt="burger"/> */}

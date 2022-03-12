@@ -1,10 +1,12 @@
-import React, {useState} from 'react';
-import { Form } from 'react-bootstrap';
+import React, {useState, useEffect} from 'react';
+import { Form, Button } from 'react-bootstrap';
 import * as yup from 'yup';
 import {toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {useDispatch} from 'react-redux';
 import { addRestaurantsAsync } from '../redux/Slice';
+import {MdOutlineLocationOn} from 'react-icons/md';
+import GoogleMapReact from 'google-map-react';
 const RestaurantSignUpForm = () => {
     const dispatch = useDispatch();
     const [username, setUserName] = useState('');
@@ -13,6 +15,8 @@ const RestaurantSignUpForm = () => {
     const [name, setName] = useState('');
     const [image, setImage] = useState('');
     const [location, setLocation] = useState('');
+    const [latValue, setLatValue] = useState('');
+    const [lngValue, setLngValue] = useState('');
     const [phone, setPhone] = useState('');
     const [rating, setRating] = useState(0);
     let schemaSignUpP = yup.object().shape({
@@ -37,7 +41,9 @@ const RestaurantSignUpForm = () => {
                     image: image,
                     location: location,
                     phone: phone,
-                    rating: rating
+                    rating: rating,
+                    lat: latValue,
+                    lng: lngValue,
                 }));
                 setUserName("");
                 setPasswordd("");
@@ -50,7 +56,32 @@ const RestaurantSignUpForm = () => {
               toast.error(e.errors[0].toString());
             });
       }
+  
+      useEffect(() => {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          setLocation(position.coords.latitude + "," + position.coords.longitude);
+          setLatValue(position.coords.latitude);
+          setLngValue(position.coords.longitude);
+        });
+      }, [])
+      const defaultProps = {
+        center: {
+          lat: latValue,
+          lng: lngValue
+        },
+        zoom: 17
+      };
+      const getAddress = async() => {
+        const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${latValue},${lngValue}&key=AIzaSyAyt8jyJ3uk_s1p6e6qtvI50OmLq8e4z0w`, {
+        method: "GET",
+    });
 
+    if(response.ok){
+        const address = await response.json();
+        setLocation(address.results[0].formatted_address);
+      
+    }
+      }
     return (
         <div>
             <Form className='d-flex flex-column'>
@@ -96,10 +127,29 @@ const RestaurantSignUpForm = () => {
                 <Form.Control type='text' 
                  required
                  value={location}
-                 placeholder="abc"
+                 placeholder="Select Location from map"
                  onChange={(e) => setLocation(e.target.value)}
                  style={{border:'none', borderRadius:'5px'}}/>
                 </Form.Label>
+                {(latValue && lngValue) && 
+                  <div style={{ height: '45vh', width: '100%' }}>
+                  <GoogleMapReact
+                    bootstrapURLKeys={{ key: "AIzaSyAyt8jyJ3uk_s1p6e6qtvI50OmLq8e4z0w" }}
+                    defaultCenter={defaultProps.center}
+                    defaultZoom={defaultProps.zoom}
+                    onBoundsChange={(center, zoom) => {setLatValue(center[0]); setLngValue(center[1]); setLocation(center[0] + "," + center[1])}}
+                  >
+                    <MdOutlineLocationOn className='fs-3'
+                      lat={latValue}
+                      lng={lngValue}
+                      text="My Marker"
+                    />
+                  </GoogleMapReact>
+                  </div>
+                  }
+                <Button className='btn' type="submit" onClick={getAddress}>
+                    Set Location
+                </Button>
                 <Form.Label className='pt-1'>Phone Number*
                 <Form.Control type='text' 
                  required
