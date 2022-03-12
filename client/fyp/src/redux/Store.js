@@ -5,6 +5,7 @@ import cartReducer from './CartSlice';
 import authReducer from './auth';
 import adminReducer from './admin';
 import userReducer from './user';
+import riderReducer from './rider';
 export default configureStore({
     reducer: {
         restaurants: restaurantReducer,
@@ -13,6 +14,6 @@ export default configureStore({
         auth: authReducer,
         admin: adminReducer,
         user: userReducer,
-        // rider: riderReducer,
+        rider: riderReducer,
     },
 })

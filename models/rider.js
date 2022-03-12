@@ -22,6 +22,18 @@ const riderSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    status: {
+        type: String,
+        default: "available"
+    },
+    lat: {
+        type: Number,
+        required: true
+    },
+    lng: {
+        type: Number,
+        required: true
+    },
 })
 riderSchema.methods.generateAuthToken = function(){
     const token = jwt.sign({_id: this._id, isRider: true},"key");
@@ -34,6 +46,8 @@ function validateRider(rider){
         email: Joi.string().min(5).max(255).required().email(),
         name : Joi.string().required(),
         phone: Joi.string().required(),
+        lat: Joi.number().required(),
+        lng: Joi.number().required(),
     })
 
     return schema.validate(rider);

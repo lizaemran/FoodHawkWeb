@@ -8,6 +8,7 @@
     "@material-ui/icons": "^4.11.2",
     "@react-icons/all-files": "^4.1.0",
     "@syncfusion/ej2-react-calendars": "^19.3.46",
+    "axios": "^0.26.1",
     "bcrypt": "^5.0.1",
     "calender": "^1.0.3",
     "cors": "^2.8.5",

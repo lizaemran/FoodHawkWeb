@@ -20,6 +20,7 @@ const CartHome = () => {
             <Row className='py-5'>
                 <h5 className='fw-bold text-capitalize'>{firstname}</h5>
                 <h6>Cart Summary</h6>
+                <h6>{cartItems.length} Item{cartItems.length > 1  && 's' }</h6>
                 <Col className='py-5' style={{paddingLeft:'0px'}}>
                 {cartItems !== undefined && cartItems.map((c) => 
                             <div className="cart-menu">
@@ -27,7 +28,7 @@ const CartHome = () => {
                                 <p className='fs-6 my-auto'>{c.name}</p>
                                 <p className='fs-6 my-auto'>x{c.countItems}</p>
                                 <p className='fs-6 px-1 fw-bold my-auto'>{c.price}</p>
-                                <span onClick={()=> handleDeleted(c.id) } style={{color:"#ef5023"}}><i className="fas fa-times"></i></span>
+                                <span onClick={()=> handleDeleted(c.id) } style={{color:"#ef5023", cursor:'pointer'}}><i className="fas fa-times"></i></span>
                             </div>
                         )
                 }
@@ -35,8 +36,8 @@ const CartHome = () => {
                 </Col>
                 <hr />
                 <div>
-                    Your Delivery Address
-                    <p><MdOutlineLocationOn className='fs-5' style={{color:"#ef5023"}}/>{address}</p>
+                    <span>Your Delivery Address</span>
+                    <p><MdOutlineLocationOn className='fs-5' style={{color:"#ef5023"}}/><span style={{fontSize:'12px'}} >{address}</span></p>
                 </div>
                 <Link to='/Cart'><Button className='mx-5' style={{background:"#ef5023", border:"none", outline:"none"}}>Go To Cart</Button></Link>
             </Row>

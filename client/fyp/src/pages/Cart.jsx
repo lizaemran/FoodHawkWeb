@@ -58,6 +58,7 @@ const Cart = ({search, setSearch}) => {
           time: time,
 
       }));
+      
   }
     return (
         <div>

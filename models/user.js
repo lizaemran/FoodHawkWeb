@@ -31,6 +31,14 @@ const userSchema = new mongoose.Schema({
         required: true
         
     }, 
+    lat: {
+        type: Number,
+        required: true
+    },
+    lng: {
+        type: Number,
+        required: true
+    },
     orders: [
         {
             type: mongoose.Schema.Types.ObjectId,
@@ -61,7 +69,9 @@ function validateUser(user){
         password: Joi.string().min(5).max(1024).required(),
         email: Joi.string().min(5).max(255).required().email(),
         contact: Joi.string().required(),
-        address: Joi.string().required()
+        address: Joi.string().required(),
+        lat: Joi.number().required(),
+        lng: Joi.number().required(),
     })
 
     return schema.validate(user);

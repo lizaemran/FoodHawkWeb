@@ -108,9 +108,9 @@
     background-color: #f21818!important;
 }
 #status-toggle{
-    font-size: 2rem!important;
+    font-size: 1rem!important;
 }
 .toggle-status{
-    font-size: 2rem!important;
-    margin: 20% 30%;
+    font-size: 1.2rem!important;
+    /* margin: 20% 30%; */
 }

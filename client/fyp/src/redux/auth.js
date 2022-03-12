@@ -16,6 +16,9 @@ async(payload) => {
             password: payload.password,
             contact: payload.contact,
             address: payload.address,
+            lat: payload.lat,
+            lng: payload.lng,
+
         })
     });
 
@@ -23,6 +26,10 @@ async(payload) => {
         const user = await response.json();
         // console.log(user.token);
         return {user};
+    }
+    else{
+        var error = true;
+        return {error};
     }
 });
 
@@ -240,6 +247,13 @@ const AuthSlice = createSlice({
     },
     extraReducers: {
         [registerUserAsync.fulfilled]: (state,action) => {
+            if(action?.payload?.error){
+                toast("Invalid username or password", {
+                    position: "top-right",
+                    autoClose: 5000,
+                });
+            }
+            else{
             console.log("User registered successfully. Sign In to continue");
             return {
                 ...state,
@@ -250,7 +264,10 @@ const AuthSlice = createSlice({
                 email: action.payload.user.email,
                 contact: action.payload.user.contact,
                 address: action.payload.user.address,
+                lat : action.payload.user.lat,
+                lng : action.payload.user.lng,
             };
+        }
         },
         [registerRiderAsync.fulfilled]: (state,action) => {
             console.log("Rider registered successfully.");

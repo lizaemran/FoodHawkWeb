@@ -13,6 +13,7 @@ import SideNav from '../components/SideNav/SideNav';
 import map from '../img/gmaps.gif';
 import jwt_decode from "jwt-decode";
 import { getUserAsync } from '../redux/auth';
+import { getRiderAssign } from '../redux/rider';
 const TrackOrder = () => {
     const auth = useSelector((state) => state.auth);
     const dispatch = useDispatch();
@@ -25,10 +26,11 @@ const TrackOrder = () => {
         dispatch(getOrderAsync(order_id)); 
         if(decoded.isUser === true){
             dispatch(getUserAsync());
+            dispatch(getRiderAssign({
+                id: order_id,
+            }));
         }
-        // for(let i = 0; i < order?.products?.length; i++){ 
-        //     dispatch(getProductAsync(order.products[i]));
-        // }
+
     }, [])
     // useEffect(() => {
     //     for(let i = 0; i < order?.products?.length; i++){ 

@@ -28,6 +28,8 @@ router.post('/', async(req,res) => {
         password: pass,
         contact: req.body.contact,
         address: req.body.address,
+        lat: req.body.lat,
+        lng: req.body.lng,
     }); 
     await user.save();
     const token = user.generateAuthToken();

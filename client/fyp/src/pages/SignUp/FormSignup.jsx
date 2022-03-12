@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import './Form.css';
 import {useDispatch, useSelector} from 'react-redux';
 import * as yup from 'yup';
@@ -6,7 +6,8 @@ import {toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Button, Container, Form } from 'react-bootstrap';
 import { registerUserAsync } from '../../redux/auth';
-
+import {MdOutlineLocationOn} from 'react-icons/md';
+import GoogleMapReact from 'google-map-react';
 const FormSignup = ({noRedirection, setModalShowLogin, setModalShowSignUp}) => {
   const [userName, setUserName] = useState('');
   const [firstName, setFirstName] = useState('');
@@ -14,7 +15,9 @@ const FormSignup = ({noRedirection, setModalShowLogin, setModalShowSignUp}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [contact, setContact] = useState('');
-  const [address, setAddress] = useState('');
+  const [location, setLocation] = useState('');
+  const [latValue, setLatValue] = useState('');
+  const [lngValue, setLngValue] = useState('');
   const token = useSelector((state) => state.auth.token);
   const dispatch = useDispatch();
   let schemaSignIn = yup.object().shape({
@@ -29,7 +32,7 @@ const FormSignup = ({noRedirection, setModalShowLogin, setModalShowSignUp}) => {
 	const onSubmit = (event) => {
 		event.preventDefault();
     schemaSignIn
-    .validate({ username: userName, password: password, firstName: firstName, lastName: lastName, email: email, contact: contact, address: address })
+    .validate({ username: userName, password: password, firstName: firstName, lastName: lastName, email: email, contact: contact, address: location })
     .then(function (valid) {
 		dispatch(registerUserAsync({
             username: userName,
@@ -38,7 +41,9 @@ const FormSignup = ({noRedirection, setModalShowLogin, setModalShowSignUp}) => {
             email: email,
             password: password,
             contact: contact,
-            address: address
+            address: location,
+            lat: latValue,
+            lng: lngValue,
 		}));
 		    setUserName("");
         setFirstName("");
@@ -46,14 +51,40 @@ const FormSignup = ({noRedirection, setModalShowLogin, setModalShowSignUp}) => {
         setEmail("");
         setPassword("");
         setContact("");
-        setAddress("");
+        setLocation("");
       }).catch((e) => {
         toast.error(e.errors[0].toString());
       });
 	};
+    
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition(function(position) {
+      setLocation(position.coords.latitude + "," + position.coords.longitude);
+      setLatValue(position.coords.latitude);
+      setLngValue(position.coords.longitude);
+    });
+  }, [])
+  const defaultProps = {
+    center: {
+      lat: latValue,
+      lng: lngValue
+    },
+    zoom: 16
+  };
+  const getAddress = async() => {
+    const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${latValue},${lngValue}&key=AIzaSyAyt8jyJ3uk_s1p6e6qtvI50OmLq8e4z0w`, {
+    method: "GET",
+});
+
+if(response.ok){
+    const address = await response.json();
+    setLocation(address.results[0].formatted_address);
+  
+}
+  }
   return (
     <Container className='p-5 '>
-      <Form  className='' noValidate onSubmit={onSubmit}>
+      <Form  className='' noValidate >
         <h3 className='text-white'>
           Register...
         </h3>
@@ -145,13 +176,33 @@ const FormSignup = ({noRedirection, setModalShowLogin, setModalShowSignUp}) => {
             type='text'
             name='address'
             style={{fontSize:'14px'}}
-            placeholder='Enter Address'
-            value={address}
-            onChange={(event) => setAddress(event.target.value)}
+            placeholder='Select from map'
+            value={location}
+            onChange={(event) => setLocation(event.target.value)}
           />
         </div>
-        
-        <Button type="submit" className='py-2 my-2 px-5 fs-6 form-btn' style={{background:"#EF5023", border:"none"}}>
+        <div className='d-flex flex-column'>
+        {(latValue && lngValue) && 
+                  <div style={{ height: '35vh', width: '75%' }}>
+                  <GoogleMapReact
+                    bootstrapURLKeys={{ key: "AIzaSyAyt8jyJ3uk_s1p6e6qtvI50OmLq8e4z0w" }}
+                    defaultCenter={defaultProps.center}
+                    defaultZoom={defaultProps.zoom}
+                    onBoundsChange={(center, zoom) => {setLatValue(center[0]); setLngValue(center[1]); setLocation(center[0] + "," + center[1])}}
+                  >
+                    <MdOutlineLocationOn className='fs-3'
+                      lat={latValue}
+                      lng={lngValue}
+                      text="My Marker"
+                    />
+                  </GoogleMapReact>
+                  </div>
+                  }
+                <Button className='btn w-75'  onClick={getAddress}>
+                    Set Location
+                </Button>
+          </div>
+        <Button type="submit" onClick={onSubmit} className='py-2 my-2 px-5 fs-6 form-btn' style={{background:"#EF5023", border:"none"}}>
           Sign up
         </Button>
         {noRedirection ? (
