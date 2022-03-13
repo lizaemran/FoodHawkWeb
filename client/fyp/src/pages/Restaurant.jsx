@@ -38,6 +38,8 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
     const [gallery, setGallery] = useState(false);
     const [reviews, setReviews] = useState(false);
     const [orderOnline, setOrderOnline] = useState(false);
+    const [latValue, setLatValue] = useState('');
+    const [lngValue, setLngValue] = useState('');
     const [book, setBook] = useState(false);
     const [booking, setBooking] = useState(false);
     const token = useSelector(state => state.auth.token);
@@ -79,7 +81,10 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
     useEffect(() => {
         dispatch(getRestaurantsAsync());
         dispatch(getRestaurantByUsernameAsync({username: location}));
-        
+        navigator.geolocation.getCurrentPosition(function(position) {
+            setLatValue(position.coords.latitude);
+            setLngValue(position.coords.longitude);
+          });
     }, [])
     // const AnyReactComponent = ({ text }) => <div>{text}</div>;
     const defaultProps = {
@@ -221,9 +226,11 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
                     onHide={() => setModalShowLogin(false)}
                 />
                 }
+                <a href={`https://www.google.com/maps/dir/?api=1&origin=${latValue},${lngValue}&destination=${restaurant?.lat},${restaurant?.lng}&travelmode=driving`} target='_blank' rel="noopener noreferrer" className=''>
                 <Button className={!direction ? 'res-but' : 'res-but-active'} onClick={()=> {setReview(false); setDirection(true); setBookmark(false); setShare(false);}} style={{marginRight:'10px'}}>
                     <MdOutlineDirections className='fs-5' style={{color: direction ? 'white' : '#EF5023'}} /> Direction
                 </Button>
+                </a>
                 {/* <p>{user?.allOrders[0].filter((o) => o?.restaurant_id === restaurant?._id) && 'plllll'}</p> */}
                 {/* <Button className={!bookmark ? 'res-but' : 'res-but-active'} onClick={()=> {setReview(false); setDirection(false); setBookmark(true); setShare(false);}} style={{marginRight:'10px'}}>
                     <BsBookmarkPlus className='fs-5' style={{color: bookmark ? 'white' : '#EF5023'}}/> Bookmark

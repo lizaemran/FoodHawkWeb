@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import { patchRestaurantAsync} from '../redux/Slice';
+import { getRestaurantsAsync, patchRestaurantAsync} from '../redux/Slice';
 const UpdateStatus = ({rId, status}) => {
+	useEffect(() => {
+		dispatch(getRestaurantsAsync());
+	}, []);
 	const restaurants = useSelector((state)=> state.restaurants.restaurants);
     const [imageValue, setImageValue] = useState('');
 	const[statusValue, setStatusValue] = useState(status);
@@ -23,12 +26,11 @@ const UpdateStatus = ({rId, status}) => {
 	};
 
 	return (
-<>		
-		<div className="form-image">
+<div className='d-flex '>		
+		<div className="form-image p-3">
 			<img src={imageValue} alt="restaurant-image"/>
 		</div>
-		<form onClick={(e) => {e.stopPropagation()}}  className='form-inline mt-3 mb-3'>
-			<label className='sr-only'>Status</label>
+		<form onClick={(e) => {e.stopPropagation()}}  className='d-flex justify-content-center align-items-center mx-auto'>
             <div class="form-check form-switch toggle-status">
 			<input
 				type='checkbox'
@@ -38,12 +40,11 @@ const UpdateStatus = ({rId, status}) => {
 				onChange={(e)=> {onSubmit(e.target.checked)} }
 			>
             </input>
-			<h1>{restaurant.status}</h1>
-            <label id="status-toggle" class="form-check-label" for="flexSwitchCheckDefault">Status</label>
+			<h6 className='mt-1'>{restaurant.status ? 'Open' : 'Closed'} </h6>
             </div>
             <br />
 		</form>
-        </>
+        </div>
 	);
 };
 

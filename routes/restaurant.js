@@ -92,6 +92,43 @@ router.get('/order/:id', restaurantAuth, async (req,res) => {
     if (!order) return res.status(404).send("ORDER NOT FOUND");
     res.send(order);
 });
+router.get('/search/:keyword', async (req,res) => {
+    let restaurants = await Restaurant.find({}).populate("products").populate("ratingArray");
+    let resultRestaurants = restaurants.filter(restaurant => {
+        return restaurant.name.toLowerCase().includes(req.params.keyword.toLowerCase());
+    });
+    // filter restaurants whose products name contains the keyword
+    let resultProducts = restaurants.filter(restaurant => {
+        return restaurant.products.filter(product => {
+            return product.name.toLowerCase().includes(req.params.keyword.toLowerCase());
+        }).length > 0;
+    });
+    
+    let result = resultRestaurants.concat(resultProducts);
+    //sort by restaurant name
+    result.sort((a,b) => {
+        if(a.rating > b.rating) return -1;
+        if(a.rating < b.rating) return 1;
+        return 0;
+    });
+
+    // const regex = new RegExp(req.params.keyword, 'i');
+    //  restaurants = await Restaurant.find({name: regex}).sort({"rating": -1 });
+    // if (!restaurants) return res.status(404).send("RESTAURANT NOT FOUND");
+    res.send(result);
+});
+
+router.get('/top/5', async (req,res) => {
+    let restaurants = await Restaurant.find({}).populate("products").populate("ratingArray");
+    let resultRestaurants = restaurants.filter(restaurant => {
+        return restaurant.orders.length > 0;
+    });
+    let result = resultRestaurants.sort(function(a, b){
+        return b.orders.length - a.orders.length;
+    });
+    res.send(result.slice(0,5));
+});
+
 
 
 module.exports = router;

@@ -37,6 +37,11 @@ router.get('/', riderAuth, async(req, res)=> {
     if (!rider) return res.status(404).send("RIDER NOT FOUND");
     res.send(rider);
 });
+router.get('/:id', async(req, res)=> {
+    let rider = await Rider.findOne({_id: req.params.id});
+    if (!rider) return res.status(404).send("RIDER NOT FOUND");
+    res.send(rider);
+});
 router.get('/:id/order', riderAuth, async(req, res)=> {
     let rider = await Rider.findById({"_id":req.params.id,  });
     if (!rider) return res.status(404).send("RIDER NOT FOUND");
@@ -69,6 +74,42 @@ router.get('/:id/order', riderAuth, async(req, res)=> {
         date : order.date,
         time : order.time,
     });
+});
+router.get('/:id/order/delivered', riderAuth, async(req, res)=> {
+    let rider = await Rider.findById({"_id":req.params.id,  });
+    if (!rider) return res.status(404).send("RIDER NOT FOUND");
+    let order = await Order.find({"rider_id":req.params.id}).populate("restaurant_id").populate("rider_id").populate("products").populate("user_id");
+    order = order.filter(order => order.status === "delivered");
+    if (order.length === 0) return res.status(404).send("ORDER NOT FOUND");
+    let respondOrders = [];
+    for(let i = 0; i < order.length; i++){
+        respondOrders.push({
+            products : order[i].products, 
+            restaurant: {
+                _id : order[i].restaurant_id._id,
+                name : order[i].restaurant_id.name,
+                lat : order[i].restaurant_id.lat,
+                lng : order[i].restaurant_id.lng,
+                location : order[i].restaurant_id.location,
+                image : order[i].restaurant_id.image,
+                phone: order[i].restaurant_id.phone,
+            },
+            user: {
+                _id : order[i].user_id._id,
+                name : order[i].user_id.firstname + " " + order[i].user_id.lastname,
+                contact : order[i].user_id.contact,
+                address : order[i].user_id.address,
+                lat : order[i].user_id.lat,
+                lng : order[i].user_id.lng,
+            },
+            id : order[i]._id,
+            total_price : order[i].total_price,
+            status : order[i].status,
+            date : order[i].date,
+            time : order[i].time,
+        }
+        )}
+    res.send(respondOrders);
 });
 router.patch('/location/:id', riderAuth, async(req, res)=> {
     let rider = await Rider.findOne({_id: req.params.id});

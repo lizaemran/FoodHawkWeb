@@ -198,6 +198,23 @@ async(payload) => {
     }
 });
 
+export const getSearchResultsAsync = createAsyncThunk('restaurants/getSearchAsync' , 
+async(payload) => {
+    const response = await fetch(`http://localhost:7000/api/restaurant/search/${payload.keyword}`);
+    if(response.ok){
+        const searchResults = await response.json();
+        return {searchResults};
+    }
+});
+export const getTop5RestaurantsAsync = createAsyncThunk('restaurants/getTop5RestaurantsAsync' , 
+async(payload) => {
+    const response = await fetch('http://localhost:7000/api/restaurant/top/5');
+    if(response.ok){
+        const top5Restaurants = await response.json();
+        return {top5Restaurants};
+    }
+});
+
 const Slice = createSlice({
     name: "restaurants",
     initialState:
@@ -273,6 +290,14 @@ const Slice = createSlice({
         [getOrderDetailAsync.fulfilled]: (state, action) => {
             console.log("Fetched Order Detail Successfully.");
             state.order_detail.push(action.payload.order);
+        },
+        [getSearchResultsAsync.fulfilled]: (state, action) => {
+            console.log("Fetched Search Results Successfully.");
+            state.searchResults = action.payload.searchResults;
+        },
+        [getTop5RestaurantsAsync.fulfilled]: (state, action) => {
+            console.log("Fetched Top 5 Restaurants Successfully.");
+            state.top5Restaurants = action.payload.top5Restaurants;
         },
     },
 });

@@ -28,12 +28,12 @@ const UpdateProduct = ({rId, pId, setPId}) => {
 	useEffect(()=>{
 		product = products.filter((p) => p._id === pId);
 		product = product[0];
-		setNameValue(product.name);
-        setPriceValue(product.price);
-		setImageValue(product.image);
+		setNameValue(product?.name);
+        setPriceValue(product?.price);
+		setImageValue(product?.image);
 		setDescriptionValue(product?.description);
-		setDiscountValue(product.discount);
-		setCategoryValue(product.category);
+		setDiscountValue(product?.discount);
+		setCategoryValue(product?.category);
 	},[products]);
 	const onSubmit = (event) => {
 		event.preventDefault();

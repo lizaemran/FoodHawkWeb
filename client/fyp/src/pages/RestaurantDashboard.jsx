@@ -8,6 +8,7 @@ import FormPopUp from '../components/FormPopUp';
 import UpdateStatus from '../components/UpdateStatus';
 import AddProduct from '../components/AddProduct';
 import {getOrderDetailAsync} from '../redux/Slice';
+import {AiOutlineEdit} from 'react-icons/ai';
 import UpdateProduct from '../components/UpdateProduct';
 const RestaurantDashboard = ({pId, setPId,isEditP, setIsEditP}) => {
     const dispatch = useDispatch();
@@ -44,15 +45,15 @@ const RestaurantDashboard = ({pId, setPId,isEditP, setIsEditP}) => {
     // const order_detail = useSelector((state) => state?.restaurants?.order_detail);
 
     return (
-        <div className='bg-dark' >
+        <div className='bg-secondary' >
             <section>
                 <Container  className='p-3'>
-                    <Row className='' style={{backgroundColor:'rgba(255, 255, 255, 0.5)', borderRadius:'20px', backdropFilter:'2px'}}>
+                    <Row className='' style={{backgroundColor:'rgba(0, 0, 0, 0.5)', borderRadius:'20px', backdropFilter:'blur(20px)'}}>
                         <Col className='d-flex flex-column p-3 text-white'>
                             <p className='fs-4'>Hello, <b>{name}</b></p>
                             <p>Date: <b>{date}</b></p>
                             <p>Time: <b>{time}</b></p>
-                            <p>You are currently <span className='fw-bold' style={{color: status ? '#37d339' : 'red'}}>{status ? 'Active' : 'Inactive'}</span> <span className='' onClick={() => setIsEditStatus(true)} style={{fontSize:'11px', cursor:'pointer', color:'#2121d1'}}><u>Change</u></span></p>
+                            <p>You are currently <span className='fw-bold' style={{color: status ? '#37d339' : 'red'}}>{status ? 'Active' : 'Inactive'}</span> <span className='' onClick={() => setIsEditStatus(true)} style={{fontSize:'11px', cursor:'pointer', color:'#2121d1'}}><AiOutlineEdit className='text-white fs-6' /></span></p>
                         </Col>
                         <Col className='d-flex justify-content-center align-items-center'>
                         <Image src={img} className='w-25 h-auto'/>
@@ -69,7 +70,7 @@ const RestaurantDashboard = ({pId, setPId,isEditP, setIsEditP}) => {
 
             <section>
                 <Container className='p-3'>
-                    <Row className='text-white' style={{backgroundColor:'rgba(255, 255, 255, 0.5)', borderRadius:'20px', backdropFilter:'2px'}}>
+                    <Row className='text-white' style={{backgroundColor:'rgba(0, 0, 0, 0.5)', borderRadius:'20px', backdropFilter:'blur(2px)'}}>
                         <Col>
                             <p className='pt-3'>Products : <span className='fw-bold'>{products?.length}</span></p>
                         </Col>
@@ -112,7 +113,7 @@ const RestaurantDashboard = ({pId, setPId,isEditP, setIsEditP}) => {
                                {u?.category}
                            </td>
                            <td>
-                           <Col className='d-flex justify-content-end align-items-center p-3'>
+                           <Col className='d-flex justify-content-center align-items-center p-3'>
                             <p className='py-1 px-2 text-white rounded-3' onClick={() => {setPId(u._id); setIsEditP(true);  }} style={{backgroundColor:'#ef5023', marginBottom:'0px', cursor:'pointer'}} >Edit Product</p>
                            </Col>
                            </td>
@@ -129,15 +130,7 @@ const RestaurantDashboard = ({pId, setPId,isEditP, setIsEditP}) => {
 
             <section>
                 <Container className='p-3'>
-                    <Row className='text-white p-2' style={{backgroundColor:'rgba(255, 255, 255, 0.5)', borderRadius:'20px', backdropFilter:'2px'}}>
-                       <p>Total Sales: PKR <b>0</b></p> 
-                    </Row>
-                </Container>
-            </section>
-
-            <section>
-                <Container className='p-3'>
-                    <Row className='text-white p-3' style={{backgroundColor:'rgba(255, 255, 255, 0.5)', borderRadius:'20px', backdropFilter:'2px'}}>
+                    <Row className='text-white p-3' style={{backgroundColor:'rgba(0, 0, 0, 0.5)', borderRadius:'20px', backdropFilter:'blur(20px)'}}>
                         <p>Orders: <b>{orders?.length}</b> </p>
                         <Table striped bordered hover responsive>
                     <thead className='text-white' >
@@ -159,7 +152,7 @@ const RestaurantDashboard = ({pId, setPId,isEditP, setIsEditP}) => {
                            <td>
                                 {u.products?.map((p, index)=> <div>{p} {index > p.length && <span>, </span>}</div>)}
                            </td>
-                           <td className={`${u?.status === 'pending' ? 'text-warning' : 'text-danger'}`}>
+                           <td className={`${u?.status === 'pending' ? 'text-warning' : 'text-success'}`}>
                                {u?.status}
                            </td>
                            <td className=''>
@@ -175,6 +168,11 @@ const RestaurantDashboard = ({pId, setPId,isEditP, setIsEditP}) => {
                        )}
                     </tbody>
                     </Table>
+                    <p className='text-white'>Total Sales: <b>PKR {orders?.reduce((acc, cur) => { 
+                        if(cur.status === 'delivered') 
+                        return(acc + cur.total_price)
+                        else
+                        return (acc)}, 0)}</b></p>
                     </Row>
                 </Container>
             </section>

@@ -14,7 +14,7 @@ import Footer from '../UserSide/components/common/Footer/Footer';
 import Box from '../UserSide/components/common/Box/Box';
 import Promo from '../UserSide/components/common/Promo/Promo';
 import Feedback from '../UserSide/components/common/CustomerFeedback/Feedback';
-import { getRestaurantsAsync } from '../redux/Slice';
+import { getRestaurantsAsync, getTop5RestaurantsAsync } from '../redux/Slice';
 const MainPage = () => {
   //   const [ordered, setOrdered] = useState(false);
 
@@ -28,14 +28,33 @@ const MainPage = () => {
   const dispatch = useDispatch();
   useEffect(()=> {
 		dispatch(getRestaurantsAsync());
+    dispatch(getTop5RestaurantsAsync());
 	},[]);
   const restaurants = useSelector((state)=> state.restaurants?.restaurants);
+  const top5Restaurants = useSelector((state)=> state.restaurants?.top5Restaurants);
     return (
       <div className='bg-light'>
          <Box/> 
         <Container className='pt-5 pb-5'> 
             {/* <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#000000" fill-opacity="1" d="M0,32L120,74.7C240,117,480,203,720,197.3C960,192,1200,96,1320,48L1440,0L1440,0L1320,0C1200,0,960,0,720,0C480,0,240,0,120,0L0,0Z"></path></svg> */}
           <Row > <h3 className='text-center fw-bold pt-3'>Popular Restaurants Today</h3></Row>
+          <Row><p className='text-center text-muted pb-5 fs-6'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt<br /> ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud</p></Row>
+               {/* {ordered && <Confirmation toggle={setOrdered} />}  */}
+                  <Row style={{margin:"0px", height:"fit-content"}}  >
+                  <Swiper className="mySwiper " slidesPerView={3} spaceBetween={10}  breakpoints = {{ 300 : {slidesPerView : 1} ,499 : {slidesPerView : 1} , 800 : {slidesPerView : 2}, 1024: {slidesPerView : 3}}}>
+                    { top5Restaurants?.map(data => (
+                     <SwiperSlide  style={{width: "426px", height:"350px"}}>
+                       
+                          <PCard key={`${data.id}`} data={data} stars={data.rating} />
+                      
+                        </SwiperSlide>
+                        )) }
+        </Swiper>
+                       </Row>  
+          </Container>
+          <Container className='pt-5 pb-5'> 
+            {/* <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#000000" fill-opacity="1" d="M0,32L120,74.7C240,117,480,203,720,197.3C960,192,1200,96,1320,48L1440,0L1440,0L1320,0C1200,0,960,0,720,0C480,0,240,0,120,0L0,0Z"></path></svg> */}
+          <Row > <h3 className='text-center fw-bold pt-3'>All Restaurants</h3></Row>
           <Row><p className='text-center text-muted pb-5 fs-6'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt<br /> ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud</p></Row>
                {/* {ordered && <Confirmation toggle={setOrdered} />}  */}
                   <Row style={{margin:"0px", height:"fit-content"}}  >

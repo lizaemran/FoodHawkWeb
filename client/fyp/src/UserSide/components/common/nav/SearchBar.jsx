@@ -23,7 +23,7 @@ function Searchbar(props) {
   }
   const history = useHistory();
   let schemaSearch = yup.object().shape({
-    searchText: yup.string().required('Please enter restaurant to search'),
+    // searchText: yup.string().required('Please enter restaurant to search'),
   });
   const handleEnterKeyPressed = (e) => {
   schemaSearch

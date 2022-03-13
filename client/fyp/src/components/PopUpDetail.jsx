@@ -81,9 +81,9 @@ const PopUpDetail = ({id, image, name, price, description, discount, category, r
                     <div id="rating">
                       <p className="price">PKR{price}</p>
                     </div>
-                    {userType === 'admin' && <div id="close" onClick={handleDeletedClick}><i class="fas fa-times"></i></div>}
-                    <p class="description">
-                    {description && <span>Description: {description || ''}</span>}
+                    {userType === 'admin' && <div id="close" onClick={handleDeletedClick}><i className="fas fa-times"></i></div>}
+                    <p className="description">
+                    {description && (<><span>Description: {description || ''}</span><br /></>)}
                     Discount: {discount}<br />
                     Category: {category}
                     </p>

@@ -124,3 +124,14 @@ color: black!important;
     background-color: #f1c1b4a2;
     filter: blur(2.5px);
  }
+ .rotation {
+  animation: spin 1s linear infinite;
+ }
+ @keyframes spin {
+  from {
+      transform:rotate(0deg);
+  }
+  to {
+      transform:rotate(360deg);
+  }
+}

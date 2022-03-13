@@ -4,10 +4,10 @@
     left:0;
     background-color: rgba(0, 0, 0, 0.541);
     width: 100vw;
-    height: fit-content;
-    backdrop-filter: blur(10px);
+    min-height: 100vh;
+    backdrop-filter: blur(20px);
     z-index: 50;
-    overflow-y: scroll;
+    overflow-y: scroll!important;
     padding-top: 5vh;
 }
 .popup-inner{
