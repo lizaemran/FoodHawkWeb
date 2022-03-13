@@ -267,12 +267,10 @@ const Account = () => {
                            <td>
                                 {index}
                            </td>
-                           <Link to = {`/track-order/${u._id}`} className='text-decoration-none text-dark'>
                                <td>
                                {u.products?.map((p, index)=> 
                                <div><Image src={p.image} className='' style={{width:'50px', height:'auto'}} /> {p.name} <span className='fw-bold'>{p.price}</span> <span>, </span></div> )}
                            </td>
-                           </Link>
                            <td>
                                {u.total_price}
                            </td>
