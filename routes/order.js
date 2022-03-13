@@ -33,7 +33,7 @@ router.get('/assign/:id', async(req,res) => {
     if (!order) return res.status(404).send("ORDER NOT FOUND");
     let restaurant = await Restaurant.findById({_id:order.restaurant_id});
     let riders = await Rider.find({status: "available"});
-    if (!riders) return res.status(404).send("NO RIDER AVAILABLE");
+    if (riders.length === 0) return res.status(404).send("NO RIDER AVAILABLE");
     let riderWithDistance = [];
       for(let i=0; i<riders.length; i++)
     {
@@ -43,10 +43,10 @@ router.get('/assign/:id', async(req,res) => {
     }).catch(err => {
         console.log(err);
     });
-}   
+}
     let minDistance = Math.min(...riderWithDistance.map(o => o.distance));
     let assignedrider = riderWithDistance.find(o => o.distance === minDistance);
-    order.rider_id = assignedrider.rider._id;
+    order.rider_id = assignedrider?.rider._id;
     let riderUpdate = await Rider.findById({_id:assignedrider.rider._id});
     riderUpdate.status = "busy";
     await riderUpdate.save();
