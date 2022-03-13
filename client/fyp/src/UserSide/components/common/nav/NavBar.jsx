@@ -17,7 +17,9 @@ const NavBar = () => {
         <Navbar.Toggle aria-controls="navbarScroll" className='' />
         <nav className="mr-auto"  navbarScroll>
         <Navbar.Collapse id="navbarScroll">
-          {location !== '' && <div className='' style={{marginRight:'50px'}}><SearchBar inNav={true} /></div>}
+          {location !== '' && <div className='' style={{marginRight:'50px'}}>
+            <SearchBar inNav={true} />
+          </div>}
             <Link to="#" className="fw-bold text-muted " >
             <Button variant="" className="NavBtn text-white ">About Us</Button>
             </Link>
@@ -25,7 +27,7 @@ const NavBar = () => {
             <Button variant="" className="NavBtn text-white">Booking</Button>
             </Link>
             <Link to="#" className="fw-bold text-muted">
-            <Button variant="" className="NavBtn text-white">Get App</Button>
+            <Button variant="" className="NavBtn text-white">Contact Us</Button>
             </Link>
             <Link to="/SignUp">
               <Button variant="" className="NavBtn text-white">Register</Button>
