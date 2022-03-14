@@ -14,26 +14,22 @@ function Box() {
     });
   };
     return (
-        <div className='curve shadow-lg' style={{backgroundColor:"black"}}>
+        <div className='curve shadow-lg'>
           <NavBar />
-        <Container className="p-5 mainbox d-flex flex-column justify-content-center align-items-center text-white">
+        <div className=" mainbox d-flex flex-column justify-content-center align-items-center text-white" style={{backgroundColor:'rgba(0,0,0,0.5)', backdropFilter : 'blur(5px)',  }}>
           <h1 className="fw-bold text-center">Special Food Every Time</h1>
           <h1 className="fw-bold text-center">For You!</h1>
-           <p className='text-muted text-center fs-5' >Are you hungry because you're home now? Don't worry, <br /> now you can order food via your cellphone!</p>
+           <p className='text-white text-center fs-6' >Are you hungry because you're home now? Don't worry, <br /> now you can order food via your cellphone!</p>
            <SearchBar />
-           <Row>
-              <Col  className='d-flex justify-content-start align-items-end'>
-                {/* <Image className='w-75 h-auto'  src={burger} alt="burger" style={{transform:"scaleX(-1)"}}/>          */}
-              </Col>
+           {/* <Row className='position-relative'>
               <Col  className='d-flex justify-content-center align-items-end'>
-              <Button className="position-absolute shadow-lg" style={{borderRadius:"50%", backgroundColor:"#ef5023", border:"none", height:"60px", width:"60px", bottom:"0px", zIndex:"3"}}>
-                <AiOutlineArrowDown   onClick={() => { scrollDown();}}  className='down text-white' style={{fontSize:"2rem",  transitionDelay: "3s", cursor: "pointer" }}/>
-              </Button></Col>
-              <Col  className='d-flex justify-content-end align-items-end'>
-                {/* <Image className='w-75 h-auto' src={burger} alt="burger"/> */}
+              <Button className="position-absolute shadow-lg d-flex justify-content-center align-items-center" style={{borderRadius:"50%", backgroundColor:"#ef5023", border:"none", height:"30px", width:"30px", top:"90px"}}>
+                <AiOutlineArrowDown   onClick={() => { scrollDown();}}  className='down text-white ' style={{fontSize:"2rem",  transitionDelay: "3s", cursor: "pointer" }}/>
+              </Button>
               </Col>
-          </Row>
-          </Container> 
+            
+          </Row> */}
+          </div> 
         </div>
           )
 }

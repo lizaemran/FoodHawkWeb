@@ -23,6 +23,19 @@ const RiderDashboard = () => {
     useEffect(() => {
         dispatch(getRiderAsync());
         if(rider?.id){
+            navigator.geolocation.getCurrentPosition(function(position) {
+                setLocation(position.coords.latitude + "," + position.coords.longitude);
+                setLat(position.coords.latitude);
+                setLng(position.coords.longitude);
+                dispatch(patchRiderLocationAsync({
+                    lat: position.coords.latitude ,
+                    lng: position.coords.longitude,
+                    id: rider?.id
+                }));
+            });
+            dispatch(getAssignedOrder({
+                id: rider?.id
+            }));
             setInterval(() => {
                 navigator.geolocation.getCurrentPosition(function(position) {
                     setLocation(position.coords.latitude + "," + position.coords.longitude);

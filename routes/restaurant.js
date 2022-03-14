@@ -103,8 +103,14 @@ router.get('/search/:keyword', async (req,res) => {
             return product.name.toLowerCase().includes(req.params.keyword.toLowerCase());
         }).length > 0;
     });
-    
-    let result = resultRestaurants.concat(resultProducts);
+    //filter restaurants whose products category contains the keyword
+    let resultCategories = restaurants.filter(restaurant => {
+        return restaurant.products.filter(product => {
+            return product.category.toLowerCase().includes(req.params.keyword.toLowerCase());
+        }).length > 0;
+    });
+
+    let result = resultRestaurants.concat(resultProducts).concat(resultCategories);
     //sort by restaurant name
     result.sort((a,b) => {
         if(a.rating > b.rating) return -1;

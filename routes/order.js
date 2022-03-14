@@ -31,6 +31,7 @@ router.post('/:r_id/:u_id', async(req,res) => {
 router.get('/assign/:id', async(req,res) => {
     let order = await Order.findById({_id:req.params.id});
     if (!order) return res.status(404).send("ORDER NOT FOUND");
+    if (order.rider_id) return res.status(400).send("ORDER ALREADY ASSIGNED");
     let restaurant = await Restaurant.findById({_id:order.restaurant_id});
     let riders = await Rider.find({status: "available"});
     if (riders.length === 0) return res.status(404).send("NO RIDER AVAILABLE");
@@ -46,12 +47,15 @@ router.get('/assign/:id', async(req,res) => {
 }
     let minDistance = Math.min(...riderWithDistance.map(o => o.distance));
     let assignedrider = riderWithDistance.find(o => o.distance === minDistance);
+    console.log("assignedrider",assignedrider)
     order.rider_id = assignedrider?.rider._id;
+    console.log("order.rider_id",order.rider_id);
     let riderUpdate = await Rider.findById({_id:assignedrider.rider._id});
     riderUpdate.status = "busy";
+    console.log("riderUpdatedtobusy",riderUpdate);
     await riderUpdate.save();
     await order.save();
-    res.send(assignedrider);
+    res.send(riderUpdate);
 });
 router.delete('/:id', async(req, res) => {
     const order = await Order. findByIdAndDelete(req.params.id);
@@ -64,6 +68,7 @@ router.patch('/status/:id', riderAuth, async(req, res)=> {
     if(req.body.status === "delivered"){
         let rider = await Rider.findById({_id:order.rider_id});
         rider.status = "available";
+        console.log("rider status update to available",rider.status);
         await rider.save();
     }
     order.status = req.body.status;

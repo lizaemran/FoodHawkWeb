@@ -135,3 +135,33 @@ color: black!important;
       transform:rotate(360deg);
   }
 }
+#spoon{
+  animation: spoonAnim 3s ease-in-out infinite;
+
+}
+@keyframes spoonAnim {
+  0% {
+      transform:translateX(0%) rotate(0deg) ;
+  }
+  50% {
+      transform:translateX(30%) rotate(7.5deg);
+  }
+  100% {
+      transform:translateX(0%) rotate(0deg);
+  }
+}
+#fork{
+  animation: forkAnim 3s ease-in-out infinite;
+
+}
+@keyframes forkAnim {
+  0% {
+      transform:translateX(0%) translateY(0%) rotate(0deg) ;
+  }
+  50% {
+      transform:translateX(-30%) translateY(22.5%) rotate(-7.5deg);
+  }
+  100% {
+      transform:translateX(0%) translateY(0%) rotate(0deg);
+  }
+}

@@ -23,6 +23,7 @@ const Account = () => {
     const [isUser, setIsUser] = useState(false);
     const [isRider, setIsRider] = useState(false);
     const [isOrder, setIsOrder] = useState(false);
+    const [isSales, setIsSales] = useState(false);
     const dispatch = useDispatch();
     var decoded = jwt_decode(token);
     useEffect(() => {
@@ -58,22 +59,26 @@ const Account = () => {
                    <p style={{marginBottom:"0px"}}>{restaurants?.length}</p>
                    <p className=''>Restaurants</p>
                    </Col>
-                   <Col xl={2} lg={2} md={2} sm={12} xs={12} onClick={() => {setIsRestaurant(false); setIsRider(false); setIsUser(true); setIsOrder(false);}} className='bg-primary p-2 m-2 d-flex flex-column justify-content-center align-items-center' style={{borderRadius:"5px", cursor:'pointer' , boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px'}}>
+                   <Col xl={2} lg={2} md={2} sm={12} xs={12} onClick={() => {setIsRestaurant(false); setIsRider(false); setIsUser(true); setIsOrder(false); setIsSales(false);}} className='bg-primary p-2 m-2 d-flex flex-column justify-content-center align-items-center' style={{borderRadius:"5px", cursor:'pointer' , boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px'}}>
                    <FiUsers className='fs-1 text-white'/>
                    <p style={{marginBottom:"0px"}}>{users.length}</p>
                    <p className=''>Users</p>
                    </Col>
-                   <Col xl={2} lg={2} md={2} sm={12} xs={12} className='bg-secondary p-2 m-2 d-flex flex-column justify-content-center align-items-center' style={{borderRadius:"5px" , boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px'}}>
+                   <Col xl={2} lg={2} md={2} sm={12} xs={12} onClick={() => {setIsRestaurant(false); setIsRider(false); setIsUser(false); setIsOrder(false); setIsSales(true);}} className='bg-secondary p-2 m-2 d-flex flex-column justify-content-center align-items-center' style={{borderRadius:"5px" , cursor:'pointer' , boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px'}}>
                    <GiCash className='fs-1 text-white'/>
-                   <p style={{marginBottom:"0px"}}>PKR 0</p>
+                   <p style={{marginBottom:"0px"}}>PKR {orders?.reduce((acc, cur) => { 
+                        if(cur.status === 'delivered') 
+                        return(acc + cur.total_price)
+                        else
+                        return (acc)}, 0)}</p>
                    <p className=''>Sales</p>
                    </Col>
-                   <Col xl={2} lg={2} md={2} sm={12} xs={12} onClick={() => {setIsRestaurant(false); setIsRider(false); setIsUser(false); setIsOrder(true);}} className='bg-info p-2 m-2 d-flex flex-column justify-content-center align-items-center' style={{borderRadius:"5px", cursor:'pointer' , boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px'}}>
+                   <Col xl={2} lg={2} md={2} sm={12} xs={12} onClick={() => {setIsRestaurant(false); setIsRider(false); setIsUser(false); setIsOrder(true); setIsSales(false);}} className='bg-info p-2 m-2 d-flex flex-column justify-content-center align-items-center' style={{borderRadius:"5px", cursor:'pointer' , boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px'}}>
                    <GiNotebook className='fs-2 text-white' style={{}}/>
                    <p style={{marginBottom:"0px"}}>{orders?.length}</p>
                    <p className=''>Orders</p>
                    </Col>
-                   <Col xl={2} lg={2} md={2} sm={12} xs={12} onClick={() => {setIsRestaurant(false); setIsRider(true); setIsUser(false); setIsOrder(false);}} className='bg-warning p-2 m-2 d-flex flex-column justify-content-center align-items-center' style={{borderRadius:"5px", cursor:'pointer' , boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px'}}>
+                   <Col xl={2} lg={2} md={2} sm={12} xs={12} onClick={() => {setIsRestaurant(false); setIsRider(true); setIsUser(false); setIsOrder(false); setIsSales(false);}} className='bg-warning p-2 m-2 d-flex flex-column justify-content-center align-items-center' style={{borderRadius:"5px", cursor:'pointer' , boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px'}}>
                    <GiFullMotorcycleHelmet className='fs-2 text-white' style={{}}/>
                    <p style={{marginBottom:"0px"}}> {riders?.length}</p>
                    <p className=''>Riders</p>
@@ -161,6 +166,13 @@ const Account = () => {
                    </Col>
                    )}
                </Row>
+               {isSales && (<div>
+                     <p>Total Revenue: PKR <b>{orders?.reduce((acc, cur) => { 
+                        if(cur.status === 'delivered') 
+                        return(acc + cur.total_price)
+                        else
+                        return (acc)}, 0)}</b></p>
+               </div>)}
                {isOrder && (
                    <Col>
                    <Table striped bordered hover responsive>
@@ -267,7 +279,7 @@ const Account = () => {
                            <td>
                                 {index + 1}
                            </td>
-                           {u.status === 'pending' ? (
+                           {(u.status === 'pending' || u.status === 'picked') ? (
                                 <Link to = {`/track-order/${u._id}`} className='text-decoration-none text-dark'>
                                 <td>
                                 {u.products?.map((p, index)=> 

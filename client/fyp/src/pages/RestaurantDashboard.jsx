@@ -10,6 +10,8 @@ import AddProduct from '../components/AddProduct';
 import {getOrderDetailAsync} from '../redux/Slice';
 import {AiOutlineEdit} from 'react-icons/ai';
 import UpdateProduct from '../components/UpdateProduct';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const RestaurantDashboard = ({pId, setPId,isEditP, setIsEditP}) => {
     const dispatch = useDispatch();
     const [isEditStatus, setIsEditStatus] = useState(false);
@@ -46,6 +48,7 @@ const RestaurantDashboard = ({pId, setPId,isEditP, setIsEditP}) => {
 
     return (
         <div className='bg-secondary' >
+            <ToastContainer />
             <section>
                 <Container  className='p-3'>
                     <Row className='' style={{backgroundColor:'rgba(0, 0, 0, 0.5)', borderRadius:'20px', backdropFilter:'blur(20px)'}}>

@@ -18,7 +18,7 @@ const AddProduct = ({rId}) => {
     const [categoryValue, setCategoryValue] = useState('Fast Food');
 	const dispatch = useDispatch();
 	let schemaAddProduct = yup.object().shape({
-        name: yup.string().required('Please enter name').matches(/^[a-zA-Z]+$/),
+        name: yup.string().required('Please enter name').matches(/^[a-zA-Z\s]+$/),
         price: yup.string().required('Please enter price').label('Price'),
         image: yup.string().required('Please enter imgbb Link'),
         discount: yup.string().required(),

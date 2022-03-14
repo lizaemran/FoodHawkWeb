@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import Footer from '../UserSide/components/common/Footer/Footer';
 import NavBar from '../UserSide/components/common/nav/NavBar';
 import { ToastContainer, toast } from 'react-toastify';
@@ -12,14 +12,21 @@ import { useLocation } from 'react-router-dom';
 import { getOrderAsync, getProductAsync } from '../redux/user';
 import { Col, Row , Container, Image} from 'react-bootstrap';
 import SideNav from '../components/SideNav/SideNav';
-import map from '../img/gmaps.gif';
+import cooking from '../img/cooking.svg';
+import ontheway from '../img/ontheway.svg';
+import delivered from '../img/delivered.svg';
 import { Swiper, SwiperSlide } from "swiper/react";
+// import fitBound from 'google-map-react/utils/fit-bound';
 import 'swiper/swiper-bundle.min.css'
 import 'swiper/swiper.min.css'
 import jwt_decode from "jwt-decode";
 import { getUserAsync } from '../redux/auth';
 import { getRiderAssign, getRiderByIdAsync } from '../redux/rider';
+import {getRestaurantAsync} from '../redux/Slice';
 import Carousel from 'react-bootstrap/Carousel';
+import Cooking from '../components/Cooking';
+import GoogleMapReact from 'google-map-react';
+import {MdOutlineLocationOn} from 'react-icons/md';
 const TrackOrder = () => {
     const auth = useSelector((state) => state.auth);
     const dispatch = useDispatch();
@@ -28,32 +35,77 @@ const TrackOrder = () => {
     const token = useSelector((state)=> state.auth.token);
     var decoded = jwt_decode(token);
     const order_id = location.split('/')[2];
+    const [latValue, setLatValue] = useState('');
+    const [lngValue, setLngValue] = useState('');
+    const rider = useSelector((state) => {if(state.rider?.assignedRider) { return  state.rider?.assignedRider} else { return state.rider?.rider}});
+    const restaurant = useSelector((state) => state.restaurants?.restaurant);
     useEffect(() => {
         dispatch(getOrderAsync(order_id)); 
         if(decoded.isUser === true){
             dispatch(getUserAsync());
-          
         }
-
-    }, [])
-    // useEffect(() => {
-    //     for(let i = 0; i < order?.products?.length; i++){ 
-    //         dispatch(getProductAsync(order.products[i]));
-    //     }
-    // }, [order])
-    const order = useSelector((state) => state.user.order);
-
-    useEffect(() => {
-        if(order.rider_id === null || order.rider_id === undefined){
-        dispatch(getRiderAssign({
+          dispatch(getRiderAssign({
             id: order_id,
-        }));
-    }
-    else{
+        }));  
+        
+       
+    }, [])
+    const order = useSelector((state) => state.user.order);
+    // const assignedRider = useSelector((state) => state.rider?.assignedRider);
+    useEffect(() => {
+        if(order?.rider_id && order?.restaurant_id){
         dispatch(getRiderByIdAsync({id: order?.rider_id}));
-    }
+        dispatch(getRestaurantAsync({
+          id : order?.restaurant_id
+      })); 
+        }
+ 
+    navigator.geolocation.getCurrentPosition(function(position) {
+        setLatValue(position.coords.latitude);
+        setLngValue(position.coords.longitude);
+      });
     }, [order])
-    const rider = useSelector((state) => state.rider?.rider);
+    
+    const defaultProps = {        
+        center: {
+            lat : (restaurant?.lat + latValue)/2,
+            lng : (restaurant?.lng + lngValue)/2
+        },
+
+        zoom : 16
+        
+      };
+      var points = [
+        {lat : restaurant?.lat, lng : restaurant?.lng},
+        {lat : latValue, lng : lngValue},
+        {lat : rider?.lat, lng : rider?.lng},
+
+      ]
+      const getMapBounds = (map, maps, points) => {
+        const bounds = new maps.LatLngBounds();
+        points.forEach((point) => {
+          bounds.extend(new maps.LatLng(
+            point.lat,
+            point.lng,
+          ));
+        });
+        return bounds;
+      };
+      const bindResizeListener = (map, maps, bounds) => {
+        maps.event.addDomListenerOnce(map, 'idle', () => {
+          maps.event.addDomListener(window, 'resize', () => {
+            map.fitBounds(bounds);
+          });
+        });
+      };
+      const apiIsLoaded = (map, maps, places) => {
+        // Get bounds by our places
+        const bounds = getMapBounds(map, maps, places);
+        // Fit map to bounds
+        map.fitBounds(bounds);
+        // Bind the resize listener
+        bindResizeListener(map, maps, bounds);
+      };
     return (
         <div>
         <Row>
@@ -70,7 +122,48 @@ const TrackOrder = () => {
                     </Row>
             </Container>
                 <Container className='p-4' style={{backgroundColor:'#f7f2f2', boxShadow: 'rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px', borderRadius:'10px',}}>
-                  
+                    
+                    <section>
+                    <Row>
+                        {order.status === 'pending' && <Cooking />}     
+                        {order.status === 'picked' && <>
+                        {(restaurant?.lat && restaurant?.lng) && 
+                                  <div style={{ height: '260px', width: '100%', }}>
+                                  <GoogleMapReact
+                                      bootstrapURLKeys={{ key: "AIzaSyAyt8jyJ3uk_s1p6e6qtvI50OmLq8e4z0w" }}
+                                      defaultCenter={defaultProps.center}
+                                      defaultZoom={defaultProps.zoom}
+                                      onGoogleApiLoaded={({ map, maps }) => apiIsLoaded(map, maps, points)}
+
+                                  >
+                                      <MdOutlineLocationOn className='fs-1 text-dark' style={{transform:'translateY(-50%)'}}
+                                      lat={latValue}
+                                      lng={lngValue}
+                                      text="My Marker"
+                                      />
+                                      <MdOutlineLocationOn className='fs-1 text-warning' style={{transform:'translateY(-50%)', color: '#e843b6'}}
+                                      lat={restaurant?.lat}
+                                      lng={restaurant?.lng}
+                                      text="My Marker"
+                                      />
+                                      <MdOutlineLocationOn className='fs-1' style={{transform:'translateY(-50%)', }}
+                                      lat={rider?.lat}
+                                      lng={rider?.lng}
+                                      text="My Marker"
+                                      />
+                                  </GoogleMapReact>
+                                  </div>
+                        }           <div className='d-flex py-4 justify-content-center align-items-center'>
+                                    <Image src={ontheway} style={{height: '30px', width: 'auto', objectFit: 'contain'}} />
+                                    <p style={{marginBottom:'0px'}} className='d-flex justify-content-center align-items-center'>
+                                        Your order is on your way...
+                                        </p>
+                        </div>
+                        </>}   
+                        {order.status === 'delivered' && <Image className='m-auto' src={delivered} style={{height: '300px', width: 'auto', objectFit: 'contain'}} />}     
+                    </Row>
+                    </section>
+
                     <section>
                     <Row className='my-2' >
                     <Col className='' style={{}}>
@@ -109,9 +202,7 @@ const TrackOrder = () => {
                           </Swiper>
                     </Row>
                
-                    <Row>
-                        <Image src={map} alt='map-tracking' className='' style={{height:'60vh', width:'100%', objectFit:'cover'}} />
-                    </Row>
+                   
                 </Container>
             </Col>
         </Row>

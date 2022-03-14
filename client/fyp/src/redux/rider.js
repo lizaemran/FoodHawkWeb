@@ -1,4 +1,5 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
+import { toast } from 'react-toastify';
 export const getRiderByIdAsync = createAsyncThunk('rider/getRiderByIdAsync',
 async(payload) => {
     const response = await fetch(`http://localhost:7000/api/rider/${payload.id}`, {
@@ -133,6 +134,7 @@ const RiderSlice = createSlice({
     extraReducers: {
         [getRiderByIdAsync.fulfilled]: (state, action) => {
             state.rider = action.payload.rider;
+            return {...state};
         },
         [patchRiderLocationAsync.fulfilled]: (state,action) => {
             console.log("Updated Rider successfully.");
@@ -148,8 +150,14 @@ const RiderSlice = createSlice({
             }
         },
         [getRiderAssign.fulfilled]: (state,action) => {
+            if(action?.payload?.error){
+
+                return {...state , assignedRider: {}};
+            }
+            else{
             console.log("Assigned Rider successfully.");
             return {...state, assignedRider: action.payload.rider};
+            }
         },
         [getAssignedOrder.fulfilled]: (state,action) => {
             console.log("Got Assigned Order successfully.");
