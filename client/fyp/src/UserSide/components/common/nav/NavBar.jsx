@@ -20,7 +20,7 @@ const NavBar = () => {
           {location !== '' && <div className='' style={{marginRight:'50px'}}>
             <SearchBar inNav={true} />
           </div>}
-            <Link to="#" className="fw-bold text-muted " >
+            <Link to="/about-us" className="fw-bold text-muted " >
             <Button variant="" className="NavBtn text-white ">About Us</Button>
             </Link>
             <Link to="#" className="fw-bold text-muted">
