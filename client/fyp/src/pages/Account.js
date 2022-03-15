@@ -296,7 +296,7 @@ const Account = () => {
                            <td>
                                {u.total_price}
                            </td>
-                           <td className={`${u.status === 'pending' ? 'text-warning' : 'text-dark'}`}>
+                           <td className={`${u.status === 'pending' ? 'text-warning' : u.status === 'picked' ? 'text-primary' : 'text-dark'}`}>
                                {u.status}
                            </td>
                            <td>
