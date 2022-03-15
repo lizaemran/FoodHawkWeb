@@ -134,7 +134,7 @@ const RiderSlice = createSlice({
     extraReducers: {
         [getRiderByIdAsync.fulfilled]: (state, action) => {
             state.rider = action.payload.rider;
-            return {...state};
+            
         },
         [patchRiderLocationAsync.fulfilled]: (state,action) => {
             console.log("Updated Rider successfully.");

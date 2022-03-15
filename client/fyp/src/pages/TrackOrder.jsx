@@ -81,31 +81,31 @@ const TrackOrder = () => {
         {lat : rider?.lat, lng : rider?.lng},
 
       ]
-      const getMapBounds = (map, maps, points) => {
-        const bounds = new maps.LatLngBounds();
-        points.forEach((point) => {
-          bounds.extend(new maps.LatLng(
-            point.lat,
-            point.lng,
-          ));
-        });
-        return bounds;
-      };
-      const bindResizeListener = (map, maps, bounds) => {
-        maps.event.addDomListenerOnce(map, 'idle', () => {
-          maps.event.addDomListener(window, 'resize', () => {
-            map.fitBounds(bounds);
-          });
-        });
-      };
-      const apiIsLoaded = (map, maps, places) => {
-        // Get bounds by our places
-        const bounds = getMapBounds(map, maps, places);
-        // Fit map to bounds
-        map.fitBounds(bounds);
-        // Bind the resize listener
-        bindResizeListener(map, maps, bounds);
-      };
+      // const getMapBounds = (map, maps, points) => {
+      //   const bounds = new maps.LatLngBounds();
+      //   points.forEach((point) => {
+      //     bounds.extend(new maps.LatLng(
+      //       point.lat,
+      //       point.lng,
+      //     ));
+      //   });
+      //   return bounds;
+      // };
+      // const bindResizeListener = (map, maps, bounds) => {
+      //   maps.event.addDomListenerOnce(map, 'idle', () => {
+      //     maps.event.addDomListener(window, 'resize', () => {
+      //       map.fitBounds(bounds);
+      //     });
+      //   });
+      // };
+      // const apiIsLoaded = (map, maps, places) => {
+      //   // Get bounds by our places
+      //   const bounds = getMapBounds(map, maps, places);
+      //   // Fit map to bounds
+      //   map.fitBounds(bounds);
+      //   // Bind the resize listener
+      //   bindResizeListener(map, maps, bounds);
+      // };
     return (
         <div>
         <Row>
@@ -133,7 +133,7 @@ const TrackOrder = () => {
                                       bootstrapURLKeys={{ key: "AIzaSyAyt8jyJ3uk_s1p6e6qtvI50OmLq8e4z0w" }}
                                       defaultCenter={defaultProps.center}
                                       defaultZoom={defaultProps.zoom}
-                                      onGoogleApiLoaded={({ map, maps }) => apiIsLoaded(map, maps, points)}
+                                      // onGoogleApiLoaded={({ map, maps }) => apiIsLoaded(map, maps, points)}
 
                                   >
                                       <MdOutlineLocationOn className='fs-1 text-dark' style={{transform:'translateY(-50%)'}}
