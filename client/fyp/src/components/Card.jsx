@@ -46,7 +46,10 @@ const Card = ({id, username, image, stars, name, location, setRId, setPId, setIs
                 <a onClick={()=> {setIsEdit(true)}}>Edit</a>
                 </div>}
                     <Link to={`/restaurant/${username}`} style={{color:'black', textDecoration:'none'}}><h1 onClick={restaurantDetailHandler}>{name}</h1></Link>
-                    <button id="btn" onClick={()=> {setIsPopUp(true)}} >ORDER</button>
+                    <button id="btn" 
+                     onClick={()=> {if(isOnline) {setIsPopUp(true);} else {setIsPopUp(false)}}} >
+                         ORDER
+                    </button>
                     <div id="rating">
                         {
                             renderStars(stars)

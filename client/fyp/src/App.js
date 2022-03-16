@@ -35,9 +35,9 @@ function App() {
         <Route path='/SignUp' component={Form} />
         <Route path='/SignIn' component={FormLogin} />
         <Route path='/user/profile' component={UserProfile} />
-        <Route path='/riders' component={Riders} />
-        <Route path='/rider/:id' component={RiderDetails} />
-        <Route path='/order/:id' component={OrderDetails} />
+        <Route exact path='/riders' component={Riders} />
+        <Route exact path='/rider/:id' component={RiderDetails} />
+        <Route exact path='/order/:id' component={OrderDetails} />
         <Route exact path='/' component={MainPage} />
         <Route path='/results/:search' component={Results} />
         <Route path='/Cart' component={() => <Cart search={search} setSearch={setSearch} />} />
@@ -46,12 +46,12 @@ function App() {
         <Route path='/admin-login' component={AdminLogin} />
         <Route path='/account' component={Account}/>
         <Route exact path='/restaurant/:username' component={()=> <Restaurant pId={pId} setPId={setPId} isEditP={isEditP} setIsEditP={setIsEditP} search={search} setSearch={setSearch} />}/>
-        <Route exact path='/register/restaurant' component={RestaurantSignUp} />
-        <Route exact path='/login/restaurant' component={RestaurantLogin} />
+        <Route exact path='/restaurant-register' component={RestaurantSignUp} />
+        <Route exact path='/restaurant-login' component={RestaurantLogin} />
         <Route exact path='/restaurant/dashboard/:username' component={() => <RestaurantDashboard pId={pId} setPId={setPId} isEditP={isEditP} setIsEditP={setIsEditP} />} />
         <Route exact path='/rider/register' component={RiderSignUp} />
-        <Route exact path='/rider/login' component={RiderLogin} />
-        <Route exact path='/rider/dashboard/' component={RiderDashboard} />
+        <Route exact path='/rider-login' component={RiderLogin} />
+        <Route exact path='/rider-dashboard/' component={RiderDashboard} />
 
 
       </Switch>

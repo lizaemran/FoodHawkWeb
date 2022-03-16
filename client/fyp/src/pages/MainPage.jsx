@@ -29,6 +29,7 @@ const MainPage = () => {
     return (
       <div className='bg-light'>
          <Box/> 
+         <section>
         <Container className='pt-5 pb-5'> 
             {/* <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#000000" fill-opacity="1" d="M0,32L120,74.7C240,117,480,203,720,197.3C960,192,1200,96,1320,48L1440,0L1440,0L1320,0C1200,0,960,0,720,0C480,0,240,0,120,0L0,0Z"></path></svg> */}
           <Row > <h5 className='text-left pt-3'>Popular Restaurants Today</h5></Row>
@@ -44,6 +45,9 @@ const MainPage = () => {
         </Swiper>
                        </Row>  
           </Container>
+          </section>
+
+          <section className='' style={{backgroundColor:'rgba(237, 144, 90, 0.1)'}}>
           <Container className='pt-2 pb-3'> 
             {/* <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#000000" fill-opacity="1" d="M0,32L120,74.7C240,117,480,203,720,197.3C960,192,1200,96,1320,48L1440,0L1440,0L1320,0C1200,0,960,0,720,0C480,0,240,0,120,0L0,0Z"></path></svg> */}
           <Row > <h5 className='text-left  pt-3'>Fast Food</h5></Row>
@@ -63,6 +67,9 @@ const MainPage = () => {
         </Swiper>
                        </Row>  
           </Container>
+          </section>
+
+          <section>
           <Container className='pt-2 pb-3'> 
             {/* <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#000000" fill-opacity="1" d="M0,32L120,74.7C240,117,480,203,720,197.3C960,192,1200,96,1320,48L1440,0L1440,0L1320,0C1200,0,960,0,720,0C480,0,240,0,120,0L0,0Z"></path></svg> */}
           <Row > <h5 className='text-left  pt-3'>Desi Food</h5></Row>
@@ -82,6 +89,8 @@ const MainPage = () => {
         </Swiper>
                        </Row>  
           </Container>
+          </section>
+
           <Promo/>
           <Feedback/>
          <Footer/>

@@ -178,7 +178,7 @@ const TrackOrder = () => {
                             <Col className='' style={{borderLeft:'1px solid rgba(0,0,0,0.2)'}}>
                             <h5 className='text-center'><MdSportsMotorsports className='fs-2' style={{marginRight:'5px'}} /><b>Rider details</b></h5>
                             <h6>Name: {rider.name}</h6>
-                            <h6>Phone: {rider.phone}</h6> 
+                            <h6>Phone: {order.status === 'picked' ? (<a className='text-decoration-none' href={`tel:${rider.phone}`}>{rider.phone}</a>) : (<>{rider.phone}</>)} </h6> 
                             </Col>}
                     </Row>
                     </section>

@@ -49,7 +49,7 @@ const OrderDetails = () => {
                     <Row>
                         <Col>
                         <h5 className=''>Order Details</h5>
-                        {order?.products.map((p) => 
+                        {order?.products?.map((p) => 
                             <div key={p?.id} className=' ' style={{borderTop:'5px dotted #e5e5e5'}}>
                                 <div className="mx-5 my-2 d-flex justify-content-between align-items-center">
                                 <Image src={p?.image} className='' style={{width:'75px', height:'auto', objectFit:'cover'}} />

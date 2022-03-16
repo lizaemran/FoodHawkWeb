@@ -23,7 +23,7 @@ export function PCard({ data, setOrdered,stars }) {
 
 
   return (
-    <Card className={`${isHov ? '' : ''} card-div h-100 justify-content-center align-items-center `} style={{width:"18rem", borderRadius:'15px'}} onMouseEnter={() => setIsHov(true)} onMouseLeave={() => setIsHov(false)}>
+    <Card className={`${isHov ? '' : ''} card-div h-100 justify-content-center align-items-center `} style={{width:"18rem", borderRadius:'10px', background : 'linear-gradient(to top, rgba(237,95,56,0.5) 0%,rgb(255,255,255) 40%,rgb(255,255,255) 100%)'}} onMouseEnter={() => setIsHov(true)} onMouseLeave={() => setIsHov(false)}>
       <Card.Img variant="" className={`${isHov ? 'image-up': ''} pt-2 `} src={data.image} style={{borderRadius:'50%' ,width:"150px", height:"auto", objectFit:"contain"}}/>
       <Card.Body className="d-flex flex-column justify-content-center align-items-center">
           <Card.Title className=' mb-0 text-capitalize'>{data.name}</Card.Title>
@@ -32,7 +32,7 @@ export function PCard({ data, setOrdered,stars }) {
           </Card.Text>
       </Card.Body>
       {isHov && 
-      <Row className='w-100 d-flex justify-content-center align-items-center p-3 card-div-button' style={{backgroundColor:"#ef5023", borderRadius:'0px 0px 13px 13px'}}>
+      <Row className='w-100 d-flex justify-content-center align-items-center p-3 card-div-button' style={{backgroundColor:"#ef5023", borderRadius:'0px 0px 10px 10px'}}>
         <Link  to={`/restaurant/${data.username}`} className='d-flex justify-content-center align-items-center' style={{textDecoration:'none'}}>
           <Col className=" text-white" style={{backgroundColor:"transparent", border:"none"}}>
           <text>Order</text>

@@ -328,7 +328,7 @@ const AuthSlice = createSlice({
             else{
             console.log("Rider logged in successfully.");
             localStorage.setItem('token', action?.payload?.token?.token)
-            window.location.href = '/rider/dashboard';
+            window.location.href = '/rider-dashboard';
             return{...state, token : action?.payload?.token?.token}
             }
         },

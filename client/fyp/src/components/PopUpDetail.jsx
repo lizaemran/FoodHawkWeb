@@ -44,11 +44,11 @@ const PopUpDetail = ({id, image, name, price, description, discount, category, r
         }
         else{
         newrId = restaurants?.filter((r)=> 
-        r.products?.filter((p)=> p === id).length > 0 );
+        r.products?.filter((p)=> p._id === id).length > 0 );
         console.log(r_id);
         dispatch(addCart({
             id: id,
-            restaurant_id: newrId[0]._id,
+            restaurant_id: newrId[0]?._id,
             countItems: 1,
             name: name,
             price: price,
@@ -59,7 +59,7 @@ const PopUpDetail = ({id, image, name, price, description, discount, category, r
             restaurant: newrId._id,
         }))
 
-        console.log("New",newrId[0]._id);
+        console.log("New",newrId[0]?._id);
         }
  
       

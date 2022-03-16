@@ -371,8 +371,8 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
                              {restaurant?.products.map((r) => 
                                 <PopUpDetail key={r._id} id={r._id} image={r.image} name={r.name} price={r.price} discount={r.discount} category={r.category} setPId={setPId} setIsEditP={setIsEditP}/>
                             )}  
-                            </>) : (
-                                <Row className='flex-wrap'> 
+                            </>) : (<>
+                            {restaurant?.products.length > 0 ? (<Row className='flex-wrap'> 
                                     {restaurant?.products.map((r) =>
                                     <Col key={r._id} xl={3} lg={4} md={3} sm={12} xs={12}>
                                         <Col className='bg-light p-2 d-flex flex-column justify-content-between align-items-center w-100 mb-3' style={{borderRadius:'5px'}} xl={4} lg={4} md={4} sm={12} xs={12}>
@@ -389,7 +389,11 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
                                         </Col>
                                     </Col>
                                     )}
-                                </Row>
+                                </Row>) : (<div>
+                                    <p className='fs-6 poppins text-center text-white'>No products yet</p>
+                                </div>)}
+                                
+                                </>
 
                         )}
                                         
