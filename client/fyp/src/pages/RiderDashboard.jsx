@@ -205,7 +205,7 @@ const RiderDashboard = () => {
                                  <Button className='' style={{backgroundColor:'blue', border:'none', outline : 'none'}} onClick={()=>dispatch(patchOrderStatusAsync({status : 'delivered' , id : assignedOrder?.id })) }>Delivered yet?</Button>
                                    </>
                                )}
-                               <a href={`https://www.google.com/maps/dir/?api=1&origin=${lat},${lng}&destination=${assignedOrder?.restaurant?.lat},${assignedOrder?.restaurant?.lng}&travelmode=driving`} target='_blank' rel="noopener noreferrer" className=''>
+                               <a href={`${assignedOrder?.status === 'pending' ? `https://www.google.com/maps/dir/?api=1&origin=${lat},${lng}&destination=${assignedOrder?.restaurant?.lat},${assignedOrder?.restaurant?.lng}&travelmode=driving` : `https://www.google.com/maps/dir/?api=1&origin=${lat},${lng}&destination=${assignedOrder?.user?.lat},${assignedOrder?.user?.lng}&travelmode=driving`}`} target='_blank' rel="noopener noreferrer" className=''>
                                 <Button className='mt-2' style={{backgroundColor:'#ef5023', border:'none', outline : 'none'}}><MdOutlineDirections className='fs-5 text-white' style={{marginRight:'2.5px'}}  />Directions</Button>
                                 </a>
                            </td>

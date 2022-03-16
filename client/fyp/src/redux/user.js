@@ -1,4 +1,5 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
+
 export const addOrderAsync = createAsyncThunk('user/addOrderAsync',
 async(payload) => {
     const response = await fetch(`http://localhost:7000/api/order/${payload.r_id}/${payload.u_id}`, {
@@ -27,7 +28,6 @@ async(payload) => {
         method: "GET",
         headers: {
             "Content-Type": 'application/json',
-            "x-auth-token": localStorage.getItem('token')
         },
     });
     if(response.ok){

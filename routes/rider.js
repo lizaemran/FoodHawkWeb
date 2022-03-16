@@ -75,7 +75,7 @@ router.get('/:id/order', riderAuth, async(req, res)=> {
         time : order.time,
     });
 });
-router.get('/:id/order/delivered', riderAuth, async(req, res)=> {
+router.get('/:id/order/delivered', async(req, res)=> {
     let rider = await Rider.findById({"_id":req.params.id,  });
     if (!rider) return res.status(404).send("RIDER NOT FOUND");
     let order = await Order.find({"rider_id":req.params.id}).populate("restaurant_id").populate("rider_id").populate("products").populate("user_id");

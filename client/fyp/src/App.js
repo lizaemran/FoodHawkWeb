@@ -18,6 +18,10 @@ import RiderDashboard from './pages/RiderDashboard';
 import TrackOrder from './pages/TrackOrder';
 import { getRestaurantsAsync } from './redux/Slice';
 import Results from './pages/Results';
+import UserProfile from './pages/UserProfile';
+import Riders from './pages/Riders';
+import RiderDetails from './pages/RiderDetails';
+import OrderDetails from './pages/OrderDetails';
 function App() {
   const [pId, setPId] = useState("");
   const [isEditP, setIsEditP] = useState(false);
@@ -30,6 +34,10 @@ function App() {
         <Switch>
         <Route path='/SignUp' component={Form} />
         <Route path='/SignIn' component={FormLogin} />
+        <Route path='/user/profile' component={UserProfile} />
+        <Route path='/riders' component={Riders} />
+        <Route path='/rider/:id' component={RiderDetails} />
+        <Route path='/order/:id' component={OrderDetails} />
         <Route exact path='/' component={MainPage} />
         <Route path='/results/:search' component={Results} />
         <Route path='/Cart' component={() => <Cart search={search} setSearch={setSearch} />} />

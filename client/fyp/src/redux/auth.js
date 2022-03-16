@@ -57,6 +57,32 @@ async(payload) => {
     }
 });
 
+export const updateUserAsync = createAsyncThunk('auth/updateUserAsync',
+async(payload) => {
+    const response = await fetch(`http://localhost:7000/api/user/${payload.id}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": 'application/json',
+            "x-auth-token": localStorage.getItem('token')
+        },
+        body: JSON.stringify({
+            firstname: payload.firstname,
+            lastname: payload.lastname,
+            contact: payload.contact,
+            address: payload.address
+        })
+    });
+
+    if(response.ok){
+        const user = await response.json();
+        return {user};
+    }
+    else{
+        var error = true;
+        return {error};
+    }
+});
+
 export const registerRiderAsync = createAsyncThunk('auth/registerRiderAsync',
 async(payload) => {
     const response = await fetch('http://localhost:7000/api/rider/', {
@@ -377,6 +403,12 @@ const AuthSlice = createSlice({
                 contact: action?.payload?.user?.contact,
                 address: action?.payload?.user?.address,
                 user_type: action?.payload?.user?.user_type
+            }
+        },
+        [updateUserAsync.fulfilled] : (state, action) => {
+            console.log("Updated User Successfully");
+            return{
+                ...state, firstname: action?.payload?.firstname, lastname: action?.payload?.lastname, contact: action?.payload?.contact, address: action?.payload?.address,
             }
         },
         [getAdminAsync.fulfilled]: (state,action) => {

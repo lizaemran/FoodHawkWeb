@@ -23,11 +23,11 @@ export function PCard({ data, setOrdered,stars }) {
 
 
   return (
-    <Card className={`${isHov ? '' : ''} card-div h-100 justify-content-center align-items-center `} style={{width:"19rem", borderRadius:'15px'}} onMouseEnter={() => setIsHov(true)} onMouseLeave={() => setIsHov(false)}>
+    <Card className={`${isHov ? '' : ''} card-div h-100 justify-content-center align-items-center `} style={{width:"18rem", borderRadius:'15px'}} onMouseEnter={() => setIsHov(true)} onMouseLeave={() => setIsHov(false)}>
       <Card.Img variant="" className={`${isHov ? 'image-up': ''} pt-2 `} src={data.image} style={{borderRadius:'50%' ,width:"150px", height:"auto", objectFit:"contain"}}/>
       <Card.Body className="d-flex flex-column justify-content-center align-items-center">
-          <Card.Title className=' mb-0 fw-bold'>{data.name}</Card.Title>
-          <Card.Text className='p-2 text-success fw-bold' style={{fontSize:"12px"}}>
+          <Card.Title className=' mb-0 text-capitalize'>{data.name}</Card.Title>
+          <Card.Text className='p-2 text-success fw-bold' style={{fontSize:"18px"}}>
           {renderStars(stars)} 
           </Card.Text>
       </Card.Body>

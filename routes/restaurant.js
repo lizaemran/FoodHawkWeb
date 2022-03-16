@@ -6,7 +6,7 @@ const bcrypt = require('bcrypt');
 const restaurantAuth = require('../middleware/restaurantAuth');
 const { Order } = require('../models/order');
 router.get('/', async (req,res) => {
-    const restaurants = await Restaurant.find().sort({"rating": -1 });
+    const restaurants = await Restaurant.find().sort({"rating": -1 }).populate("products");
     if (!restaurants) return res.status(404).send("RESTAURANT NOT FOUND");
     res.send(restaurants);
 });
