@@ -226,7 +226,7 @@ const RiderDashboard = () => {
                         <h3 className='py-2'>
                             Completed Orders
                         </h3>
-                        {deliveredOrders.length > 0 ? 
+                        {deliveredOrders?.length > 0 ? 
                         (<div>
                         <Table striped bordered hover responsive>
                     <thead className='text-white' >

@@ -241,6 +241,25 @@ async(payload) => {
     }
 });
 
+export const patchOverviewAsync = createAsyncThunk('auth/patchOverviewAsync',
+async(payload) => {
+    const response = await fetch(`http://localhost:7000/api/restaurant/overview/${payload.id}`, {
+        method: 'PATCH',
+        headers: {
+            "Content-Type": 'application/json',
+        },
+        body: JSON.stringify({overview: payload.overview})
+    });
+    if(response.ok){
+        const overview = await response.json();
+        return {overview};
+    }
+    else{
+        var error = true;
+        return {error};
+    }
+});
+
 
 
 const AuthSlice = createSlice({
@@ -362,12 +381,12 @@ const AuthSlice = createSlice({
                 username: action?.payload?.data?.restaurant?.username,
                 name: action?.payload?.data?.restaurant?.name,
                 email: action?.payload?.data?.restaurant?.email,
-                password: action?.payload?.data?.restaurant?.password,
                 phone: action?.payload?.data?.restaurant?.phone,
                 location: action?.payload?.data?.restaurant?.location,
                 image: action?.payload?.data?.restaurant?.image,
                 rating: action?.payload?.data?.restaurant?.rating,
                 status: action?.payload?.data?.restaurant?.status,
+                overview: action?.payload?.data?.restaurant?.overview,
                 user_type: 'Restaurant'
             }
         }
@@ -379,16 +398,20 @@ const AuthSlice = createSlice({
                 username: action?.payload?.restaurant?.username,
                 name: action?.payload?.restaurant?.name,
                 email: action?.payload?.restaurant?.email,
-                password: action?.payload?.restaurant?.password,
                 phone: action?.payload?.restaurant?.phone,
                 location: action?.payload?.restaurant?.location,
                 image: action?.payload?.restaurant?.image,
                 rating: action?.payload?.restaurant?.rating,
                 status: action?.payload?.restaurant?.status,
                 products: action?.payload?.restaurant?.products,
+                overview: action?.payload?.restaurant?.overview,
                 user_type: 'Restaurant',
                 orders: action?.payload?.restaurant?.orders,
             }
+        },
+        [patchOverviewAsync.fulfilled]: (state, action) => {
+            console.log("Posted overview successfully.");
+            return{...state, overview: action?.payload?.overview?.overview}
         },
         [getUserAsync.fulfilled]: (state,action) => {
             console.log("Got User successfully.");

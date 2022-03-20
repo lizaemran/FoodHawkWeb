@@ -22,6 +22,24 @@ async(payload) => {
     }
 });
 
+export const addOrderRatingAsync = createAsyncThunk('user/addOrderAsync',
+async(payload) => {
+    const response = await fetch(`http://localhost:7000/api/orderRating/${payload.r_id}/${payload.u_id}/${payload.o_id}`, {
+        method: "POST",
+        headers: {
+            "Content-Type": 'application/json',
+        },
+        body: JSON.stringify({
+            stars: payload.stars,
+            description: payload.description,
+        })
+    });
+    if(response.ok){
+        const orderRating = await response.json();
+        return {orderRating};
+    }
+});
+
 export const getOrderAsync = createAsyncThunk('user/getOrderAsync' , 
 async(payload) => {
     const response = await fetch(`http://localhost:7000/api/user/order/${payload}`, {
@@ -95,8 +113,11 @@ const UserSlice = createSlice({
         },
         [getAllOrdersForUserAsync.fulfilled]: (state,action) => {
             console.log("Fetched all orders for user successfully.");
-            state.allOrders.push(action.payload.orders);
+            state.allOrders.push(action.payload?.orders);
         },
+        [addOrderRatingAsync.fulfilled]: (state,action) => {
+            console.log("Order Rating Added successfully.");
+        }
     }
        
 });

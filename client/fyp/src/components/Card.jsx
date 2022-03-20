@@ -34,10 +34,10 @@ const Card = ({id, username, image, stars, name, location, setRId, setPId, setIs
     return (
 <>
 {isPopUp && <ProductPopUp id={id} image={image} name={name} location={location} setIsPopUp={setIsPopUp} setPId={setPId} setIsEditP={setIsEditP}/>}
-            <motion.div className="row r-card my-4" style={{marginRight:"1%"}} variants={popup} initial='hidden' animate='show' onClick={()=> {setRId(id)}}>
-                <Col className="col-2 m-auto">
+            <motion.div className="row r-card my-3 " variants={popup} initial='hidden' animate='show' onClick={()=> {setRId(id)}}>
+                <Col className="col-2 m-auto"> 
                     <div id="status" className = {isOnline ? "active-status": "inactive-status"}></div>
-                    <Link to={`/restaurant/${username}`}><Image onClick={restaurantDetailHandler} className="p-image" src={image} style={{borderRadius:'50%'}} alt="restaurant"/></Link>
+                    <Link to={`/restaurant/${username}`}><Image onClick={restaurantDetailHandler} className="p-image" src={image} style={{borderRadius:'50%', marginLeft:'50px'}} alt="restaurant"/></Link>
                 </Col>
                 <Col className="col-10">
                 {userType === 'admin' && <div className="admin-button">

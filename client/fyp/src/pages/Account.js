@@ -285,22 +285,25 @@ const Account = () => {
                     </thead>
                     <tbody>
                        {allOrders[0]?.map((u, index)=> 
-                       
                        <tr>
                            <td>
                                 {index + 1}
                            </td>
                            {(u.status === 'pending' || u.status === 'picked') ? (
                                 <Link to = {`/track-order/${u._id}`} className='text-decoration-none text-dark'>
-                                <td>
+                                <td className=''>
                                 {u.products?.map((p, index)=> 
-                                <div><Image src={p.image} className='' style={{width:'50px', height:'auto'}} /> {p.name} <span className='fw-bold'>{p.price}</span></div> )}
+                                <div className='d-flex flex-column'>
+                                    <Image src={p.image} className='' style={{width:'50px', height:'auto'}} /> 
+                                    {p.name} <span className='fw-bold '>Rs. {p.price}</span>
+                                </div> )}
                             </td>
                              </Link>
                            ) : (
                             <td>
                             {u.products?.map((p, index)=> 
-                            <div><Image src={p.image} className='' style={{width:'50px', height:'auto'}} /> {p.name} <span className='fw-bold'>{p.price}</span></div> )}
+                            <div className='d-flex flex-column'>
+                                <Image src={p.image} className='' style={{width:'50px', height:'auto'}} /> {p.name} <span className='fw-bold'>Rs. {p.price}</span></div> )}
                         </td>
                            )}
                           

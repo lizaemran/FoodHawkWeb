@@ -114,6 +114,7 @@ const TrackOrder = () => {
             </Col>
             <Col>
             <Container className='p-2 mt-3'>
+                <ToastContainer />
                 <Row>
             <div className='px-4 py-3 mb-3 bg-danger bg-opacity-10 text-white w-25 d-flex justify-content-start align-items-center' style={{borderRadius:"10px"}}>
                         <p className='fs-4' style={{marginBottom:'0px'}}>Hello, {auth.firstName || auth.username}</p>

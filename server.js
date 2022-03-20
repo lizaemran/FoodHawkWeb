@@ -8,6 +8,7 @@ const auth = require('./routes/auth');
 const rider = require('./routes/rider');
 const order = require('./routes/order');
 const rating = require('./routes/rating');
+const orderRating = require('./routes/orderRating');
 const cors = require('cors')
 const app = express();
 
@@ -21,6 +22,7 @@ app.use('/api/admin', admin);
 app.use('/api/rider', rider);
 app.use('/api/order', order);
 app.use('/api/rating', rating);
+app.use('/api/orderRating', orderRating);
 
 mongoose.connect('mongodb+srv://liza:lizfiz1@foodhawk.uitlt.mongodb.net/data?retryWrites=true&w=majority')
     .then(()=>{console.log('Connected')})
