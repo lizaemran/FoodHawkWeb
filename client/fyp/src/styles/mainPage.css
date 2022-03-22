@@ -191,4 +191,5 @@ color: black!important;
 }
 .accordion-button:not(.collapsed){
   background-color: #ef4f2325!important;
+  color: #EF5124!important;
 }

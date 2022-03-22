@@ -8,7 +8,7 @@ const FAQs = () => {
         <Accordion className="w-75" >
             <Accordion.Item className="mb-3" eventKey="0">
                 <Accordion.Header className="" >
-                    <h6 style={{color:'#ef5023'}}>How do I login?</h6>
+                    <h6>How do I login?</h6>
                 </Accordion.Header>
                 <Accordion.Body>
                     <p> You can login by clicking on the "Login" button on the homepage. You will be redirected to the login page.</p>
@@ -16,7 +16,7 @@ const FAQs = () => {
             </Accordion.Item>
             <Accordion.Item className="mb-3" eventKey="1">
                 <Accordion.Header className="" >
-                    <h6 style={{color:'#ef5023'}}>How do I sign up?</h6>
+                    <h6>How do I sign up?</h6>
                 </Accordion.Header>
                 <Accordion.Body>
                     <p> You can sign up by clicking on the "Sign Up" button on the
