@@ -23,6 +23,8 @@ import Riders from "./pages/Riders";
 import RiderDetails from "./pages/RiderDetails";
 import OrderDetails from "./pages/OrderDetails";
 import UserContact from "./pages/UserContact";
+import Contact from "./pages/Contact";
+import AboutUs from "./pages/AboutUs";
 function App() {
   const [pId, setPId] = useState("");
   const [isEditP, setIsEditP] = useState(false);
@@ -42,6 +44,8 @@ function App() {
         <Route exact path="/order/:id" component={OrderDetails} />
         <Route exact path="/" component={MainPage} />
         <Route path="/results/:search" component={Results} />
+        <Route exact path ='/contact-us' component={Contact} />
+        <Route exact path="/about-us" component={AboutUs} />
         <Route
           path="/Cart"
           component={() => <Cart search={search} setSearch={setSearch} />}
