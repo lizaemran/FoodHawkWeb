@@ -312,16 +312,21 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
                 </div>
                {overview && 
                     <div className='py-3'>
-                        <h6>Known For</h6>
-                        <p className='' style={{fontSize:'14px'}}>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum nulla iste maiores optio, vero odit ab aliquid, voluptate necessitatibus similique perferendis. Iste delectus suscipit repudiandae!
-                        </p>
-                        <p style={{fontSize:'14px'}}>
-                            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Libero itaque, <b>molestias officiis fugit</b> modi facere.
-                        </p>
-                        <p style={{fontSize:'14px'}}>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. In qui esse sint cupiditate quos quod libero perferendis, magnam quis quasi delectus atque, officia nisi beatae aliquam corrupti voluptates, consectetur neque? Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus est tempore nobis nostrum officiis sed natus sit perspiciatis aut alias.
-                        </p>
+                        {restaurant?.overview ? (<>
+                        {restaurant?.overview}
+                        </>) : (
+                            <><h6>Known For</h6>
+                            <p className='' style={{fontSize:'14px'}}>
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum nulla iste maiores optio, vero odit ab aliquid, voluptate necessitatibus similique perferendis. Iste delectus suscipit repudiandae!
+                            </p>
+                            <p style={{fontSize:'14px'}}>
+                                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Libero itaque, <b>molestias officiis fugit</b> modi facere.
+                            </p>
+                            <p style={{fontSize:'14px'}}>
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. In qui esse sint cupiditate quos quod libero perferendis, magnam quis quasi delectus atque, officia nisi beatae aliquam corrupti voluptates, consectetur neque? Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus est tempore nobis nostrum officiis sed natus sit perspiciatis aut alias.
+                            </p></>
+                        )}
+                        
                    </div>}
                    {menu && 
                     <div className='py-3'>

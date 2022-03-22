@@ -1,4 +1,5 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
+import { toast } from 'react-toastify';
 
 export const addOrderAsync = createAsyncThunk('user/addOrderAsync',
 async(payload) => {
@@ -78,6 +79,26 @@ async(payload) => {
         return {orders};
     }
 });
+
+export const sendMessageAsync = createAsyncThunk('user/sendMessageAsync',
+async(payload) => {
+    const response = await fetch(`http://localhost:7000/api/user/message`, {
+        method: "POST",
+        headers: {
+            "Content-Type": 'application/json',
+        },
+        body: JSON.stringify({
+            email: payload.email,
+            subject: payload.subject,
+            message: payload.message,
+        })
+    });
+    if(response.ok){
+        const message = await response.json();
+        return {message};
+    }
+});
+
 const UserSlice = createSlice({
     name: "user",
     initialState: 
@@ -117,7 +138,11 @@ const UserSlice = createSlice({
         },
         [addOrderRatingAsync.fulfilled]: (state,action) => {
             console.log("Order Rating Added successfully.");
-        }
+        },
+        [sendMessageAsync.fulfilled]: (state,action) => {
+            console.log("Message Sent successfully.");
+            toast.success("Message Sent Successfully.");
+        },
     }
        
 });

@@ -29,11 +29,11 @@ const SideNav = () => {
         style={{ borderRadius:"0px 20px 20px 0px", width:'7vw'}}>
             {/* <p className='mt-4 mb-5 text-center' style={{fontSize:'16px',  color: '#ef5023'}} >FOOD HAWK</p> */}
             <Link to="/dashboard"><AiOutlineHome className='side-link fs-2 mt-4 mb-5'/></Link>
-            {decoded.isUser && <Link to="/user/profile"><CgProfile className='side-link fs-2 mt-4 mb-5'/></Link>}
+            {decoded.isUser && <Link to="/user-profile"><CgProfile className='side-link fs-2 mt-4 mb-5'/></Link>}
             <Link to="/account">{decoded.isUser && <IoReceipt className='side-link fs-2 mt-4 mb-5' />}</Link>
             <Link to="/account">{decoded.isAdmin && <ImStatsDots className='side-link fs-2 mt-4 mb-5' />}</Link>
             {decoded.isAdmin && <Link to="/riders"><MdSportsMotorsports className='side-link fs-2 mt-4 mb-5'/></Link>}
-            <Link to="/"><AiOutlineMail className='side-link fs-2 mt-4 mb-5'/></Link>
+            <Link to="/user-contact"><AiOutlineMail className='side-link fs-2 mt-4 mb-5'/></Link>
             <Link to="/"><AiOutlineInfoCircle className='side-link fs-2 mt-4 mb-5'/></Link>
             <AiOutlineLogout onClick={logOut} className='side-link fs-2 mt-4 mb-5' style={{cursor:"pointer"}}/>
         </div>

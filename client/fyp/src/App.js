@@ -22,6 +22,7 @@ import UserProfile from './pages/UserProfile';
 import Riders from './pages/Riders';
 import RiderDetails from './pages/RiderDetails';
 import OrderDetails from './pages/OrderDetails';
+import UserContact from './pages/UserContact';
 function App() {
   const [pId, setPId] = useState("");
   const [isEditP, setIsEditP] = useState(false);
@@ -34,7 +35,8 @@ function App() {
         <Switch>
         <Route path='/SignUp' component={Form} />
         <Route path='/SignIn' component={FormLogin} />
-        <Route path='/user/profile' component={UserProfile} />
+        <Route path='/user-profile' component={UserProfile} />
+        <Route path='/user-contact' component={UserContact} />
         <Route exact path='/riders' component={Riders} />
         <Route exact path='/rider/:id' component={RiderDetails} />
         <Route exact path='/order/:id' component={OrderDetails} />

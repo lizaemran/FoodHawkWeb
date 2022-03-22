@@ -182,3 +182,13 @@ color: black!important;
       transform:translateX(0%) translateY(0%) rotate(0deg);
   }
 }
+.accordion-button::after{
+  color: #EF5124!important;
+}
+.accordion-button:focus {
+  box-shadow: none!important;
+  border-color: rgba(0,0,0,.125)!important;
+}
+.accordion-button:not(.collapsed){
+  background-color: #ef4f2325!important;
+}

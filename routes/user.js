@@ -5,6 +5,7 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 const userAuth = require('../middleware/userAuth');
 const { Order } = require('../models/order');
+const nodemailer = require('nodemailer');
 
 router.post('/', async(req,res) => {
     // console.log(req.body)
@@ -66,6 +67,41 @@ router.get('/order/:id', async (req,res) => {
     const order = await Order.findById({"_id":req.params.id}).populate("products");
     if (!order) return res.status(404).send("ORDER NOT FOUND");
     res.send(order);
+});
+
+//nodemailer
+var transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'lizaemran56@gmail.com',
+      pass: 'Liza@#123'
+    }
+});
+
+
+router.post('/message' , async(req,res) => {
+    var message = `<div>
+                    <p><b>Email:</b> ${req.body.email}<br />
+                    <b>Message: </b>${req.body.message}<br />
+                    <span>Food Hawk</span>
+                    </p>
+                   </div>`;
+    var mailOptions = {
+        from: req.body.email,
+        to: 'lizaemran56@gmail.com',
+        subject: req.body.subject,
+        html: message
+      };
+      transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+          console.log(error);
+          res.send(error);
+        } else {
+          console.log('Email sent: ' + info.response);
+          res.send({message: "Message Sent"});
+        }
+      });
+    
 });
 
 module.exports = router;

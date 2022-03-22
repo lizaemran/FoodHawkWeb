@@ -16,6 +16,7 @@ import Promo from '../UserSide/components/common/Promo/Promo';
 import Feedback from '../UserSide/components/common/CustomerFeedback/Feedback';
 import { getRestaurantsAsync, getTop5RestaurantsAsync } from '../redux/Slice';
 import Banner from '../components/Banner';
+import FAQs from '../components/FAQs';
 const MainPage = () => {
   const dispatch = useDispatch();
   
@@ -35,6 +36,7 @@ const MainPage = () => {
                     It's simple: Choose your faviourite restaurant, select from menu, and book your reservation online in advanced.
                     Interested?<br /><br /> 
                     Let's start!</p>} />
+          <FAQs />
           <Promo />
           <Feedback/>
          <Footer/>

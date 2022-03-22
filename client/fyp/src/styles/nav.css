@@ -336,7 +336,7 @@ width:100%;
   margin-top: 0.5rem;
 }
 .home-container {
-  padding: 1% 1% !important;
+padding: 0% 1% !important;
 display: flex;
 flex-wrap: wrap;
 }
@@ -369,7 +369,7 @@ flex-wrap: wrap;
   width: 30px;
   background-color: #17d614;
   border-radius: 50%;
-  top: -20px;
+  top: -25px;
   left: 5px;
   border: 3px solid #edf6f9;
 }
