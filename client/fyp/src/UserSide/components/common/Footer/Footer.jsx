@@ -129,7 +129,7 @@ function Footer() {
           <Col className="d-flex justify-content-center align-items-center">
             <BsTwitter className="fs-3" style={{ color: "#EF5023" }} />
           </Col>
-          <Col className="d-flex justify-content-center align-items-center">
+          <Col className="d-flex justify-content-start align-items-center">
             <AiFillInstagram className="fs-3" style={{ color: "#EF5023" }} />
           </Col>
         </Row>
