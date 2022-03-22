@@ -114,6 +114,7 @@ const TrackOrder = () => {
             </Col>
             <Col>
             <Container className='p-2 mt-3'>
+                <ToastContainer />
                 <Row>
             <div className='px-4 py-3 mb-3 bg-danger bg-opacity-10 text-white w-25 d-flex justify-content-start align-items-center' style={{borderRadius:"10px"}}>
                         <p className='fs-4' style={{marginBottom:'0px'}}>Hello, {auth.firstName || auth.username}</p>
@@ -152,6 +153,7 @@ const TrackOrder = () => {
                                       text="My Marker"
                                       />
                                   </GoogleMapReact>
+                                
                                   </div>
                         }           <div className='d-flex py-4 justify-content-center align-items-center'>
                                     <Image src={ontheway} style={{height: '30px', width: 'auto', objectFit: 'contain'}} />
@@ -177,7 +179,7 @@ const TrackOrder = () => {
                             <Col className='' style={{borderLeft:'1px solid rgba(0,0,0,0.2)'}}>
                             <h5 className='text-center'><MdSportsMotorsports className='fs-2' style={{marginRight:'5px'}} /><b>Rider details</b></h5>
                             <h6>Name: {rider.name}</h6>
-                            <h6>Phone: {rider.phone}</h6> 
+                            <h6>Phone: {order.status === 'picked' ? (<a className='text-decoration-none' href={`tel:${rider.phone}`}>{rider.phone}</a>) : (<>{rider.phone}</>)} </h6> 
                             </Col>}
                     </Row>
                     </section>

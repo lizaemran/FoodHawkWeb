@@ -14,7 +14,7 @@ import UpdateProduct from '../components/UpdateProduct';
 import UpdateStatus from '../components/UpdateStatus';
 import FormPopUp from '../components/FormPopUp';
 import {setCart} from '../redux/CartSlice';
-import { Col, Container, Row } from 'react-bootstrap';
+import { Col, Container, Row, Modal, Button } from 'react-bootstrap';
 import SideNav from '../components/SideNav/SideNav';
 import { getUserAsync, getAdminAsync } from '../redux/auth';
 import jwt_decode from "jwt-decode";
@@ -22,6 +22,8 @@ import Cart from './Cart';
 import CartHome from '../components/CartHome';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { getAllOrdersForUserAsync } from '../redux/user';
+import ReviewForm from '../components/ReviewForm';
 const Home = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
     const {cartItems, total} = useSelector((state)=> state.cart);
     const cart = useSelector((state)=> state.cart);
@@ -31,10 +33,18 @@ const Home = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
     const [isEditStatus, setIsEditStatus] = useState(false);
     const dispatch = useDispatch();
 	const restaurants = useSelector((state)=> state.restaurants.restaurants);
+    const id = useSelector((state)=> state.auth.id);
 	const token = useSelector((state)=> state.auth.token);
     const [searched, setSearched] = useState(false);
     const [rId, setRId] = useState();
-   
+    const userType = useSelector((state)=> state.auth?.user_type);
+    const firstname = useSelector((state) => state.auth?.firstname)
+    const allOrders = useSelector((state)=> state.user?.allOrders[0]);
+    const [modalShow, setModalShow] = useState(false);
+    const [orderToReview, setOrderToReview] = useState('');
+    // var today = new Date();
+    // time = today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
+    // const [time, setTime] = useState(time);
     useEffect(() => {
         if(total === 0){
             localStorage.setItem("cart",[]);
@@ -62,8 +72,41 @@ const Home = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
         else{
             window.location.href='/';
         }
-        
+        dispatch(getAllOrdersForUserAsync(id));
+        if(allOrders?.length > 0 ){
+            alert('You have orders to review');
+            for(let i = 0; i < allOrders.length; i++){
+                if(allOrders[i].status === "delivered" && allOrders[i].ratingOrder === undefined ){
+                    
+                    setOrderToReview(allOrders[i]);
+                    setModalShow(true);
+                }
+            }
+        }        
     }, []);
+    function MyVerticallyCenteredModal(props) {
+        return (
+          <Modal
+            {...props}
+            size="md"
+            aria-labelledby="contained-modal-title-vcenter"
+            centered
+          >
+            <Modal.Header >
+              <Modal.Title id="contained-modal-title-vcenter">
+                Please rate your Order 
+              </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <h5>Review by {firstname} </h5>
+             <ReviewForm setModalShow={setModalShow} orderToReview={orderToReview} />
+            </Modal.Body>
+            <Modal.Footer>
+              {/* <Button onClick={()=> setModalShow(false)} style={{backgroundColor:'#ef5023', border:'none'}}>Close</Button> */}
+            </Modal.Footer>
+          </Modal>
+        );
+      }
     var decoded = jwt_decode(token);
     useEffect(()=>{
         if(search!== null && search.length > 1 && search !== ''){
@@ -74,10 +117,15 @@ const Home = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
     }
     },[search.length > 1])
 
-   const userType = useSelector((state)=> state.auth?.user_type);
+
     return (
         <>
         <ToastContainer />
+        {token !== null  &&
+                <MyVerticallyCenteredModal
+                    show={modalShow}
+                    onHide={() => setModalShow(false)}
+        />}
             <Row className=''>
             <Col xl={1} lg={1} md={1} sm={12} xs={12} >
             <SideNav />
@@ -90,11 +138,11 @@ const Home = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
             <img id="fries" src={fries} alt="fries"/>
             <img id="soda" src={soda} alt="soda"/> */}
             <Container  className="home-container">
-            <Row>
+            
             {/* <Swiper className="mySwiper " slidesPerView={3} spaceBetween={10}  breakpoints = {{ 300 : {slidesPerView : 1} ,499 : {slidesPerView : 1} , 800 : {slidesPerView : 2}, 1024: {slidesPerView : 3}}}> */}
            {searched !== '' ?  <>
            {restaurants?.map((restaurant) => (
-                <div key={restaurant._id}>
+                <div key={restaurant._id}   >
                 {/* <SwiperSlide  style={{width: "426px", height:"410px"}}> */}
 				<Card  
                 key={restaurant._id} 
@@ -116,7 +164,7 @@ const Home = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
                 </div>
 			))}</> : <>
             {searched?.map((restaurant) => (
-                <div key={restaurant._id}>
+                <div key={restaurant._id} >
                 {/* <SwiperSlide  style={{width: "426px", height:"410px"}}> */}
 				<Card  
                 key={restaurant._id} 
@@ -139,7 +187,7 @@ const Home = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
 			))} 
             </>}
             {/* </Swiper> */}
-            </Row>
+          
             </Container>
         
             </Col>

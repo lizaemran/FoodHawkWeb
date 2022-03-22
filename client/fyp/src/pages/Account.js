@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import { Col, Container, Row, Table, Image } from 'react-bootstrap'
+import { Col, Container, Row, Table, Image, Button } from 'react-bootstrap'
 import SideNav from '../components/SideNav/SideNav'
 import {Link} from 'react-router-dom';
 import Footer from '../UserSide/components/common/Footer/Footer'
@@ -12,6 +12,7 @@ import { useDispatch } from 'react-redux';
 import { getAllOrdersAsync, getAllRidersAsync, getAllUsersAsync } from '../redux/admin';
 import jwt_decode from "jwt-decode";
 import { getAllOrdersForUserAsync } from '../redux/user';
+import { getRestaurantsAsync } from '../redux/Slice';
 const Account = () => {
     const token = useSelector((state)=> state.auth.token);
     const auth = useSelector((state) => state.auth);
@@ -31,6 +32,7 @@ const Account = () => {
         dispatch(getAllUsersAsync());
         dispatch(getAllRidersAsync());
         dispatch(getAllOrdersAsync());
+        dispatch(getRestaurantsAsync());
         }
         else if(decoded.isUser == true){
         dispatch(getAllOrdersForUserAsync(auth?.id));
@@ -102,7 +104,7 @@ const Account = () => {
                        {users.map((u, index)=> 
                        <tr>
                            <td>
-                                {index}
+                                {index + 1}
                            </td>
                            <td>
                                {u.firstname}
@@ -142,7 +144,7 @@ const Account = () => {
                        {restaurants.map((u, index)=> 
                        <tr>
                            <td>
-                                {index}
+                                {index + 1}
                            </td>
                            <td>
                                {u?.name}
@@ -154,7 +156,7 @@ const Account = () => {
                                {u.rating}
                            </td>
                            <td>
-                               {u.status === true ? 'Active' : 'Closed'} 
+                               {u.status === true ? <span className='text-white p-1 rounded-3' style={{backgroundColor:'#25d366'}}>Active</span> : <span>Closed</span>} 
                            </td>
                            <td>
                                {u.products?.length}
@@ -185,13 +187,16 @@ const Account = () => {
                         <th>Status</th>
                         <th>Date</th>
                         <th>Time</th>
+                        <th></th>
                         </tr>
                     </thead>
                     <tbody>
-                       {orders.map((u, index)=> 
+                       {orders?.map((u, index)=> 
+                      
                        <tr>
+                           
                            <td>
-                                {index}
+                                {index + 1}
                            </td>
                            <td>
                                {u?.products?.map((p, index)=> <div key={index}><Image src={p.image} style={{width:'40px', height:'auto'}} /> {p.name}<span className='mx-2'><b>{p.price}</b></span> {index < p.length && <span> , </span>}</div> )}
@@ -211,7 +216,13 @@ const Account = () => {
                            <td>
                                {u.time}
                            </td>
+                           <td>
+                           <Link className='text-decoration-none' to={`/order/${u?._id}`}>
+                            <Button className='text-white' variant='info' size='sm'>View</Button>
+                           </Link>
+                           </td>
                        </tr>
+                      
                        )}
                     </tbody>
                     </Table>
@@ -234,7 +245,7 @@ const Account = () => {
                        {riders.map((u, index)=> 
                        <tr>
                            <td>
-                                {index}
+                                {index + 1}
                            </td>
                            <td>
                                {u.name}
@@ -274,22 +285,25 @@ const Account = () => {
                     </thead>
                     <tbody>
                        {allOrders[0]?.map((u, index)=> 
-                       
                        <tr>
                            <td>
                                 {index + 1}
                            </td>
                            {(u.status === 'pending' || u.status === 'picked') ? (
                                 <Link to = {`/track-order/${u._id}`} className='text-decoration-none text-dark'>
-                                <td>
+                                <td className=''>
                                 {u.products?.map((p, index)=> 
-                                <div><Image src={p.image} className='' style={{width:'50px', height:'auto'}} /> {p.name} <span className='fw-bold'>{p.price}</span></div> )}
+                                <div className='d-flex flex-column'>
+                                    <Image src={p.image} className='' style={{width:'50px', height:'auto'}} /> 
+                                    {p.name} <span className='fw-bold '>Rs. {p.price}</span>
+                                </div> )}
                             </td>
                              </Link>
                            ) : (
                             <td>
                             {u.products?.map((p, index)=> 
-                            <div><Image src={p.image} className='' style={{width:'50px', height:'auto'}} /> {p.name} <span className='fw-bold'>{p.price}</span></div> )}
+                            <div className='d-flex flex-column'>
+                                <Image src={p.image} className='' style={{width:'50px', height:'auto'}} /> {p.name} <span className='fw-bold'>Rs. {p.price}</span></div> )}
                         </td>
                            )}
                           

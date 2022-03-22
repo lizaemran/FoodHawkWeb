@@ -14,15 +14,15 @@ div.navbar-collapse.show{
   box-shadow: none !important;
 }
 .NavBtn:hover{
-background-color: rgba(128, 128, 128, 0.363);
+  border-radius: 0px;
+  border-bottom: 1px solid black;
 }
 .NavLogo{
-  padding: 5px 10px;
   object-fit: cover;
 }
 
 .NavLogo:hover{
   border-radius: 5px;
-  background-color: rgba(128, 128, 128, 0.363);
+  background-color: rgba(128, 128, 128, 0.123);
 
   }

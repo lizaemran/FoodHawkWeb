@@ -18,8 +18,11 @@ import RiderDashboard from "./pages/RiderDashboard";
 import TrackOrder from "./pages/TrackOrder";
 import { getRestaurantsAsync } from "./redux/Slice";
 import Results from "./pages/Results";
-import AboutUs from "./pages/AboutUs";
-import Contact from "./pages/Contact";
+import UserProfile from "./pages/UserProfile";
+import Riders from "./pages/Riders";
+import RiderDetails from "./pages/RiderDetails";
+import OrderDetails from "./pages/OrderDetails";
+import UserContact from "./pages/UserContact";
 function App() {
   const [pId, setPId] = useState("");
   const [isEditP, setIsEditP] = useState(false);
@@ -32,6 +35,11 @@ function App() {
       <Switch>
         <Route path="/SignUp" component={Form} />
         <Route path="/SignIn" component={FormLogin} />
+        <Route path="/user-profile" component={UserProfile} />
+        <Route path="/user-contact" component={UserContact} />
+        <Route exact path="/riders" component={Riders} />
+        <Route exact path="/rider/:id" component={RiderDetails} />
+        <Route exact path="/order/:id" component={OrderDetails} />
         <Route exact path="/" component={MainPage} />
         <Route path="/results/:search" component={Results} />
         <Route
@@ -68,8 +76,8 @@ function App() {
             />
           )}
         />
-        <Route exact path="/register/restaurant" component={RestaurantSignUp} />
-        <Route exact path="/login/restaurant" component={RestaurantLogin} />
+        <Route exact path="/restaurant-register" component={RestaurantSignUp} />
+        <Route exact path="/restaurant-login" component={RestaurantLogin} />
         <Route
           exact
           path="/restaurant/dashboard/:username"
@@ -83,10 +91,8 @@ function App() {
           )}
         />
         <Route exact path="/rider/register" component={RiderSignUp} />
-        <Route exact path="/rider/login" component={RiderLogin} />
-        <Route exact path="/rider/dashboard/" component={RiderDashboard} />
-        <Route exact path="/about-us" component={AboutUs} />
-        <Route exact path="/contact-us" component={Contact} />
+        <Route exact path="/rider-login" component={RiderLogin} />
+        <Route exact path="/rider-dashboard/" component={RiderDashboard} />
       </Switch>
     </div>
   );

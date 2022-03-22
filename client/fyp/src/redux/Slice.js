@@ -142,6 +142,7 @@ async(payload) => {
     }
 });
 
+
 export const getOrderDetailAsync = createAsyncThunk('restaurant/getOrderDetailAsync' , 
 async(payload) => {
     const response = await fetch(`http://localhost:7000/api/restaurant/order/${payload.id}`, {
@@ -198,6 +199,15 @@ async(payload) => {
     }
 });
 
+export const getOrdersRatingAsync = createAsyncThunk('restaurants/getOrdersRatingAsync' , 
+async(payload) => {
+    const response = await fetch(`http://localhost:7000/api/orderRating/${payload.id}`);
+    if(response.ok){
+        const ratings = await response.json();
+        return {ratings};
+    }
+});
+
 export const getSearchResultsAsync = createAsyncThunk('restaurants/getSearchAsync' , 
 async(payload) => {
     const response = await fetch(`http://localhost:7000/api/restaurant/search/${payload.keyword}`);
@@ -220,6 +230,7 @@ const Slice = createSlice({
     initialState:
     {
         restaurants: [], order_detail : [],
+        
     },
     // [
     //     { 
@@ -275,6 +286,11 @@ const Slice = createSlice({
             console.log("Got rating successfully.");
             state.restaurant.ratingArray.push(action.payload.rating);
         },
+        [getOrdersRatingAsync.fulfilled]: (state,action) => {
+            console.log("Got order ratings successfully.");
+            state.restaurant.ratingOArray?.push(action.payload.ratings);
+           
+        },
         [updateRestaurantsAsync.fulfilled]: (state,action) => {
             console.log("Posted restaurants successfully.");
             const index = state.restaurants.findIndex((restaurant)=> restaurant.id === action.payload.id);
@@ -299,6 +315,7 @@ const Slice = createSlice({
             console.log("Fetched Top 5 Restaurants Successfully.");
             state.top5Restaurants = action.payload.top5Restaurants;
         },
+     
     },
 });
 export default Slice.reducer;

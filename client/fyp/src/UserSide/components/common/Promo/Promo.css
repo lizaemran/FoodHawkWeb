@@ -1,7 +1,7 @@
 
 .square {
     border-radius: 25px;
-    background:black;
+    background:radial-gradient(circle, rgba(238,241,255,1) 0%, #edbaa7 100%);
     padding: 20px; 
   } 
   .square h1{
@@ -14,7 +14,7 @@
     text-align: center;
   }
   .input1{
-    background-color:rgba(255, 255, 255, 0.685) !important;
+    background-color:rgba(255, 255, 255) !important;
     height: 40px;
     border-radius: 10px;  
     border:none;

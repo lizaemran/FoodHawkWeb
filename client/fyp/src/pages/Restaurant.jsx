@@ -23,7 +23,7 @@ import FormLoginSub from './SignIn/FormLoginSub';
 import { getUserAsync } from '../redux/auth';
 import { useEffect } from 'react';
 import FormSignup from './SignUp/FormSignup';
-import { addRatingAsync, getRatingAsync, getRestaurantByUsernameAsync, getRestaurantsAsync } from '../redux/Slice';
+import { addRatingAsync, getRatingAsync, getRestaurantByUsernameAsync, getRestaurantsAsync, getOrdersRatingAsync } from '../redux/Slice';
 import ReviewForm from '../components/ReviewForm';
 import GoogleMapReact from 'google-map-react';
 
@@ -36,7 +36,7 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
     const [overview, setOverview] = useState(true);
     const [menu, setMenu] = useState(false);
     const [gallery, setGallery] = useState(false);
-    const [reviews, setReviews] = useState(false);
+    const [reviews, setReviews] = useState(false); 
     const [orderOnline, setOrderOnline] = useState(false);
     const [latValue, setLatValue] = useState('');
     const [lngValue, setLngValue] = useState('');
@@ -47,6 +47,7 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
     const restaurant = useSelector((state) => state.restaurants.restaurant);
     const ratingArray = useSelector((state) => state.restaurants.restaurant?.ratingArray);
     const user = useSelector((state) => state.auth.user);
+    const ratingOArray = useSelector((state) => state.restaurants.restaurant?.ratingOArray);
     const noRedirection = true;
     const dispatch = useDispatch();
     const selectBookingMenu = (r) => {
@@ -69,6 +70,7 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
     location = location.pathname.split('/')[2];
     useEffect (() => {
         dispatch(getUserAsync());
+       
     }, [token])
     // const getRatingHandler = (id) => {
     //             alert('a');
@@ -86,6 +88,16 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
             setLngValue(position.coords.longitude);
           });
     }, [])
+    // useEffect (() => {
+    //     if(restaurant?.ratingOArray !== undefined){
+    //         for(let i=0; i < restaurant?.ratingOArray.length ; i++){
+    //             alert('hh'); 
+    //             dispatch(getOrdersRatingAsync({
+    //                 id: restaurant?.ratingOArray[i]
+    //             }))
+    //         }
+    //     }
+    // }, [restaurant])
     // const AnyReactComponent = ({ text }) => <div>{text}</div>;
     const defaultProps = {
         center: {
@@ -204,9 +216,13 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
                     {/* <p className='' style={{margin: '0px' , fontSize:'15px'}}>Fast Food</p> */}
                     </Col>
                     <Col className='d-flex justify-content-end'>
-                    <div id="" className='fs-6 '>
-                        {renderStars(restaurant?.rating)} {restaurant?.rating}
+                    <div id="" className='fs-6 ' style={{marginRight:'20px'}}>
+                        {renderStars(restaurant?.ratingR)} {restaurant?.ratingR}
                         <p className='' style={{fontSize:'12px'}}>{restaurant?.ratingArray?.length} Dining Reviews</p>
+                    </div>
+                    <div id="" className='fs-6 '>
+                        {renderStars(restaurant?.ratingO)} {restaurant?.ratingO}
+                        <p className='' style={{fontSize:'12px'}}>{restaurant?.ratingOArray?.length} Delivery Reviews</p>
                     </div>
                     </Col>
                 </Row>
@@ -296,16 +312,21 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
                 </div>
                {overview && 
                     <div className='py-3'>
-                        <h6>Known For</h6>
-                        <p className='' style={{fontSize:'14px'}}>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum nulla iste maiores optio, vero odit ab aliquid, voluptate necessitatibus similique perferendis. Iste delectus suscipit repudiandae!
-                        </p>
-                        <p style={{fontSize:'14px'}}>
-                            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Libero itaque, <b>molestias officiis fugit</b> modi facere.
-                        </p>
-                        <p style={{fontSize:'14px'}}>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. In qui esse sint cupiditate quos quod libero perferendis, magnam quis quasi delectus atque, officia nisi beatae aliquam corrupti voluptates, consectetur neque? Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus est tempore nobis nostrum officiis sed natus sit perspiciatis aut alias.
-                        </p>
+                        {restaurant?.overview ? (<>
+                        {restaurant?.overview}
+                        </>) : (
+                            <><h6>Known For</h6>
+                            <p className='' style={{fontSize:'14px'}}>
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum nulla iste maiores optio, vero odit ab aliquid, voluptate necessitatibus similique perferendis. Iste delectus suscipit repudiandae!
+                            </p>
+                            <p style={{fontSize:'14px'}}>
+                                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Libero itaque, <b>molestias officiis fugit</b> modi facere.
+                            </p>
+                            <p style={{fontSize:'14px'}}>
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. In qui esse sint cupiditate quos quod libero perferendis, magnam quis quasi delectus atque, officia nisi beatae aliquam corrupti voluptates, consectetur neque? Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus est tempore nobis nostrum officiis sed natus sit perspiciatis aut alias.
+                            </p></>
+                        )}
+                        
                    </div>}
                    {menu && 
                     <div className='py-3'>
@@ -361,8 +382,20 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
                             </div>
                         )}</>) 
                     : 
+                    (<>
+                       {restaurant?.ratingOArray.length > 0 ? 
+                        (<>
+                           {restaurant?.ratingOArray.map((r) =>
+                            <div key={r._id} className=''>
+                                <Reviews name={r?.user_name} stars={r.stars} desc={r.description} />
+                            </div>
+                        )}</>) 
+                    : 
                     (<p className='fs-6 poppins text-center'>No reviews yet</p>)
                     }
+                    </>)
+                    }
+                  
                      
                    </div>}
                    {orderOnline && 
@@ -371,15 +404,15 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
                              {restaurant?.products.map((r) => 
                                 <PopUpDetail key={r._id} id={r._id} image={r.image} name={r.name} price={r.price} discount={r.discount} category={r.category} setPId={setPId} setIsEditP={setIsEditP}/>
                             )}  
-                            </>) : (
-                                <Row className='flex-wrap'> 
+                            </>) : (<>
+                            {restaurant?.products.length > 0 ? (<Row className='flex-wrap'> 
                                     {restaurant?.products.map((r) =>
                                     <Col key={r._id} xl={3} lg={4} md={3} sm={12} xs={12}>
                                         <Col className='bg-light p-2 d-flex flex-column justify-content-between align-items-center w-100 mb-3' style={{borderRadius:'5px'}} xl={4} lg={4} md={4} sm={12} xs={12}>
                                         <Image src={r.image} style={{height:'auto', width:'10vw', }} />
                                         <div className='d-flex flex-column justify-content-center align-items-center'>
                                         <p className='fs-5 fw-bold'>{r.name}</p>
-                                        <p className='text-center' style={{fontSize:'11px'}}>{r?.description}</p>
+                                        {/* <p className='text-center' style={{fontSize:'11px'}}>{r?.description}</p> */}
                                         <p>PKR {r.price}</p>
                                         <p>{r.category}</p>
                                         </div>
@@ -389,7 +422,11 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
                                         </Col>
                                     </Col>
                                     )}
-                                </Row>
+                                </Row>) : (<div>
+                                    <p className='fs-6 poppins text-center text-white'>No products yet</p>
+                                </div>)}
+                                
+                                </>
 
                         )}
                                         

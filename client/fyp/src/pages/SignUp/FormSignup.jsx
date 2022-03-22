@@ -83,15 +83,15 @@ if(response.ok){
 }
   }
   return (
-    <Container className='p-5 '>
+    <Container className='p-5 ' style={{backgroundColor:'#e9e9e1'}}>
       <Form  className='' noValidate >
-        <h3 className='text-white'>
+        <h3 className='text-dark'>
           Register...
         </h3>
         <div className='d-flex flex-column'>
-          <label className='text-white' style={{fontSize:'14px'}}>Username</label>
+          <label className='text-dark' style={{fontSize:'14px'}}>Username</label>
           <input
-            className='w-75 mb-1 input1 fs-6 rounded-3 mt-0 border-0 text-muted bg-light'
+            className='w-75 mb-1 input2 py-3 fs-6 rounded-3 text-muted bg-light'
             type='text'
             style={{fontSize:'14px'}}
             name='username'
@@ -101,9 +101,9 @@ if(response.ok){
           />
         </div>
         <div className='d-flex flex-column'>
-          <label className='text-white' style={{fontSize:'14px'}}>First Name</label>
+          <label className='text-dark' style={{fontSize:'14px'}}>First Name</label>
           <input
-            className='w-75 mb-1 input1 fs-6 rounded-3 mt-0 border-0 text-muted bg-light'
+            className='w-75 mb-1 input2 py-3 fs-6 rounded-3 mt-0  text-muted bg-light'
             type='text'
             name='username'
             style={{fontSize:'14px'}}
@@ -113,9 +113,9 @@ if(response.ok){
           />
         </div>
         <div className='d-flex flex-column'>
-          <label className='text-white' style={{fontSize:'14px'}}>Last Name</label>
+          <label className='text-dark' style={{fontSize:'14px'}}>Last Name</label>
           <input
-            className='w-75 mb-1 input1 fs-6 rounded-3 mt-0 border-0 text-muted bg-light'
+            className='w-75 mb-1 input2 py-3 fs-6 rounded-3 mt-0  text-muted bg-light'
             type='text'
             name='username'
             style={{fontSize:'14px'}}
@@ -125,9 +125,9 @@ if(response.ok){
           />
         </div>
         <div className='d-flex flex-column'>
-          <label className='text-white' style={{fontSize:'14px'}}>Email</label>
+          <label className='text-dark' style={{fontSize:'14px'}}>Email</label>
           <input
-            className='input1 w-75 mb-1 fs-6 p-3 rounded-3 mt-0 border-0 text-muted bg-light'
+            className='input2 w-75 mb-1 fs-6 p-3 rounded-3 mt-0  text-muted bg-light'
             type='email'
             name='email'
             style={{fontSize:'14px'}}
@@ -137,9 +137,9 @@ if(response.ok){
           />
         </div>
         <div className='d-flex flex-column'>
-          <label className='text-white' style={{fontSize:'14px'}}>Password</label>
+          <label className='text-dark' style={{fontSize:'14px'}}>Password</label>
           <input
-            className='input1 w-75 mb-1 fs-6 p-3 rounded-3 mt-0 border-0 text-muted bg-light'
+            className='input2 w-75 mb-1 fs-6 p-3 rounded-3 text-muted bg-light'
             type='password'
             name='password'
             style={{fontSize:'14px'}}
@@ -151,16 +151,16 @@ if(response.ok){
         {/* <div className='d-flex flex-column'>
           <label className='text-white'>Confirm Password</label>
           <input
-            className='input1 w-75 mb-1 fs-6 p-3 rounded-3 mt-0 border-0 text-muted'
+            className='input2 w-75 mb-1 fs-6 p-3 rounded-3 mt-0  text-muted'
             type='password'
             name='password2'
             placeholder='Confirm your password'
           />
         </div> */}
         <div className='d-flex flex-column'>
-          <label className='text-white' style={{fontSize:'14px'}}>Phone Number</label>
+          <label className='text-dark' style={{fontSize:'14px'}}>Phone Number</label>
           <input
-            className='input1 w-75 mb-1 fs-6 p-3 rounded-3 mt-0 border-0 text-muted bg-light'
+            className='input2 w-75 mb-1 fs-6 p-3 rounded-3 mt-0  text-muted bg-light'
             type='phone'
             name='phone'
             style={{fontSize:'14px'}}
@@ -170,14 +170,15 @@ if(response.ok){
           />
         </div>
         <div className='d-flex flex-column'>
-          <label className='text-white' style={{fontSize:'14px'}}>Address</label>
+          <label className='text-dark' style={{fontSize:'14px'}}>Address</label>
           <input
-            className='input1 w-75 mb-1 fs-6 rounded-3 mt-0 border-0 text-muted bg-light'
+            className='input2 w-75 py-3 mb-1 fs-6 rounded-3 mt-0  text-muted bg-light'
             type='text'
             name='address'
             style={{fontSize:'14px'}}
             placeholder='Select from map'
             value={location}
+            disabled='true'
             onChange={(event) => setLocation(event.target.value)}
           />
         </div>
@@ -206,11 +207,11 @@ if(response.ok){
           Sign up
         </Button>
         {noRedirection ? (
-           <span className='text-white' style={{fontSize:'12px', cursor:'pointer'}}>
+           <span className='text-dark' style={{fontSize:'12px', cursor:'pointer'}}>
            <br />Already have an account? <u onClick={() => {setModalShowLogin(true); setModalShowSignUp(false);}}>Login</u>
          </span>
         ) : (
-          <span className='text-white' style={{fontSize:'12px'}}>
+          <span className='text-dark' style={{fontSize:'12px'}}>
           <br />Already have an account? <a href='/SignIn'>Login</a>
         </span>
         )}

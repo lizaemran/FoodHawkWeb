@@ -6,7 +6,7 @@ const bcrypt = require('bcrypt');
 const restaurantAuth = require('../middleware/restaurantAuth');
 const { Order } = require('../models/order');
 router.get('/', async (req,res) => {
-    const restaurants = await Restaurant.find().sort({"rating": -1 });
+    const restaurants = await Restaurant.find().sort({"rating": -1 }).populate("products");
     if (!restaurants) return res.status(404).send("RESTAURANT NOT FOUND");
     res.send(restaurants);
 });
@@ -16,12 +16,12 @@ router.get('/:id/products', async (req,res) => {
     res.send(restaurants[0].products);
 });
 router.get('/:id', async (req,res) => {
-    const restaurants = await Restaurant.findById({"_id":req.params.id}).populate("products").populate("ratingArray");
-    if (!restaurants) return res.status(404).send("RESTAURANT NOT FOUND");
-    res.send(restaurants);
+    const restaurant = await Restaurant.findById({"_id":req.params.id}).populate("products").populate("ratingArray").populate("ratingOArray");
+    if (!restaurant) return res.status(404).send("RESTAURANT NOT FOUND");
+    res.send(restaurant);
 });
 router.get('/dashboard/:username', async (req,res) => {
-    let restaurant = await Restaurant.findOne({username: req.params.username}).populate("products").populate("ratingArray").populate("orders").sort({"date": -1 });	
+    let restaurant = await Restaurant.findOne({username: req.params.username}).populate("products").populate("ratingArray").populate("ratingOArray").populate("orders").sort({"date": -1 });	
     if (!restaurant) return res.status(404).send("RESTAURANT NOT FOUND");
     res.send(restaurant);
 });
@@ -86,6 +86,19 @@ router.patch('/:id', async(req,res) => {
         if (!restaurant) return res.status(404).send("RESTAURANT WITH ID NOT FOUND");
     }
 });
+
+router.patch('/overview/:id', async(req,res) => {
+    let restaurant;
+    try { restaurant = await Restaurant.findOne({_id:req.params.id});
+        restaurant.overview = req.body.overview
+    await restaurant.save();
+    res.send(restaurant);
+}
+    catch{
+        if (!restaurant) return res.status(404).send("RESTAURANT WITH ID NOT FOUND");
+    }
+});
+
 
 router.get('/order/:id', restaurantAuth, async (req,res) => {
     const order = await Order.findById({"_id":req.params.id});

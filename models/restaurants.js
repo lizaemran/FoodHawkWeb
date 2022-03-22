@@ -18,6 +18,10 @@ const restaurantSchema = new mongoose.Schema({
         type:String,
         required:true 
     },
+    overview:{
+        type:String,
+        required:false 
+    },
     image:{
         type:String,
         required:true 
@@ -61,10 +65,28 @@ const restaurantSchema = new mongoose.Schema({
         required: true
         
     }, 
+    ratingR: {
+        type: Number,
+        required: true,
+        default: 0
+        
+    }, 
+    ratingO: {
+        type: Number,
+        required: true,
+        default: 0
+        
+    }, 
     ratingArray : [
         {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Rating" 
+        }
+    ],
+    ratingOArray : [
+        {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "OrderRating" 
         }
     ],
     status: {

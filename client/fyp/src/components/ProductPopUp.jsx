@@ -5,6 +5,7 @@ import PopUpDetail from './PopUpDetail';
 import {getProductsAsync} from '../redux/ProductSlice';
 import {motion} from 'framer-motion';
 import {popup} from '../animations';
+import { Modal, Button } from 'react-bootstrap';
 const ProductPopUp = ({id, image, name, setIsPopUp, setPId, setIsEditP}) => {
     const dispatch = useDispatch();
     const products = useSelector((state) => state.products);
@@ -13,15 +14,14 @@ const ProductPopUp = ({id, image, name, setIsPopUp, setPId, setIsEditP}) => {
             id
         }));
     }, [dispatch]);
+        
     return (
         <>
         
         <span onClick={()=> {setIsPopUp(false)}} className="toggle-btn"><i class="fas fa-times"></i></span>
         <motion.div variants={popup} initial="hidden" animate="show" className="popup-main">
-            <div className="popup-inner">
-               
-                {products.length > 0 ? (<>
-                
+            <div className="popup-inner ">
+            {products.length > 0 ? (<> 
             {products?.map((product) => (<>
 				<PopUpDetail 
                 key={product.id} 
@@ -44,9 +44,7 @@ const ProductPopUp = ({id, image, name, setIsPopUp, setPId, setIsEditP}) => {
                 <div>
                     <h2 className='text-white'>No Products To Show</h2>
                 </div>
-            )}
-
-                
+            )}  
             </div>
         </motion.div>
         </>

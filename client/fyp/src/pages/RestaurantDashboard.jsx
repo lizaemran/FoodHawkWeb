@@ -1,13 +1,13 @@
 import React, {useState,useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import {getRestaurantDashboardAsync, logoutUser} from '../redux/auth';
+import {getRestaurantDashboardAsync, logoutUser, patchOverviewAsync} from '../redux/auth';
 import { useLocation } from 'react-router-dom';
-import { Col, Container, Image, Row, Table } from 'react-bootstrap';
+import { Col, Container, Form, Image, Row, Table } from 'react-bootstrap';
 import {AiOutlineLogout} from 'react-icons/ai';
 import FormPopUp from '../components/FormPopUp';
 import UpdateStatus from '../components/UpdateStatus';
 import AddProduct from '../components/AddProduct';
-import {getOrderDetailAsync} from '../redux/Slice';
+import {getOrderDetailAsync, } from '../redux/Slice';
 import {AiOutlineEdit} from 'react-icons/ai';
 import UpdateProduct from '../components/UpdateProduct';
 import { ToastContainer, toast } from 'react-toastify';
@@ -16,6 +16,7 @@ const RestaurantDashboard = ({pId, setPId,isEditP, setIsEditP}) => {
     const dispatch = useDispatch();
     const [isEditStatus, setIsEditStatus] = useState(false);
     const [isAdd, setIsAdd] = useState(false);
+    const [overView, setOverView] = useState('');
     const d = new Date();
     const month = d.toLocaleString('default', { month: 'long' });
     const date = d.getDate() + " " + month + ", " + d.getFullYear();
@@ -25,11 +26,12 @@ const RestaurantDashboard = ({pId, setPId,isEditP, setIsEditP}) => {
     const username = location.split('/')[3];
     const status = useSelector((state) => state?.auth?.status);
     const name = useSelector((state) => state?.auth?.name);
+    const rating = useSelector((state) => state?.auth?.rating);
     const img = useSelector((state) => state?.auth?.image);
     const products = useSelector((state) => state?.auth?.products);
     const r_id = useSelector((state) => state?.auth?.id);
     const orders = useSelector((state) => state?.auth?.orders);
-
+    const current_overview = useSelector((state) => state?.auth?.overview);
     useEffect(()=> {
         dispatch(getRestaurantDashboardAsync(username))
     }, []) //have to re-render on status change
@@ -40,6 +42,18 @@ const RestaurantDashboard = ({pId, setPId,isEditP, setIsEditP}) => {
     //         }));
     //     }
     // }, [orders]) //have to re-render on status change
+    const renderStars = (stars) => {
+        let rating = [];
+             for(let i=1; i<=5; i++){
+                if(i <= stars) {
+                    rating.push(<i class="fas fa-star golden"></i>);
+                }
+                else{
+                    rating.push(<i class="fas fa-star grey"></i>)
+                }
+            }
+            return rating;
+    }
     const logOut = (e) => {
         e.preventDefault();
         dispatch(logoutUser());
@@ -58,11 +72,15 @@ const RestaurantDashboard = ({pId, setPId,isEditP, setIsEditP}) => {
                             <p>Time: <b>{time}</b></p>
                             <p>You are currently <span className='fw-bold' style={{color: status ? '#37d339' : 'red'}}>{status ? 'Active' : 'Inactive'}</span> <span className='' onClick={() => setIsEditStatus(true)} style={{fontSize:'11px', cursor:'pointer', color:'#2121d1'}}><AiOutlineEdit className='text-white fs-6' /></span></p>
                         </Col>
-                        <Col className='d-flex justify-content-center align-items-center'>
+                        <Col className='d-flex  justify-content-center align-items-center'>
                         <Image src={img} className='w-25 h-auto'/>
                         </Col>
-                        <Col className='d-flex justify-content-end align-items-center p-3' >
-                            <AiOutlineLogout className='fs-3 bg-light p-1' onClick={logOut} style={{borderRadius:'50%', cursor:'pointer'}}/>
+                        <Col className='text-end p-3' >
+                            <div className='d-flex flex-column justify-content-around align-items-end'>
+                                <div>{renderStars(rating)}</div>
+                                <AiOutlineLogout className='mt-5 fs-3 bg-light p-1' onClick={logOut} style={{borderRadius:'50%', cursor:'pointer'}}/>
+                            </div>
+                           
                         </Col>
                     </Row>
                 </Container>
@@ -70,6 +88,17 @@ const RestaurantDashboard = ({pId, setPId,isEditP, setIsEditP}) => {
 
             </section>
 
+            <section>
+                <Container className=''>
+                    <div className='p-3 text-white d-flex flex-column justify-content-end align-items-center' style={{backgroundColor:'rgba(0, 0, 0, 0.5)', borderRadius:'20px', backdropFilter:'blur(2px)'}}>
+                      <p>Let customers know about your restaurant. Add some overview about your cuisines and other specialities.</p>
+                      <Form.Control as="textarea" className='w-100' placeholder='Our restaurnt is ... We have spacialities are... We are busy during... Our best dishes...' value={overView} onChange={(e) => setOverView(e.target.value)} />
+                      <p className='py-1 px-2 text-center text-white rounded-3 w-25 my-2' onClick={() => dispatch(patchOverviewAsync({id: r_id, overview : overView }))} style={{backgroundColor:'#ef5023', marginBottom:'0px', cursor:'pointer'}} >Set Overview</p>
+                      {current_overview !== undefined && <p>Current Overview: <i>{current_overview}</i></p>}
+                    </div>
+                </Container>
+               
+            </section>
 
             <section>
                 <Container className='p-3'>

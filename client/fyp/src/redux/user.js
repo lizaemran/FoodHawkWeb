@@ -1,4 +1,6 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
+import { toast } from 'react-toastify';
+
 export const addOrderAsync = createAsyncThunk('user/addOrderAsync',
 async(payload) => {
     const response = await fetch(`http://localhost:7000/api/order/${payload.r_id}/${payload.u_id}`, {
@@ -21,13 +23,30 @@ async(payload) => {
     }
 });
 
+export const addOrderRatingAsync = createAsyncThunk('user/addOrderAsync',
+async(payload) => {
+    const response = await fetch(`http://localhost:7000/api/orderRating/${payload.r_id}/${payload.u_id}/${payload.o_id}`, {
+        method: "POST",
+        headers: {
+            "Content-Type": 'application/json',
+        },
+        body: JSON.stringify({
+            stars: payload.stars,
+            description: payload.description,
+        })
+    });
+    if(response.ok){
+        const orderRating = await response.json();
+        return {orderRating};
+    }
+});
+
 export const getOrderAsync = createAsyncThunk('user/getOrderAsync' , 
 async(payload) => {
     const response = await fetch(`http://localhost:7000/api/user/order/${payload}`, {
         method: "GET",
         headers: {
             "Content-Type": 'application/json',
-            "x-auth-token": localStorage.getItem('token')
         },
     });
     if(response.ok){
@@ -60,6 +79,26 @@ async(payload) => {
         return {orders};
     }
 });
+
+export const sendMessageAsync = createAsyncThunk('user/sendMessageAsync',
+async(payload) => {
+    const response = await fetch(`http://localhost:7000/api/user/message`, {
+        method: "POST",
+        headers: {
+            "Content-Type": 'application/json',
+        },
+        body: JSON.stringify({
+            email: payload.email,
+            subject: payload.subject,
+            message: payload.message,
+        })
+    });
+    if(response.ok){
+        const message = await response.json();
+        return {message};
+    }
+});
+
 const UserSlice = createSlice({
     name: "user",
     initialState: 
@@ -95,7 +134,14 @@ const UserSlice = createSlice({
         },
         [getAllOrdersForUserAsync.fulfilled]: (state,action) => {
             console.log("Fetched all orders for user successfully.");
-            state.allOrders.push(action.payload.orders);
+            state.allOrders.push(action.payload?.orders);
+        },
+        [addOrderRatingAsync.fulfilled]: (state,action) => {
+            console.log("Order Rating Added successfully.");
+        },
+        [sendMessageAsync.fulfilled]: (state,action) => {
+            console.log("Message Sent successfully.");
+            toast.success("Message Sent Successfully.");
         },
     }
        

@@ -33,8 +33,12 @@ const orderSchema = new mongoose.Schema({
     time: {
         type:String,
         required:true
-    }
-
+    }, 
+    ratingOrder :
+        {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "OrderRating" 
+        },
 })
 
 const Order = mongoose.model('Order',orderSchema)

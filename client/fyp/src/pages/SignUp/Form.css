@@ -11,3 +11,7 @@
 .form-btn:hover{
   background-color:#ef4f23a1!important;
 }
+.input2{
+  border: 1px solid gray!important;
+  height: 25px!important;
+}

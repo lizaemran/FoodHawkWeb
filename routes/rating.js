@@ -15,13 +15,13 @@ router.post('/:r_id/:u_id', async(req,res) => {
         restaurant_id: req.params.r_id,
         description: req.body.description,
     });
-    
     let user = await User.findById({_id:req.params.u_id});
     rating.user_name = user.firstname;
     await rating.save();
     // user = await user.save();
     restaurant.ratingArray.push(rating);
-    restaurant.rating = restaurant.ratingArray.reduce((a,b) => a + b.stars, 0)/restaurant.ratingArray.length;
+    restaurant.ratingR = restaurant.ratingArray.reduce((a,b) => a + b.stars, 0)/restaurant.ratingArray.length;
+    restaurant.rating = (restaurant.ratingR + restaurant.ratingO) / (restaurant.ratingArray.length + restaurant.ratingOArray.length);
     restaurant = await restaurant.save();
     res.send(restaurant);
 });

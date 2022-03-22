@@ -134,6 +134,7 @@ const RiderSlice = createSlice({
     extraReducers: {
         [getRiderByIdAsync.fulfilled]: (state, action) => {
             state.rider = action.payload.rider;
+            state.assignedRider = action.payload.rider;
             
         },
         [patchRiderLocationAsync.fulfilled]: (state,action) => {
@@ -151,7 +152,7 @@ const RiderSlice = createSlice({
         },
         [getRiderAssign.fulfilled]: (state,action) => {
             if(action?.payload?.error){
-
+                toast.error("Finding a rider for you. Please wait.");
                 return {...state , assignedRider: {}};
             }
             else{

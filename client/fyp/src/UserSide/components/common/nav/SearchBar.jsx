@@ -10,6 +10,7 @@ import {ToastContainer, toast} from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
 import 'react-toastify/dist/ReactToastify.css';
 import { getTop5RestaurantsAsync } from "../../../../redux/Slice";
+import {AiOutlineSearch} from 'react-icons/ai';
 import {Link} from 'react-router-dom';
 function Searchbar(props) {
   const { 
@@ -69,7 +70,7 @@ return (
   <>
     <ToastContainer />
     <div className="position-relative">
-    <div className="d-flex justify-content-center align-items-center shadow-lg" style={{zIndex:'3'}}>
+    <div className="d-flex justify-content-center align-items-center shadow-sm" style={{zIndex:'3'}}>
         <input
           onChange={handleInput}
           onKeyPress={handleEnterKeyPressed}
@@ -92,8 +93,9 @@ return (
                     { top5Restaurants?.map(data => (
                               <div  className="d-flex bg-light p-2 text-dark" style={{ borderRadius:'20px' ,marginRight:'10px',  width: 'fit-content', height:'fit-content', boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px'}}>
                                 <Link key={`${data.id}`} to={`/restaurant/${data.name}`} className='text-decoration-none d-flex text-dark'>
-                                <Image src={data.image} style={{marginRight:'5px' , width:"auto", height:"50px", borderRadius:'50%', objectFit:'cover'}}/>
-                                <p className="d-flex justify-content-center align-items-center text-capitalize" style={{marginBottom:'0px'}}>{data.name}</p>
+                                <Image src={data.image} style={{marginRight:'5px' , width:"auto", height:"35px", borderRadius:'50%', objectFit:'cover'}}/>
+                                <p className="d-flex justify-content-center align-items-center  " style={{marginBottom:'0px', fontSize:'14px', marginRight:'2.5px'}}>{data.name}</p>
+                                <BsSearch className="fs-5 m-auto" />
                                 </Link>
                               </div>
                               
