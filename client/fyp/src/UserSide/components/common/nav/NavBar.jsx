@@ -21,13 +21,13 @@ const NavBar = () => {
           {location !== '' && <div className='' style={{marginRight:'50px'}}>
             <SearchBar inNav={true} />
           </div>}
-            <Link to="#" className="fw-bold text-dark " >
-            <Button variant="" className="NavBtn text-dark ">About Us</Button>
+            <Link to="/about-us" className="fw-bold text-dark " >
+            <Button variant="" className="NavBtn text-dark">About Us</Button>
             </Link>
             <Link to="#" className="fw-bold text-dark">
             <Button variant="" className="NavBtn text-dark">Booking</Button>
             </Link>
-            <Link to="#" className="fw-bold text-dark">
+            <Link to="/contact-us" className="fw-bold text-dark">
             <Button variant="" className="NavBtn text-dark">Contact Us</Button>
             </Link>
             <Link to="/SignUp">
