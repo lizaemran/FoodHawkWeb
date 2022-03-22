@@ -26,7 +26,7 @@ const NavBar = () => {
             <Link to="#" className="fw-bold text-muted">
             <Button variant="" className="NavBtn text-white">Booking</Button>
             </Link>
-            <Link to="#" className="fw-bold text-muted">
+            <Link to="/contact-us" className="fw-bold text-muted">
             <Button variant="" className="NavBtn text-white">Contact Us</Button>
             </Link>
             <Link to="/SignUp">

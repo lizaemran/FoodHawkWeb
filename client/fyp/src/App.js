@@ -19,6 +19,7 @@ import TrackOrder from "./pages/TrackOrder";
 import { getRestaurantsAsync } from "./redux/Slice";
 import Results from "./pages/Results";
 import AboutUs from "./pages/AboutUs";
+import Contact from "./pages/Contact";
 function App() {
   const [pId, setPId] = useState("");
   const [isEditP, setIsEditP] = useState(false);
@@ -85,6 +86,7 @@ function App() {
         <Route exact path="/rider/login" component={RiderLogin} />
         <Route exact path="/rider/dashboard/" component={RiderDashboard} />
         <Route exact path="/about-us" component={AboutUs} />
+        <Route exact path="/contact-us" component={Contact} />
       </Switch>
     </div>
   );

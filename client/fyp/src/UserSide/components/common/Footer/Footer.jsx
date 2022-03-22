@@ -17,13 +17,17 @@ function Footer() {
         </Row>
         <Row className="py-3">
         <Col className="d-flex justify-content-end align-items-center">
+        <a href="https://www.facebook.com/profile.php?id=100079527450083">
           <BsFacebook className="fs-3" style={{color:"#EF5023"}}/>
+          </a>
         </Col>
         <Col className="d-flex justify-content-center align-items-center">
         <BsTwitter className="fs-3" style={{color:"#EF5023"}}/>
         </Col>
         <Col className="d-flex justify-content-start align-items-center">
+          <a href="https://www.instagram.com/foodhawk11/">
         <AiFillInstagram className="fs-3" style={{color:"#EF5023"}}/>
+        </a>
         </Col>
         </Row>
         </Container>
