@@ -8,6 +8,7 @@ const PopUpDetail = ({id, image, name, price, description, discount, category, r
     const {cartItems, total} = useSelector((state)=> state.cart);
     const restaurants = useSelector((state)=> state.restaurants.restaurants);
     const token = useSelector((state)=> state.auth.token);
+    const isConfirmed = useSelector((state)=> state?.auth?.isConfirmed);
     var decoded = jwt_decode(token);
     const dispatch = useDispatch();
     let rId = 0;
@@ -75,7 +76,7 @@ const PopUpDetail = ({id, image, name, price, description, discount, category, r
                 <a onClick={()=> {setIsEditP(true)}}>Edit</a>
                 </div>}
                     <h1>{name}</h1>
-                    {decoded.isUser === true  && 
+                    {(decoded.isUser === true && isConfirmed)  && 
                      <button id="btn" onClick={AddtoCart}>ADD TO CART</button>
                     }
                     <div id="rating">

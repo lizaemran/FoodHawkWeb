@@ -16,7 +16,7 @@ const Form = () => {
     <ToastContainer />
     <NavBar/>
     <Row className='bg-light'>
-      <Col xl={6} lg={6} md={6} sm={12} xs={12} className='d-flex flex-column justify-content-center align-items-center text-white'>
+      <Col xl={6} lg={6} md={6} sm={12} xs={12} className='d-flex flex-column justify-content-center align-items-center text-dark'>
       {/* <Image className='log-img' src={BurgerS} alt="sign-in"/> */}
       <Image src={logo} style={{height:'auto', width:'15rem'}} />
           <h1>Food Hawk</h1>

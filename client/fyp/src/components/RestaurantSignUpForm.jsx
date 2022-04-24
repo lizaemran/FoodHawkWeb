@@ -72,7 +72,7 @@ const RestaurantSignUpForm = () => {
         zoom: 17
       };
       const getAddress = async() => {
-        const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${latValue},${lngValue}&key=AIzaSyAyt8jyJ3uk_s1p6e6qtvI50OmLq8e4z0w`, {
+        const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${latValue},${lngValue}&key=AIzaSyAOWEsA7XNwmoFasiw9hlAewldBeEJB8-o`, {
         method: "GET",
     });
 
@@ -134,7 +134,7 @@ const RestaurantSignUpForm = () => {
                 {(latValue && lngValue) && 
                   <div style={{ height: '45vh', width: '100%' }}>
                   <GoogleMapReact
-                    bootstrapURLKeys={{ key: "AIzaSyAyt8jyJ3uk_s1p6e6qtvI50OmLq8e4z0w" }}
+                    bootstrapURLKeys={{ key: "AIzaSyAOWEsA7XNwmoFasiw9hlAewldBeEJB8-o" }}
                     defaultCenter={defaultProps.center}
                     defaultZoom={defaultProps.zoom}
                     onBoundsChange={(center, zoom) => {setLatValue(center[0]); setLngValue(center[1]); setLocation(center[0] + "," + center[1])}}

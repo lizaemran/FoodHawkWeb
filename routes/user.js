@@ -6,7 +6,30 @@ const bcrypt = require('bcrypt');
 const userAuth = require('../middleware/userAuth');
 const { Order } = require('../models/order');
 const nodemailer = require('nodemailer');
+const utility = require("../utility");
+const hbs = require('nodemailer-express-handlebars')
+const path = require('path')
 
+//nodemailer
+var transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: '180984@students.au.edu.pk',
+      pass: '7031376@#'
+    }
+});
+
+const handlebarOptions = {
+	viewEngine: {
+		partialsDir: path.resolve('./templates'),
+		defaultLayout: false,
+	},
+	viewPath: path.resolve('./templates'),
+};
+
+transporter.use('compile', hbs(handlebarOptions))
+
+//register
 router.post('/', async(req,res) => {
     // console.log(req.body)
     const {error} = validate(req.body);
@@ -21,17 +44,43 @@ router.post('/', async(req,res) => {
     }
     const salt = await bcrypt.genSalt(10);
     let pass = await bcrypt.hash(req.body.password, salt);
+    let otp = utility.randomNumber(4);
     user = new User({
         username : req.body.username,
         firstname: req.body.firstname,
         lastname: req.body.lastname,
         email: req.body.email,
+        confirmOTP: otp,
         password: pass,
         contact: req.body.contact,
         address: req.body.address,
         lat: req.body.lat,
         lng: req.body.lng,
     }); 
+//     var message = `<div>
+//     <p><b>Email:</b> ${req.body.email}<br />
+//     <b>Message: </b>${req.body.message}<br />
+//     <span>Food Hawk</span>
+//     </p>
+//    </div>`;
+    var mailOptions = {
+    from: '180984@students.au.edu.pk',
+    to: req.body.email,
+    subject: 'Please verify your account on Food Hawk',
+    template: 'verifyEmailTemplate',
+    context: {
+        verifylink: 'http://localhost:3000/user/verifyConfirm/' + otp,
+    }
+    };
+    transporter.sendMail(mailOptions, function(error, info){
+    if (error) {
+    console.log(error);
+    res.send(error);
+    } else {
+    console.log('Email sent: ' + info.response);
+    res.send({message: "Message Sent"});
+    }
+    });
     await user.save();
     const token = user.generateAuthToken();
     user.token = token;
@@ -69,28 +118,23 @@ router.get('/order/:id', async (req,res) => {
     res.send(order);
 });
 
-//nodemailer
-var transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: 'lizaemran56@gmail.com',
-      pass: 'Liza@#123'
-    }
-});
-
-
+//contact
 router.post('/message' , async(req,res) => {
-    var message = `<div>
-                    <p><b>Email:</b> ${req.body.email}<br />
-                    <b>Message: </b>${req.body.message}<br />
-                    <span>Food Hawk</span>
-                    </p>
-                   </div>`;
+    // var message = `<div>
+    //                 <p><b>Email:</b> ${req.body.email}<br />
+    //                 <b>Message: </b>${req.body.message}<br />
+    //                 <span>Food Hawk</span>
+    //                 </p>
+    //                </div>`;
     var mailOptions = {
         from: req.body.email,
-        to: 'lizaemran56@gmail.com',
+        to: '180984@students.au.edu.pk',
         subject: req.body.subject,
-        html: message
+        template: 'contactTemplate',
+        context: {
+            email: req.body.email,
+            message: req.body.message,
+        }
       };
       transporter.sendMail(mailOptions, function(error, info){
         if (error) {

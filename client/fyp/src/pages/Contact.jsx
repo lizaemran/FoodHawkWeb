@@ -8,6 +8,7 @@ import { sendMessageAsync } from "../redux/user";
 import * as yup from 'yup';
 import {toast, ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Footer from '../UserSide/components/common/Footer/Footer';
 const Contact = () => {
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState("");
@@ -43,7 +44,7 @@ const Contact = () => {
       <ToastContainer />
       <Col className='position-relative' xl={6} lg={6} md={6} sm={12} xs={12}>
       <Image className='log-img' src={BurgerS} alt="sign-in"/>
-      <div className='position-absolute text-white text-center rounded-3' style={{top:'25%', left:'25%', backgroundColor:'rgba(0,0,0,0.5)', padding:'100px'}}>
+      <div className='position-absolute text-white text-center rounded-3' style={{top:'10%', left:'10%', backgroundColor:'rgba(0,0,0,0.5)', padding:'200px'}}>
         <h2>Food Hawk</h2>
         <p className='fs-5'>Delivering the best...</p>
       </div>
@@ -67,7 +68,7 @@ const Contact = () => {
           </Form>
       </Col>
     </Row>
-   
+   <Footer />
 </>
   )
 }

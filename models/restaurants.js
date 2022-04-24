@@ -14,6 +14,14 @@ const restaurantSchema = new mongoose.Schema({
         type: String,
         required:true 
     },
+    confirmOTP: {
+        type: Number,
+        required: false
+    },
+    isConfirmed: {
+        type: Boolean,
+        default: false
+    },
     name:{
         type:String,
         required:true 

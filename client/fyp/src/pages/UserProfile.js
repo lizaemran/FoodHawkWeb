@@ -21,8 +21,8 @@ const UserProfile = () => {
     const [address, setAddress] = useState("");
     const [phone, setPhone] = useState("");
     const [location, setLocation] = useState('');
-    const [latValue, setLatValue] = useState('');
-    const [lngValue, setLngValue] = useState('');
+    const [latValue, setLatValue] = useState('0');
+    const [lngValue, setLngValue] = useState('0');
     const dispatch = useDispatch();
     let schemaUpdatePI = yup.object().shape({
 		firstname: yup.string().required('Please enter firstname'),
@@ -60,7 +60,7 @@ const UserProfile = () => {
         zoom: 16
       };
       const getAddress = async() => {
-        const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${latValue},${lngValue}&key=AIzaSyAyt8jyJ3uk_s1p6e6qtvI50OmLq8e4z0w`, {
+        const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${latValue},${lngValue}&key=AIzaSyAOWEsA7XNwmoFasiw9hlAewldBeEJB8-o`, {
         method: "GET",
     });
     
@@ -79,19 +79,19 @@ const UserProfile = () => {
             </Col>
             <Col xl={11} lg={11} md={11} sm={12} xs={12}>
             <ToastContainer />
-           <Container className='p-4'>
-               <div className='px-4 py-3 bg-danger bg-opacity-10 text-white w-100 d-flex justify-content-start align-items-start flex-column' style={{borderRadius:"5px"}}>
-                    <p className='fs-4' style={{marginBottom:'0px', borderBottom:'5px dotted #e5e5e5'}}>Hello, {auth.firstName || auth.username}</p>
-                    <p className="mt-1" style={{marginBottom:'0px'}}><BsFillPersonFill className="text-dark" style={{marginRight:'5px'}} />{auth?.firstname}{" "}{auth?.lastname}</p>
-                    <p style={{marginBottom:'0px'}}><AiFillPhone className="text-dark" style={{ marginRight:'5px'}} /> {auth?.contact}</p>
-                    <p className="" style={{marginBottom:'0px'}}><IoHome className="text-dark" style={{marginRight:'5px'}} />{auth?.address}</p>
+           <Container className='p-4 bg-light'>
+               <div className='px-4 py-2 text-white w-50 d-flex justify-content-start align-items-start flex-column' style={{borderRadius:"5px", backgroundColor:'#ef5023'}}>
+                    <p className='fs-5' style={{marginBottom:'0px', borderBottom:'3px dotted #e5e5e5'}}>Hello, {auth.firstName || auth.username}</p>
+                    <p className="mt-1" style={{marginBottom:'0px', fontSize:'14px'}}><BsFillPersonFill className="text-dark" style={{marginRight:'5px'}} />{auth?.firstname}{" "}{auth?.lastname}</p>
+                    <p style={{marginBottom:'0px', fontSize:'14px'}}><AiFillPhone className="text-dark" style={{ marginRight:'5px'}} /> {auth?.contact}</p>
+                    <p className="" style={{marginBottom:'0px', fontSize:'14px'}}><IoHome className="text-dark" style={{marginRight:'5px'}} />{auth?.address}</p>
                </div>
                {!isEdit && <Button className="my-3 d-flex justify-content-center align-items-center " onClick={() => setIsEdit(true)}>
                  <p style={{marginBottom:'0px'}}>Edit Profile Information</p>
                </Button>}
                {isEdit && 
-                            <div className="mt-2 shadow-lg" style={{ border: '2px solid orange', borderRadius:'5px'}}>
-                             <div className=' py-3 bg-white d-flex justify-content-center align-items-center ' style={{borderRadius:"5px"}}>
+                            <div className="mt-2 shadow-sm bg-light" style={{ border: '2px solid #e5e5e5', borderRadius:'5px' }}>
+                             <div className=' py-3 d-flex justify-content-center align-items-center ' style={{borderRadius:"5px",}}>
                             <Form className="">
                              
                              {/* <Form.Label  className="">First Name : </Form.Label> */}
@@ -101,7 +101,7 @@ const UserProfile = () => {
                                  className="mb-3 "
                                  style={{fontSize:'10px'}}
                              >
-                                <Form.Control className="" style={{}} name='fname' type='text' value={fname} onChange={(e) => setFName(e.target.value)} placeholder='Change First Name' />
+                                <Form.Control className="" style={{height:'40px', border:'1px solid gray'}} name='fname' type='text' value={fname} onChange={(e) => setFName(e.target.value)} placeholder='Change First Name' />
                                 </FloatingLabel>
                                 {/* <Form.Label>Last Name : </Form.Label> */}
                                 <FloatingLabel
@@ -110,7 +110,7 @@ const UserProfile = () => {
                                  className="mb-3"
                                  style={{fontSize:'10px'}}
                              >
-                                <Form.Control className="" style={{ }} name='lname' type='text' value={lname}  onChange={(e) => setLName(e.target.value)} placeholder='Change Last Name' />
+                                <Form.Control className="" style={{height:'40px', border:'1px solid gray'}} name='lname' type='text' value={lname}  onChange={(e) => setLName(e.target.value)} placeholder='Change Last Name' />
                                 </FloatingLabel>
                       
                                 {/* <Form.Label>Address : </Form.Label> */}
@@ -120,13 +120,13 @@ const UserProfile = () => {
                                  className="mb-3"
                                  style={{fontSize:'10px'}}
                              >
-                                <Form.Control className="" style={{}} name='address' type='text' value={address}  onChange={(e) => setAddress(e.target.value)} placeholder='Change Address' />
+                                <Form.Control className="" style={{height:'40px', border:'1px solid gray'}} name='address' type='text' value={address}  onChange={(e) => setAddress(e.target.value)} placeholder='Change Address' />
                                  </FloatingLabel>
                                  <div className='d-flex flex-column'>
                      {(latValue && lngValue) && 
-                               <div style={{ height: '35vh', width: '100%' }}>
+                               <div style={{ height: '20vh', width: '100%' }}>
                                <GoogleMapReact
-                                 bootstrapURLKeys={{ key: "AIzaSyAyt8jyJ3uk_s1p6e6qtvI50OmLq8e4z0w" }}
+                                 bootstrapURLKeys={{ key: "AIzaSyAOWEsA7XNwmoFasiw9hlAewldBeEJB8-o" }}
                                  defaultCenter={defaultProps.center}
                                  defaultZoom={defaultProps.zoom}
                                  onBoundsChange={(center, zoom) => {setLatValue(center[0]); setLngValue(center[1]); setLocation(center[0] + "," + center[1])}}
@@ -139,7 +139,7 @@ const UserProfile = () => {
                                </GoogleMapReact>
                                </div>
                                }
-                             <Button className='btn w-100 bg-light text-primary'  onClick={getAddress}>
+                             <Button className='btn w-100 text-white'  onClick={getAddress} style={{border:'1px solid rgb(239, 80, 35)', backgroundColor:'rgb(239, 90, 1,0.9)'}}>
                                  Set Location
                              </Button>
                        </div>
@@ -150,14 +150,17 @@ const UserProfile = () => {
                                  className="my-3"
                                  style={{fontSize:'10px'}}
                              >
-                                 <Form.Control className="" style={{}} name='phone' type='text' value={phone} onChange={(e) => setPhone(e.target.value)} placeholder='Change Phone' />
+                                 <Form.Control className="" style={{height:'40px', border:'1px solid gray'}} name='phone' type='text' value={phone} onChange={(e) => setPhone(e.target.value)} placeholder='Change Phone' />
                                  </FloatingLabel>
-                                 <Button onClick={updateInfoHandler} className='w-100 bg-success'>
+                                 <div className="d-flex justify-content-end align-items-center">
+                                 <Button onClick={updateInfoHandler} className='w-25' style={{border:'1px solid #25d366', backgroundColor:'#25d366'}}>
                                      Submit 
                                  </Button>
-                                 <Button onClick={() => setIsEdit(false)} className='w-100 bg-light text-primary mt-2'>
+                                 <Button variant='outline-danger' onClick={() => setIsEdit(false)} className='w-25 bg-light text-danger border border-1 border-danger ' style={{marginLeft:'5px'}}>
                                      Discard 
                                  </Button>
+                                 </div>
+                                 
                                 
                             </Form>
                             </div>

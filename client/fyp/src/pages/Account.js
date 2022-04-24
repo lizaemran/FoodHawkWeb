@@ -51,7 +51,7 @@ const Account = () => {
             </Col>
             <Col xl={11} lg={11} md={11} sm={12} xs={12}>
            <Container className='p-4'>
-               <div className='px-4 py-3 bg-danger bg-opacity-10 text-white w-25 d-flex justify-content-start align-items-center' style={{borderRadius:"5px"}}>
+               <div className='px-4 py-3 text-white w-25 d-flex justify-content-start align-items-center' style={{borderRadius:"5px", backgroundColor:'#EF5023'}}>
                     <p className='fs-4' style={{marginBottom:'0px'}}>Hello, {auth.firstName || auth.username}</p>
                </div>
                {decoded.isAdmin === true && 
