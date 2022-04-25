@@ -1,5 +1,5 @@
 import React, {useState,useEffect} from 'react';
-import {AiOutlineLogout, AiOutlineLoading3Quarters} from 'react-icons/ai';
+import {AiOutlineLogout, AiOutlineLoading3Quarters, AiOutlineWarning} from 'react-icons/ai';
 import {FaUserCircle} from 'react-icons/fa';
 import auth, { logoutUser, getRiderAsync} from '../redux/auth';
 import {useSelector, useDispatch} from 'react-redux';
@@ -80,6 +80,9 @@ const RiderDashboard = () => {
     }
     return (
         <div className='rider__register__bg' >
+             {rider?.isConfirmed === false && <div className="alert alert-danger mb-1 text-center" role="alert">
+               <AiOutlineWarning className='fs-5' /> Confirm Your Email to Change Status 
+               </div>}
             <Container className='p-3'>
                 <Row className='mb-2 ' style={{backgroundColor:'rgba(0, 0, 0, 0.4)', borderRadius:'20px', backdropFilter:'blur(15px)'}}>
                     <Col className='d-flex justify-content-between align-items-center py-3 px-5 text-white' >
@@ -91,7 +94,7 @@ const RiderDashboard = () => {
                         <FaUserCircle className='' style={{fontSize:'6rem'}} />
                         <div className='d-flex flex-column my-auto'>
                         <div class="form-check form-switch toggle-status mt-4">
-                        <input
+                        {rider?.isConfirmed === true && <><input
                             type='checkbox'
                             className='form-check-input'
                             id="flexSwitchCheckDefault"
@@ -99,7 +102,7 @@ const RiderDashboard = () => {
                             onChange={(e)=> {setStatusValue(!statusValue); onSubmit(e); } }
                         >
                         </input>
-                        <h6 className='text-capitalize'>{riderdetails?.status ? riderdetails?.status : 'Updating'}</h6>
+                        <h6 className='text-capitalize'>{riderdetails?.status ? riderdetails?.status : 'Updating'}</h6></>}
                         </div>
                         <div className='mt-1 mb-2'>
                             <AiOutlineLogout className='fs-3 bg-light p-1' onClick={logOut} style={{borderRadius:'50%', cursor:'pointer',}}/>
@@ -114,11 +117,13 @@ const RiderDashboard = () => {
                         <h3 className='py-2 text-center text-white' >
                             Current Location
                         </h3>
+                        {/* AIzaSyAyt8jyJ3uk_s1p6e6qtvI50OmLq8e4z0w */}
                         {/* <Image src={map} className='' alt='res-map' style={{height:'37.5vh', width:'100%', borderRadius:'10px', objectFit:'cover'}}/> */}
                         {(lat && lng) ? 
                                   (<div style={{ height: '260px', width: '100%', }}>
+                                      
                                   <GoogleMapReact
-                                      bootstrapURLKeys={{ key: "AIzaSyAyt8jyJ3uk_s1p6e6qtvI50OmLq8e4z0w" }}
+                                      bootstrapURLKeys={{ key: "AIzaSyAOWEsA7XNwmoFasiw9hlAewldBeEJB8-o" }}
                                       defaultCenter={defaultProps.center}
                                       defaultZoom={defaultProps.zoom}
                                   >

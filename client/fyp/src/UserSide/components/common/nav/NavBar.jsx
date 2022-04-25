@@ -22,7 +22,7 @@ const NavBar = () => {
             <SearchBar inNav={true} />
           </div>}
             <Link to="/about-us" className="fw-bold text-dark " >
-            <Button variant="" className="NavBtn text-dark ">About Us</Button>
+            <Button variant="" className="NavBtn text-dark">About Us</Button>
             </Link>
             <Link to="#" className="fw-bold text-dark">
             <Button variant="" className="NavBtn text-dark">Booking</Button>

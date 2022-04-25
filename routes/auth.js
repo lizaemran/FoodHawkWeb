@@ -7,6 +7,40 @@ const { Admin } = require('../models/admin');
 const { Restaurant } = require('../models/restaurants');
 const { Rider } = require('../models/rider');
 
+router.post('/user/verifyConfirm', async(req,res) => {
+    let user = await User.findOne({confirmOTP: req.body.otp});
+    if(!user){
+        return res.status(400).send("INVALID OTP");
+    }
+    user.isConfirmed = true;
+    user.confirmOTP = null;
+    await user.save();
+    return res.status(200).send("OTP VERIFIED");
+});
+
+router.post('/rider/verifyConfirm', async(req,res) => {
+    let user = await Rider.findOne({confirmOTP: req.body.otp});
+    if(!user){
+        return res.status(400).send("INVALID OTP");
+    }
+    user.isConfirmed = true;
+    user.confirmOTP = null;
+    await user.save();
+    return res.status(200).send("OTP VERIFIED");
+});
+
+router.post('/restaurant/verifyConfirm', async(req,res) => {
+    let user = await Restaurant.findOne({confirmOTP: req.body.otp});
+    if(!user){
+        return res.status(400).send("INVALID OTP");
+    }
+    user.isConfirmed = true;
+    user.confirmOTP = null;
+    await user.save();
+    return res.status(200).send("OTP VERIFIED");
+});
+
+
 router.post('/user', async(req,res) => {
     let user = await User.findOne({username: req.body.username});
     if(!user){

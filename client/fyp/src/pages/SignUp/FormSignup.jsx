@@ -15,9 +15,9 @@ const FormSignup = ({noRedirection, setModalShowLogin, setModalShowSignUp}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [contact, setContact] = useState('');
-  const [location, setLocation] = useState('');
-  const [latValue, setLatValue] = useState('');
-  const [lngValue, setLngValue] = useState('');
+  const [location, setLocation] = useState('abc');
+  const [latValue, setLatValue] = useState('0');
+  const [lngValue, setLngValue] = useState('1');
   const token = useSelector((state) => state.auth.token);
   const dispatch = useDispatch();
   let schemaSignIn = yup.object().shape({
@@ -72,13 +72,13 @@ const FormSignup = ({noRedirection, setModalShowLogin, setModalShowSignUp}) => {
     zoom: 16
   };
   const getAddress = async() => {
-    const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${latValue},${lngValue}&key=AIzaSyAyt8jyJ3uk_s1p6e6qtvI50OmLq8e4z0w`, {
+    const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${latValue},${lngValue}&key=AIzaSyAOWEsA7XNwmoFasiw9hlAewldBeEJB8-o`, {
     method: "GET",
 });
 
 if(response.ok){
     const address = await response.json();
-    setLocation(address.results[0].formatted_address);
+    setLocation(address.results[0]?.formatted_address);
   
 }
   }
@@ -186,7 +186,7 @@ if(response.ok){
         {(latValue && lngValue) && 
                   <div style={{ height: '35vh', width: '75%' }}>
                   <GoogleMapReact
-                    bootstrapURLKeys={{ key: "AIzaSyAyt8jyJ3uk_s1p6e6qtvI50OmLq8e4z0w" }}
+                    bootstrapURLKeys={{ key: "AIzaSyAOWEsA7XNwmoFasiw9hlAewldBeEJB8-o" }}
                     defaultCenter={defaultProps.center}
                     defaultZoom={defaultProps.zoom}
                     onBoundsChange={(center, zoom) => {setLatValue(center[0]); setLngValue(center[1]); setLocation(center[0] + "," + center[1])}}

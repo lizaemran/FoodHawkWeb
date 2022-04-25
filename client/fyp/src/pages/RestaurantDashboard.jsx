@@ -8,7 +8,7 @@ import FormPopUp from '../components/FormPopUp';
 import UpdateStatus from '../components/UpdateStatus';
 import AddProduct from '../components/AddProduct';
 import {getOrderDetailAsync, } from '../redux/Slice';
-import {AiOutlineEdit} from 'react-icons/ai';
+import {AiOutlineEdit, AiOutlineWarning} from 'react-icons/ai';
 import UpdateProduct from '../components/UpdateProduct';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -26,6 +26,7 @@ const RestaurantDashboard = ({pId, setPId,isEditP, setIsEditP}) => {
     location = location.pathname;
     const username = location.split('/')[3];
     const status = useSelector((state) => state?.auth?.status);
+    const isConfirmed = useSelector((state) => state?.auth?.isConfirmed);
     const name = useSelector((state) => state?.auth?.name);
     const rating = useSelector((state) => state?.auth?.rating);
     const img = useSelector((state) => state?.auth?.image);
@@ -64,6 +65,9 @@ const RestaurantDashboard = ({pId, setPId,isEditP, setIsEditP}) => {
     return (
         <div className='bg-secondary' >
             <ToastContainer />
+            {isConfirmed === false && <div className="alert alert-danger mb-1 text-center" role="alert">
+               <AiOutlineWarning className='fs-5' /> Confirm Your Email to Add Products 
+               </div>}
             <section>
                 <Container  className='p-3'>
                     <Row className='' style={{backgroundColor:'rgba(0, 0, 0, 0.5)', borderRadius:'20px', backdropFilter:'blur(20px)'}}>
@@ -107,8 +111,8 @@ const RestaurantDashboard = ({pId, setPId,isEditP, setIsEditP}) => {
                         <Col>
                             <p className='pt-3'>Products : <span className='fw-bold'>{products?.length}</span></p>
                         </Col>
-                        <Col className='d-flex justify-content-end align-items-center p-3'>
-                        <p className='py-1 px-2 text-white rounded-3' onClick={() => setIsAdd(true)} style={{backgroundColor:'#ef5023', marginBottom:'0px', cursor:'pointer'}} >Add Product</p>
+                         <Col className='d-flex justify-content-end align-items-center p-3'>
+                         {isConfirmed === true &&<p className='py-1 px-2 text-white rounded-3' onClick={() => setIsAdd(true)} style={{backgroundColor:'#ef5023', marginBottom:'0px', cursor:'pointer'}} >Add Product</p>}
                         </Col>
                        
                         <Row>

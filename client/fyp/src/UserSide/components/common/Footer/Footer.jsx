@@ -7,7 +7,7 @@ import { BsTwitter } from "react-icons/bs";
 function Footer() {
   return (
     <div className="main-footer">
-      <p className="text-center fs-3 fw-bold text-white">Food Hawk</p>
+      <p className="text-center fs-3 fw-bold text-dark">Food Hawk</p>
       <Container className="">
         <Row className="pt-3 pb-4">
           <Col
@@ -19,7 +19,7 @@ function Footer() {
             className="d-flex justify-content-center align-items-center fs-6"
             style={{}}
           >
-            <a className="text-decoration-none text-white" href="/about-us">
+            <a className="text-decoration-none text-dark" href="/about-us">
               About Us
             </a>
           </Col>
@@ -32,7 +32,7 @@ function Footer() {
             className="d-flex justify-content-center align-items-center fs-6"
             style={{}}
           >
-            <a className="text-decoration-none text-white" href="/">
+            <a className="text-decoration-none text-dark" href="/">
               Booking
             </a>
           </Col>
@@ -45,7 +45,7 @@ function Footer() {
             className="d-flex justify-content-center align-items-center fs-6"
             style={{}}
           >
-            <a className="text-decoration-none text-white" href="/contact-us">
+            <a className="text-decoration-none text-dark" href="/contact">
               Contact
             </a>
           </Col>
@@ -58,7 +58,7 @@ function Footer() {
             className="d-flex justify-content-center align-items-center fs-6"
             style={{}}
           >
-            <a className="text-decoration-none text-white" href="/faqs">
+            <a className="text-decoration-none text-dark" href="/faqs">
               FAQs
             </a>
           </Col>
@@ -74,7 +74,7 @@ function Footer() {
             style={{}}
           >
             <a
-              className="text-decoration-none text-white"
+              className="text-decoration-none text-dark"
               href="/register/restaurant"
             >
               Restaurant Login/Register
@@ -89,7 +89,7 @@ function Footer() {
             className="d-flex justify-content-center align-items-center fs-6"
             style={{}}
           >
-            <a className="text-decoration-none text-white" href="/">
+            <a className="text-decoration-none text-dark" href="/">
               Place Order
             </a>
           </Col>
@@ -102,7 +102,7 @@ function Footer() {
             className="d-flex justify-content-center align-items-center fs-6"
             style={{}}
           >
-            <a className="text-decoration-none text-white" href="/rider/login">
+            <a className="text-decoration-none text-dark" href="/rider/login">
               Become Our Rider
             </a>
           </Col>
@@ -115,7 +115,7 @@ function Footer() {
             className="d-flex justify-content-center align-items-center fs-6"
             style={{}}
           >
-            <a className="text-decoration-none text-white" href="/">
+            <a className="text-decoration-none text-dark" href="/">
               Get Promos
             </a>
           </Col>
@@ -129,7 +129,7 @@ function Footer() {
           <Col className="d-flex justify-content-center align-items-center">
             <BsTwitter className="fs-3" style={{ color: "#EF5023" }} />
           </Col>
-          <Col className="d-flex justify-content-center align-items-center">
+          <Col className="d-flex justify-content-start align-items-center">
             <AiFillInstagram className="fs-3" style={{ color: "#EF5023" }} />
           </Col>
         </Row>

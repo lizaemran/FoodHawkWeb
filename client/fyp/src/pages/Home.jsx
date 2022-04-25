@@ -24,6 +24,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { getAllOrdersForUserAsync } from '../redux/user';
 import ReviewForm from '../components/ReviewForm';
+import {AiOutlineWarning} from 'react-icons/ai';
 const Home = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
     const {cartItems, total} = useSelector((state)=> state.cart);
     const cart = useSelector((state)=> state.cart);
@@ -38,7 +39,8 @@ const Home = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
     const [searched, setSearched] = useState(false);
     const [rId, setRId] = useState();
     const userType = useSelector((state)=> state.auth?.user_type);
-    const firstname = useSelector((state) => state.auth?.firstname)
+    const firstname = useSelector((state) => state.auth?.firstname);
+    const isConfirmed = useSelector((state) => state.auth?.isConfirmed);
     const allOrders = useSelector((state)=> state.user?.allOrders[0]);
     const [modalShow, setModalShow] = useState(false);
     const [orderToReview, setOrderToReview] = useState('');
@@ -137,9 +139,13 @@ const Home = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
             <img id="burger" src={burger} alt="burger"/>
             <img id="fries" src={fries} alt="fries"/>
             <img id="soda" src={soda} alt="soda"/> */}
+             {(isConfirmed === false && userType === 'user') && <div className="alert alert-danger mb-1" role="alert">
+               <AiOutlineWarning className='fs-5' /> Confirm Your Email to Place Order
+               </div>}
             <Container  className="home-container">
             
             {/* <Swiper className="mySwiper " slidesPerView={3} spaceBetween={10}  breakpoints = {{ 300 : {slidesPerView : 1} ,499 : {slidesPerView : 1} , 800 : {slidesPerView : 2}, 1024: {slidesPerView : 3}}}> */}
+
            {searched !== '' ?  <>
            {restaurants?.map((restaurant) => (
                 <div key={restaurant._id}   >

@@ -22,17 +22,27 @@ const riderSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    confirmOTP: {
+        type: Number,
+        required: false
+    },
+    isConfirmed: {
+        type: Boolean,
+        default: false
+    },
     status: {
         type: String,
-        default: "available"
+        default: "inactive"
     },
     lat: {
         type: Number,
-        required: true
+        required: true,
+        default: 0
     },
     lng: {
         type: Number,
-        required: true
+        required: true,
+        default: 0
     },
 })
 riderSchema.methods.generateAuthToken = function(){

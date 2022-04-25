@@ -9,7 +9,7 @@ const BookTableForm = ({setOrderOnline, setBook, setBookingModalShow}) => {
 
    
     return (
-        <div className=' d-flex flex-column justify-content-center align-items-center py-5 bg__booking__form' >
+        <div className=' d-flex flex-column justify-content-center align-items-center py-3 bg__booking__form' >
             <Form className='d-flex flex-column p-4'  style={{backgroundColor:'rgba(255, 255, 255, 0.7)', border:'2px solid gray', borderRadius:'10px'}} >
                 <Form.Label className=''>*Name</Form.Label>
                 <Form.Control type='text' className='book-form' value={name} onChange={(e) => setName(e.target.value)} placeholder='John Doe'/>

@@ -1,8 +1,8 @@
 import React, {useState} from 'react'
 import { Breadcrumb, Button, Col, Container, Image, Row, Modal, Form, } from 'react-bootstrap'
-import {AiOutlineStar} from 'react-icons/ai';
+import {AiOutlineStar, AiOutlineClose} from 'react-icons/ai';
 import {MdOutlineDirections} from 'react-icons/md';
-import {BsBookmarkPlus, BsShare} from 'react-icons/bs'
+import {BsBookmarkPlus, BsShare, BsCheckCircle} from 'react-icons/bs'
 import {ImCancelCircle} from 'react-icons/im';
 import {MdOutlineLocationOn} from 'react-icons/md';
 import SideNav from '../components/SideNav/SideNav'
@@ -26,9 +26,13 @@ import FormSignup from './SignUp/FormSignup';
 import { addRatingAsync, getRatingAsync, getRestaurantByUsernameAsync, getRestaurantsAsync, getOrdersRatingAsync } from '../redux/Slice';
 import ReviewForm from '../components/ReviewForm';
 import GoogleMapReact from 'google-map-react';
-
+import { addBookingItems, clearBooking, deleteBooking } from '../redux/BookingSlice';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
     const [bookingModalShow, setBookingModalShow] = useState(false);
+    const {bookingItems, totalB} = useSelector((state)=> state?.booking);
+    const restaurants = useSelector((state)=> state?.restaurants);
     const [review, setReview] = useState(false);
     const [direction, setDirection] = useState(false);
     const [bookmark, setBookmark] = useState(false);
@@ -47,12 +51,51 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
     const restaurant = useSelector((state) => state.restaurants.restaurant);
     const ratingArray = useSelector((state) => state.restaurants.restaurant?.ratingArray);
     const user = useSelector((state) => state.auth.user);
+    const u_id = useSelector((state) => state.auth?.id);
     const ratingOArray = useSelector((state) => state.restaurants.restaurant?.ratingOArray);
     const noRedirection = true;
     const dispatch = useDispatch();
     const selectBookingMenu = (r) => {
-        alert(r.name + ' is selected');
-    }
+        // console.log(r._id);
+            // if(total > 0){
+                    dispatch(addBookingItems({
+                        id: r._id,
+                        restaurant_id: restaurant._id,
+                        user_id: u_id,
+                        countItems: 1,
+                        name: r.name,
+                        price: r.price,
+                        image: r.image,
+                        description: r.description,
+                        discount: r.discount,
+                        category: r.category,
+                        
+                    }))
+                    toast.success('Item added to booking!', {	
+                        position: "top-right",
+                        autoClose: 5000,
+                        });
+                // }
+            // else{
+            // dispatch(addBookingItems({
+            //     id: r.id,
+            //     restaurant_id: restaurant._id,
+            //     countItems: 1,
+            //     name: r.name,
+            //     price: r.price,
+            //     image: r.image,
+            //     description: r.description,
+            //     discount: r.discount,
+            //     category: r.category,
+            //     restaurant: newrId._id,
+            // }));
+            // toast.success('Item added to booking!', {	
+            //     position: "top-right",
+            //     autoClose: 5000,
+            //     });
+            //     }
+     
+        };
     const renderStars = (stars) => {
         let rating = [];
              for(let i=1; i<=5; i++){
@@ -186,6 +229,7 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
         }
     return (
         <div>
+            <ToastContainer />
             {token === null && <NavBar />}
             <Row>
                 {token !== null &&
@@ -260,21 +304,21 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
                     <TwitterIcon size={32} round={true} />
                 </TwitterShareButton>
                 </section>
-                <div className='position-relative '>
-                    <div className='position-absolute res__img__map__div' style={{width:'100%', height:'400px', zIndex:'-1'}}>
+                {/* <div className='position-relative '> */}
+                    {/* <div className='position-absolute res__img__map__div' style={{width:'100%', height:'300px', zIndex:'-1'}}>
 
-                    </div>
-                <Row className='py-1 align-items-center px-5' style={{height:'400px'}}>
+                    </div> */}
+                <Row className='py-1 align-items-center' style={{}}>
                         <Col xl={7} lg={7} md={7} sm={12} xs={12} style={{height:'fit-content'}}>
-                        <Image src={coke} className='' alt='res-img' style={{height:'45vh', width:'100%', borderRadius:'10px', objectFit:'cover'}}/>
+                        <Image src={coke} className='' alt='res-img' style={{height:'37.5vh', width:'100%', borderRadius:'10px', objectFit:'cover'}}/>
                         </Col>
-                        <Col className=' p-3' xl={5} lg={5} md={5} sm={12} xs={12} style={{borderRadius:'5px', height:'fit-content', backgroundColor:'rgba(0,0,0,0.2)', backdropFilter:'blur(10px)'}}>
+                        <Col className=' p-3' xl={5} lg={5} md={5} sm={12} xs={12} style={{borderRadius:'5px', height:'fit-content', backgroundColor:'rgba(0,0,0,0.5)', backdropFilter:'blur(10px)'}}>
                         <p className='mb-2 text-white' style={{margin: '0px' , fontSize:'15px'}}><MdOutlineLocationOn className='fs-4'/> {restaurant?.location}</p>
                         {/* <Image src={map} className='' alt='res-map' style={{height:'37.5vh', width:'100%', borderRadius:'10px', objectFit:'cover'}}/> */}
                         {(restaurant?.lat && restaurant?.lng) && 
-                                  <div style={{ height: '260px', width: '100%', }}>
+                                  <div style={{ height: '200px', width: '100%', }}>
                                   <GoogleMapReact
-                                      bootstrapURLKeys={{ key: "AIzaSyAyt8jyJ3uk_s1p6e6qtvI50OmLq8e4z0w" }}
+                                      bootstrapURLKeys={{ key: "AIzaSyAOWEsA7XNwmoFasiw9hlAewldBeEJB8-o" }}
                                       defaultCenter={defaultProps.center}
                                       defaultZoom={defaultProps.zoom}
                                   >
@@ -289,7 +333,7 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
               
                         </Col>
                 </Row>
-                </div>
+                {/* </div> */}
                 <div className='d-flex res-tab-menu mt-4'>
                 <div className={!overview ? 'res-tab' : 'res-tab-active'} onClick={() => {setOverview(true); setMenu(false); setGallery(false); setReviews(false); setOrderOnline(false); setBook(false);}} style={{marginRight:'10px', cursor:'pointer'}}>
                     Overview
@@ -435,20 +479,17 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
                     <div className='py-3' >
                         {booking ? (
                             <>
-                            <div className='d-flex justify-content-end align-items-center'>
-                             <Button onClick={() => setBooking(false)} className='w-25 h-25' style={{backgroundColor:'red',color:'white', textDecoration:'none', border:'none'}}>
-                                        <ImCancelCircle className='text-white' /> Cancel Booking
-                             </Button>
-                             </div>
+                            <Row>
+                             <Col>
                                  <Row className='flex-wrap'> 
                                  {restaurant?.products.map((r) =>
-                                 <Col key={r._id} xl={3} lg={4} md={3} sm={12} xs={12}>
+                                 <Col key={r._id} xl={4} lg={4} md={6} sm={12} xs={12}>
                                      <Col className='bg-light p-2 d-flex flex-column justify-content-between align-items-center w-100 mb-3' style={{borderRadius:'5px'}} xl={4} lg={4} md={4} sm={12} xs={12}>
-                                     <Image src={r.image} style={{height:'auto', width:'10vw', }} />
-                                     <div className='d-flex flex-column justify-content-center align-items-center'>
-                                     <p className='fs-5 fw-bold'>{r.name}</p>
-                                     <p>PKR {r.price}</p>
-                                     <p>{r.category}</p>
+                                     <Image src={r.image} style={{height:'15vh', width:'8vw', objectFit:'cover' }} />
+                                     <div className='my-2 d-flex flex-column justify-content-center align-items-center'>
+                                     <p className='fs-6' style={{marginBottom:'0px'}}>{r.name}</p>
+                                     <p style={{marginBottom:'0px', fontSize:'13px'}}>{r.category}</p>
+                                     <p style={{marginBottom:'0px', fontSize:'13px'}}>PKR {r.price}</p>
                                      </div>
                                      <Button onClick={() => selectBookingMenu(r)} className='w-100' style={{backgroundColor:'#ef5023',color:'white', textDecoration:'none', border:'none'}}>
                                          Select
@@ -457,7 +498,57 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
                                  </Col>
                                  )}
                              </Row>
-                            
+                             </Col>
+                             <Col className='bg-light p-3'>
+                            <div className='d-flex justify-content-end align-items-start mb-1 '>
+                            <Button className='w-10 h-10 ' style={{marginRight:'5px',backgroundColor:'#25d366',color:'white', textDecoration:'none', border:'none'}}>
+                                    <BsCheckCircle className='text-white' /> Confirm
+                             </Button>
+                             <Button onClick={() => {setBooking(false); dispatch(clearBooking());}} className='w-10 h-10' style={{backgroundColor:'red',color:'white', textDecoration:'none', border:'none'}}>
+                                    <ImCancelCircle className='text-white' /> Cancel
+                             </Button>
+                             </div>
+                             <div className='d-flex flex-column justify-content-center align-items-center'>
+                                 {!totalB > 0 && <p>No Items Selected Yet</p>}
+                                 {bookingItems.map((r,i) =>
+                                 <Row className='py-3 my-1 d-flex justify-content-center align-items-center w-100 bg-white rounded-3 shadow-sm px-3 py-2'>
+                                 <Col>
+                                 {i+1}
+                                 </Col>
+                                 <Col>
+                                 <Image src={r.image} alt='product' width={75} height={50} style={{objectFit:'contain'}} />
+                                 </Col>
+                                 <Col className='d-flex justify-content-center align-items-center'>
+                                 <p className='fs-6 ' style={{marginBottom:'0px'}}>{r.name}</p>
+                                 </Col>
+                                 <Col className='d-flex justify-content-center align-items-center'>
+                                 <p className='fs-6 ' style={{marginBottom:'0px'}}>{r.countItems}</p>
+                                 </Col>
+                                 <Col className='d-flex justify-content-center align-items-center'>
+                                 <p style={{marginBottom:'0px'}}>{r?.category}</p>
+                                 </Col>
+                                 <Col className='d-flex justify-content-center align-items-center'>
+                                 <p style={{marginBottom:'0px'}}>PKR {r?.price}</p>
+                                 </Col>
+                                 <Col className='d-flex justify-content-center align-items-center'>
+                                 <AiOutlineClose style={{cursor:'pointer'}} onClick={() => {dispatch(deleteBooking({id : r.id})); toast.success('Item Removed from booking');}} />
+                                 </Col>
+                                 
+                               </Row>
+                                 )}
+                                
+                                 
+                             </div>
+                             {totalB > 0 && 
+                             <div className='mt-3 d-flex justify-content-end align-items-center'>
+                                 <p className='fs-6'>Items: {totalB}</p>   
+                            </div>}
+                             {totalB > 0 && 
+                             <div className='d-flex justify-content-end align-items-center'>
+                                <p className='fs-6'>Total: PKR {bookingItems?.reduce((acc, cur) => (Number(acc) + Number(cur.countItems * cur.price)), Number(0))}</p>                                     
+                            </div>}
+                             </Col>
+                             </Row>
                              </>
 
                         ) : (

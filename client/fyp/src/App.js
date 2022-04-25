@@ -23,11 +23,10 @@ import Riders from "./pages/Riders";
 import RiderDetails from "./pages/RiderDetails";
 import OrderDetails from "./pages/OrderDetails";
 import UserContact from "./pages/UserContact";
-import AboutUs from "./pages/AboutUs";
 import Contact from "./pages/Contact";
-import Faqs from "./pages/Faqs";
+import AboutUs from "./pages/AboutUs";
+import VerifyEmail from "./pages/VerifyEmail";
 import UserInfo from "./components/UserInfo";
-
 function App() {
   const [pId, setPId] = useState("");
   const [isEditP, setIsEditP] = useState(false);
@@ -38,6 +37,9 @@ function App() {
   return (
     <div>
       <Switch>
+        <Route path="/user/verifyConfirm/:otp" component={VerifyEmail} />
+        <Route path="/rider/verifyConfirm/:otp" component={VerifyEmail} />
+        <Route path="/restaurant/verifyConfirm/:otp" component={VerifyEmail} />
         <Route path="/SignUp" component={Form} />
         <Route path="/SignIn" component={FormLogin} />
         <Route path="/user-profile" component={UserProfile} />
@@ -51,6 +53,8 @@ function App() {
         <Route exact path="/faqs" component={Faqs} />
         <Route exact path="/user-info" component={UserInfo} />
         <Route path="/results/:search" component={Results} />
+        <Route exact path="/contact-us" component={Contact} />
+        <Route exact path="/about-us" component={AboutUs} />
         <Route
           path="/Cart"
           component={() => <Cart search={search} setSearch={setSearch} />}
@@ -99,7 +103,7 @@ function App() {
             />
           )}
         />
-        <Route exact path="/rider/register" component={RiderSignUp} />
+        <Route exact path="/rider-register" component={RiderSignUp} />
         <Route exact path="/rider-login" component={RiderLogin} />
         <Route exact path="/rider-dashboard/" component={RiderDashboard} />
       </Switch>

@@ -38,19 +38,20 @@ router.get('/assign/:id', async(req,res) => {
     let riderWithDistance = [];
       for(let i=0; i<riders.length; i++)
     {
-    await axios.get(`https://maps.googleapis.com/maps/api/distancematrix/json?origins=${riders[i].lat}%2C${riders[i].lng}&destinations=${restaurant.lat}%2C${restaurant.lng}&key=AIzaSyAyt8jyJ3uk_s1p6e6qtvI50OmLq8e4z0w`)
+    await axios.get(`https://maps.googleapis.com/maps/api/distancematrix/json?origins=${riders[i].lat}%2C${riders[i].lng}&destinations=${restaurant.lat}%2C${restaurant.lng}&key=AIzaSyAOWEsA7XNwmoFasiw9hlAewldBeEJB8-o`)
     .then(res => {
         riderWithDistance.push({ rider: riders[i], distance: res?.data?.rows[0]?.elements[0]?.distance?.value});
     }).catch(err => {
         console.log(err);
     });
 }
+    console.log(riderWithDistance, "riderWithDistance");
     let minDistance = Math.min(...riderWithDistance.map(o => o.distance));
     let assignedrider = riderWithDistance.find(o => o.distance === minDistance);
     console.log("assignedrider",assignedrider)
     order.rider_id = assignedrider?.rider._id;
     console.log("order.rider_id",order.rider_id);
-    let riderUpdate = await Rider.findById({_id:assignedrider.rider._id});
+    let riderUpdate = await Rider.findById({_id:assignedrider.rider?._id});
     riderUpdate.status = "busy";
     console.log("riderUpdatedtobusy",riderUpdate);
     await riderUpdate.save();

@@ -12,6 +12,8 @@ const RiderSignUpForm = () => {
     const [emaill, setEmail] = useState('');
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
+    const [lat, setLat] = useState('');
+    const [lng, setLng] = useState('');
     let schemaSignUpP = yup.object().shape({
         username: yup.string().required('Please enter username'),
         password: yup.string().required('Please enter password').min(5).label('Password'),
@@ -30,6 +32,8 @@ const RiderSignUpForm = () => {
                     email: emaill,
                     name: name,
                     phone: phone,
+                    lat: 0,
+                    lng: 0,
                 }));
                 setUserName("");
                 setPasswordd("");

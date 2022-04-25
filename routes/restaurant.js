@@ -5,6 +5,30 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 const restaurantAuth = require('../middleware/restaurantAuth');
 const { Order } = require('../models/order');
+const nodemailer = require('nodemailer');
+const utility = require("../utility");
+const hbs = require('nodemailer-express-handlebars')
+const path = require('path')
+
+//nodemailer
+var transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: '180984@students.au.edu.pk',
+      pass: '7031376@#'
+    }
+});
+
+const handlebarOptions = {
+	viewEngine: {
+		partialsDir: path.resolve('./templates'),
+		defaultLayout: false,
+	},
+	viewPath: path.resolve('./templates'),
+};
+
+transporter.use('compile', hbs(handlebarOptions))
+
 router.get('/', async (req,res) => {
     const restaurants = await Restaurant.find().sort({"rating": -1 }).populate("products");
     if (!restaurants) return res.status(404).send("RESTAURANT NOT FOUND");
@@ -25,6 +49,8 @@ router.get('/dashboard/:username', async (req,res) => {
     if (!restaurant) return res.status(404).send("RESTAURANT NOT FOUND");
     res.send(restaurant);
 });
+
+//register
 router.post('/', async(req,res) => {
     const {error} = validateR(req.body);
     if(error) return res.status(400).send(error.details[0].message);
@@ -38,6 +64,7 @@ router.post('/', async(req,res) => {
     }
     const salt = await bcrypt.genSalt(10);
     let pass = await bcrypt.hash(req.body.password, salt);
+    let otp = utility.randomNumber(4);
      restaurant = new Restaurant({
         username: req.body.username,
         password: pass,
@@ -49,8 +76,27 @@ router.post('/', async(req,res) => {
         lng: req.body.lng,
         phone: req.body.phone,
         rating: req.body.rating,
-        status: false
+        status: false,
+        confirmOTP: otp,
     });
+    var mailOptions = {
+        from: '180984@students.au.edu.pk',
+        to: req.body.email,
+        subject: 'Please verify your account on Food Hawk',
+        template: 'verifyEmailTemplate',
+        context: {
+            verifylink: 'http://localhost:3000/restaurant/verifyConfirm/' + otp,
+        }
+        };
+        transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+        console.log(error);
+        res.send(error);
+        } else {
+        console.log('Email sent: ' + info.response);
+        res.send({message: "Message Sent"});
+        }
+        });
     await restaurant.save();
     const token = restaurant.generateAuthToken();
     restaurant.token = token;

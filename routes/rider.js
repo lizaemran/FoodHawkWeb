@@ -5,6 +5,31 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 const riderAuth = require('../middleware/riderAuth');
 const { Order } = require('../models/order');
+const nodemailer = require('nodemailer');
+const utility = require("../utility");
+const hbs = require('nodemailer-express-handlebars')
+const path = require('path')
+
+//nodemailer
+var transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: '180984@students.au.edu.pk',
+      pass: '7031376@#'
+    }
+});
+
+const handlebarOptions = {
+	viewEngine: {
+		partialsDir: path.resolve('./templates'),
+		defaultLayout: false,
+	},
+	viewPath: path.resolve('./templates'),
+};
+
+transporter.use('compile', hbs(handlebarOptions))
+
+//register
 router.post('/', async(req,res) => {
     const {error} = validate(req.body);
     if(error) return res.status(400).send(error.details[0].message);
@@ -18,15 +43,35 @@ router.post('/', async(req,res) => {
     }
     const salt = await bcrypt.genSalt(10);
     let pass = await bcrypt.hash(req.body.password, salt);
+    let otp = utility.randomNumber(4);
      rider = new Rider({
         username: req.body.username,
         password: pass,
         email: req.body.email,
         name : req.body.name,
         phone: req.body.phone,
+        confirmOTP: otp,
         lat: 0,
         lng: 0,
     });
+    var mailOptions = {
+        from: '180984@students.au.edu.pk',
+        to: req.body.email,
+        subject: 'Please verify your account on Food Hawk',
+        template: 'verifyEmailTemplate',
+        context: {
+            verifylink: 'http://localhost:3000/rider/verifyConfirm/' + otp,
+        }
+        };
+        transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+        console.log(error);
+        res.send(error);
+        } else {
+        console.log('Email sent: ' + info.response);
+        res.send({message: "Message Sent"});
+        }
+        });
     await rider.save();
     const token = rider.generateAuthToken();
     rider.token = token;

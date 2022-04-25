@@ -51,6 +51,14 @@ const userSchema = new mongoose.Schema({
             ref: "Booking"
         }
     ],
+    confirmOTP: {
+        type: Number,
+        required: false
+    },
+    isConfirmed: {
+        type: Boolean,
+        default: false
+    },
     user_type: {
         type: String,
         required: false,

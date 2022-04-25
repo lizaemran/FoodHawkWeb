@@ -42,19 +42,29 @@ const UserContact = () => {
             </Col>
             <Col xl={11} lg={11} md={11} sm={12} xs={12} className=''>
             <ToastContainer />
-           <Container className='p-4 d-flex flex-column justify-content-center align-items-center'>
+           <Container className='p-4 d-flex flex-column justify-content-center align-items-center bg-light' >
                <h4 className="p-2"><GrMail className="fs-3" style={{marginRight:'10px'}} />Contact Us</h4>
+               <div className="w-100">
                <Form.Label> From  </Form.Label>
                <Form.Control type='text' className="mb-3 bg-light" value={auth?.email} disabled={true} style={{cursor:'no-drop'}} />
-               <Form.Label> To  </Form.Label>
+                </div>
+                <div className="w-100">
+                <Form.Label> To  </Form.Label>
                <Form.Control type='text' className="mb-3 bg-light" value='foodhawk@info.com' disabled={true} style={{cursor:'no-drop'}} />
+                </div>
+               <div className="w-100">
                <Form.Label> Subject  </Form.Label>
                <Form.Control type='text' className="mb-3 bg-light" value={subject} onChange={(e) => setSubject(e.target.value)} placeholder='XYZ - Query' />
+               </div>
+               <div className="w-100">
                <Form.Label> Message  </Form.Label>
-               <Form.Control  value={message} onChange={(e)=> setMessage(e.target.value)} as='textarea' className="shadow w-50" style={{borderRadius:'10px' ,border:'2px solid #ef5023'}}  rows={10} placeholder='Can you please help me with...'  /> 
+               <Form.Control  value={message} onChange={(e)=> setMessage(e.target.value)} as='textarea' className="shadow " style={{borderRadius:'10px' ,border:'2px solid #ef5023'}}  rows={10} placeholder='Can you please help me with...'  /> 
                <p className="text-muted mt-1" style={{marginBottom:'0px', fontSize:'12px', }}>Characters: {message.length}</p>
+
+               </div>
+               
                <Button onClick={sendMessageHandler} className="mt-2 px-5" style={{backgroundColor:'#ef5023', border:'1px solid #ef5023' }}>
-                   Send Message
+                  <GrMail className="fs-3 text-white" style={{marginRight:'10px'}} /> Send Message
                </Button>
            </Container>
             </Col>

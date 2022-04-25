@@ -33,6 +33,28 @@ async(payload) => {
     }
 });
 
+export const verifyUserAsync = createAsyncThunk('auth/verifyUserAsync',
+async(payload) => {
+    const response = await fetch('http://localhost:7000/api/auth/user/verifyConfirm', {
+        method: "POST",
+        headers: {
+            "Content-Type": 'application/json',
+        },
+        body: JSON.stringify({
+            otp : payload.otp,
+        })
+    });
+    if(response.ok){
+        const message = await response.json();
+        // console.log(token);
+        return {message};
+    }
+    else{
+        var error = true;
+        return {error};
+    }
+});
+
 export const loginUserAsync = createAsyncThunk('auth/loginUserAsync',
 async(payload) => {
     const response = await fetch('http://localhost:7000/api/auth/user', {
@@ -96,12 +118,40 @@ async(payload) => {
             email: payload.email,
             password: payload.password,
             phone: payload.phone,
+            lat: payload.lat,
+            lng: payload.lng,
         })
     });
 
     if(response.ok){
         const rider = await response.json();
         return {rider};
+    }
+    else{
+        var error = true;
+        return {error};
+    }
+});
+
+export const verifyRiderAsync = createAsyncThunk('auth/verifyRiderAsync',
+async(payload) => {
+    const response = await fetch('http://localhost:7000/api/auth/rider/verifyConfirm', {
+        method: "POST",
+        headers: {
+            "Content-Type": 'application/json',
+        },
+        body: JSON.stringify({
+            otp : payload.otp,
+        })
+    });
+    if(response.ok){
+        const message = await response.json();
+        // console.log(token);
+        return {message};
+    }
+    else{
+        var error = true;
+        return {error};
     }
 });
 
@@ -173,6 +223,28 @@ async(payload) => {
         return {error};
     }
 })
+
+export const verifyRestaurantAsync = createAsyncThunk('auth/verifyRestaurantAsync',
+async(payload) => {
+    const response = await fetch('http://localhost:7000/api/auth/restaurant/verifyConfirm', {
+        method: "POST",
+        headers: {
+            "Content-Type": 'application/json',
+        },
+        body: JSON.stringify({
+            otp : payload.otp,
+        })
+    });
+    if(response.ok){
+        const message = await response.json();
+        // console.log(token);
+        return {message};
+    }
+    else{
+        var error = true;
+        return {error};
+    }
+});
 
 export const getRestaurantDashboardAsync = createAsyncThunk('auth/getRestaurantDashboardAsync',
 async(payload) => {
@@ -299,7 +371,11 @@ const AuthSlice = createSlice({
                 });
             }
             else{
-            console.log("User registered successfully. Sign In to continue");
+            toast("Verify your Email and Sign In to continue", {
+                position: "top-right",
+                autoClose: 5000,
+            });
+            window.location.href = '/SignIn';
             return {
                 ...state,
                 username: action.payload.user.username,
@@ -311,13 +387,76 @@ const AuthSlice = createSlice({
                 address: action.payload.user.address,
                 lat : action.payload.user.lat,
                 lng : action.payload.user.lng,
+                isConfirmed : false,
             };
         }
         },
+        [verifyUserAsync.fulfilled]: (state,action) => {
+            if(action?.payload?.error){
+                toast.error("Invalid OTP", {
+                    position: "top-right",
+                    autoClose: 5000,
+                });
+            }
+            else{
+                toast("User verified successfully.", {
+                    position: "top-right",
+                    autoClose: 5000,
+                });
+
+            }
+            return {
+                ...state,
+            }
+        },
+        [verifyRiderAsync.fulfilled]: (state,action) => {
+            if(action?.payload?.error){
+                toast.error("Invalid OTP", {
+                    position: "top-right",
+                    autoClose: 5000,
+                });
+            }
+            else{
+                toast("Rider verified successfully.", {
+                    position: "top-right",
+                    autoClose: 5000,
+                });
+
+            }
+            return {
+                ...state,
+            }
+        },
+        [verifyRestaurantAsync.fulfilled]: (state,action) => {
+            if(action?.payload?.error){
+                toast.error("Invalid OTP", {
+                    position: "top-right",
+                    autoClose: 5000,
+                });
+            }
+            else{
+                toast("Restaurant verified successfully.", {
+                    position: "top-right",
+                    autoClose: 5000,
+                });
+
+            }
+            return {
+                ...state,
+            }
+        },
         [registerRiderAsync.fulfilled]: (state,action) => {
+            if(action?.payload?.error){
+                toast("Invalid details", {
+                    position: "top-right",
+                    autoClose: 5000,
+                });
+            }
+            else{
             console.log("Rider registered successfully.");
-            window.location.href = '/rider/login';
+            window.location.href = '/rider-dashboard/';
             return action.payload.rider;
+            }
         },
         [loginUserAsync.fulfilled]: (state,action) => {
             if(action?.payload?.error){
@@ -335,7 +474,10 @@ const AuthSlice = createSlice({
                 }
             }
         
-            return{...state, registered: false,  token : action?.payload?.token?.token}
+            return{...state, 
+                registered: false,  
+                token : action?.payload?.token?.token
+            }
         },
         [loginRiderAsync.fulfilled]: (state,action) => {
             if(action?.payload?.error){
@@ -407,6 +549,8 @@ const AuthSlice = createSlice({
                 overview: action?.payload?.restaurant?.overview,
                 user_type: 'Restaurant',
                 orders: action?.payload?.restaurant?.orders,
+                isConfirmed : action?.payload?.restaurant?.isConfirmed,
+
             }
         },
         [patchOverviewAsync.fulfilled]: (state, action) => {
@@ -425,7 +569,8 @@ const AuthSlice = createSlice({
                 password: action?.payload?.user?.password,
                 contact: action?.payload?.user?.contact,
                 address: action?.payload?.user?.address,
-                user_type: action?.payload?.user?.user_type
+                user_type: action?.payload?.user?.user_type,
+                isConfirmed : action?.payload?.user?.isConfirmed,
             }
         },
         [updateUserAsync.fulfilled] : (state, action) => {
@@ -457,9 +602,12 @@ const AuthSlice = createSlice({
                 email: action?.payload?.rider?.email,
                 password: action?.payload?.rider?.password,
                 phone: action?.payload?.rider?.phone,
-                user_type: 'rider'
+                user_type: 'rider',
+                isConfirmed : action?.payload?.rider?.isConfirmed,
+
             }
         },
+
     }
        
 });
