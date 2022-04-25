@@ -45,7 +45,7 @@ function Footer() {
             className="d-flex justify-content-center align-items-center fs-6"
             style={{}}
           >
-            <a className="text-decoration-none text-white" href="/contact">
+            <a className="text-decoration-none text-white" href="/contact-us">
               Contact
             </a>
           </Col>

@@ -23,6 +23,11 @@ import Riders from "./pages/Riders";
 import RiderDetails from "./pages/RiderDetails";
 import OrderDetails from "./pages/OrderDetails";
 import UserContact from "./pages/UserContact";
+import AboutUs from "./pages/AboutUs";
+import Contact from "./pages/Contact";
+import Faqs from "./pages/Faqs";
+import UserInfo from "./components/UserInfo";
+
 function App() {
   const [pId, setPId] = useState("");
   const [isEditP, setIsEditP] = useState(false);
@@ -41,6 +46,10 @@ function App() {
         <Route exact path="/rider/:id" component={RiderDetails} />
         <Route exact path="/order/:id" component={OrderDetails} />
         <Route exact path="/" component={MainPage} />
+        <Route exact path="/about-us" component={AboutUs} />
+        <Route exact path="/contact-us" component={Contact} />
+        <Route exact path="/faqs" component={Faqs} />
+        <Route exact path="/user-info" component={UserInfo} />
         <Route path="/results/:search" component={Results} />
         <Route
           path="/Cart"
