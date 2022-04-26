@@ -27,6 +27,8 @@ import Contact from "./pages/Contact";
 import AboutUs from "./pages/AboutUs";
 import VerifyEmail from "./pages/VerifyEmail";
 import UserInfo from "./components/UserInfo";
+import Faqs from "./pages/Faqs";
+
 function App() {
   const [pId, setPId] = useState("");
   const [isEditP, setIsEditP] = useState(false);
