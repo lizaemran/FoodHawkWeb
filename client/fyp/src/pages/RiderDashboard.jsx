@@ -1,7 +1,7 @@
 import React, {useState,useEffect} from 'react';
 import {AiOutlineLogout, AiOutlineLoading3Quarters, AiOutlineWarning} from 'react-icons/ai';
 import {FaUserCircle} from 'react-icons/fa';
-import auth, { logoutUser, getRiderAsync} from '../redux/auth';
+import auth, { logoutUser, getRiderAsync, resendVerifyRiderAsync} from '../redux/auth';
 import {useSelector, useDispatch} from 'react-redux';
 import { Col, Container, Image, Row, Table, Button, ToggleButton } from 'react-bootstrap';
 import {MdOutlineLocationOn, MdOutlineDirections } from 'react-icons/md';
@@ -81,7 +81,7 @@ const RiderDashboard = () => {
     return (
         <div className='rider__register__bg' >
              {rider?.isConfirmed === false && <div className="alert alert-danger mb-1 text-center" role="alert">
-               <AiOutlineWarning className='fs-5' /> Confirm Your Email to Change Status 
+               <AiOutlineWarning className='fs-5' /> Confirm Your Email to Change Status <a className='border border-1 border-danger text-decoration-none text-danger rounded-3 p-1 shadow-sm' style={{cursor:'pointer'}} onClick={()=> dispatch(resendVerifyRiderAsync({email:rider.email}))}>Resend</a>
                </div>}
             <Container className='p-3'>
                 <Row className='mb-2 ' style={{backgroundColor:'rgba(0, 0, 0, 0.4)', borderRadius:'20px', backdropFilter:'blur(15px)'}}>

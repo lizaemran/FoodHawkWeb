@@ -1,6 +1,6 @@
 import React, {useState,useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import {getRestaurantDashboardAsync, logoutUser, patchOverviewAsync} from '../redux/auth';
+import {getRestaurantDashboardAsync, logoutUser, patchOverviewAsync, resendVerifyRestaurantAsync} from '../redux/auth';
 import { useLocation } from 'react-router-dom';
 import { Col, Container, Form, Image, Row, Table } from 'react-bootstrap';
 import {AiOutlineLogout} from 'react-icons/ai';
@@ -32,6 +32,7 @@ const RestaurantDashboard = ({pId, setPId,isEditP, setIsEditP}) => {
     const img = useSelector((state) => state?.auth?.image);
     const products = useSelector((state) => state?.auth?.products);
     const r_id = useSelector((state) => state?.auth?.id);
+    const email = useSelector((state) => state?.auth?.email);
     const orders = useSelector((state) => state?.auth?.orders);
     const current_overview = useSelector((state) => state?.auth?.overview);
     useEffect(()=> {
@@ -66,7 +67,7 @@ const RestaurantDashboard = ({pId, setPId,isEditP, setIsEditP}) => {
         <div className='bg-secondary' >
             <ToastContainer />
             {isConfirmed === false && <div className="alert alert-danger mb-1 text-center" role="alert">
-               <AiOutlineWarning className='fs-5' /> Confirm Your Email to Add Products 
+               <AiOutlineWarning className='fs-5' /> Confirm Your Email to Add Products <a className='border border-1 border-danger text-decoration-none text-danger rounded-3 p-1 shadow-sm' style={{cursor:'pointer'}} onClick={()=> dispatch(resendVerifyRestaurantAsync({email:email}))}>Resend</a>
                </div>}
             <section>
                 <Container  className='p-3'>

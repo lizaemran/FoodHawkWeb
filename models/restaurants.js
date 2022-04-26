@@ -22,6 +22,14 @@ const restaurantSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
+    resetOTP: {
+        type: Number,
+        required: false
+    },
+    isReset: {
+        type: Boolean,
+        default: false
+    },
     name:{
         type:String,
         required:true 

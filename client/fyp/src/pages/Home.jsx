@@ -16,7 +16,7 @@ import FormPopUp from '../components/FormPopUp';
 import {setCart} from '../redux/CartSlice';
 import { Col, Container, Row, Modal, Button } from 'react-bootstrap';
 import SideNav from '../components/SideNav/SideNav';
-import { getUserAsync, getAdminAsync } from '../redux/auth';
+import { getUserAsync, getAdminAsync, resendVerifyUserAsync } from '../redux/auth';
 import jwt_decode from "jwt-decode";
 import Cart from './Cart';
 import CartHome from '../components/CartHome';
@@ -35,6 +35,7 @@ const Home = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
     const dispatch = useDispatch();
 	const restaurants = useSelector((state)=> state.restaurants.restaurants);
     const id = useSelector((state)=> state.auth.id);
+    const email = useSelector((state)=> state.auth.email);
 	const token = useSelector((state)=> state.auth.token);
     const [searched, setSearched] = useState(false);
     const [rId, setRId] = useState();
@@ -139,8 +140,8 @@ const Home = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
             <img id="burger" src={burger} alt="burger"/>
             <img id="fries" src={fries} alt="fries"/>
             <img id="soda" src={soda} alt="soda"/> */}
-             {(isConfirmed === false && userType === 'user') && <div className="alert alert-danger mb-1" role="alert">
-               <AiOutlineWarning className='fs-5' /> Confirm Your Email to Place Order
+             {(isConfirmed === false && userType === 'user') && <div className="alert alert-danger mb-1 text-center" role="alert">
+               <AiOutlineWarning className='fs-5' /> Confirm Your Email to Place Order <a className='border border-1 border-danger text-decoration-none text-danger rounded-3 p-1 shadow-sm' style={{cursor:'pointer'}} onClick={()=> dispatch(resendVerifyUserAsync({email:email}))}>Resend</a>
                </div>}
             <Container  className="home-container">
             

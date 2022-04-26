@@ -27,8 +27,9 @@ import Contact from "./pages/Contact";
 import AboutUs from "./pages/AboutUs";
 import VerifyEmail from "./pages/VerifyEmail";
 import UserInfo from "./components/UserInfo";
-import Faqs from "./pages/Faqs";
-
+import FAQs from "./components/FAQs";
+import Faqs from './pages/Faqs';
+import ResetPassword from "./pages/ResetPassword";
 function App() {
   const [pId, setPId] = useState("");
   const [isEditP, setIsEditP] = useState(false);
@@ -42,6 +43,9 @@ function App() {
         <Route path="/user/verifyConfirm/:otp" component={VerifyEmail} />
         <Route path="/rider/verifyConfirm/:otp" component={VerifyEmail} />
         <Route path="/restaurant/verifyConfirm/:otp" component={VerifyEmail} />
+        <Route path="/user/forgotPassword/:otp" component={ResetPassword} />
+        <Route path="/rider/forgotPassword/:otp" component={ResetPassword} />
+        <Route path="/restaurant/forgotPassword/:otp" component={ResetPassword} />
         <Route path="/SignUp" component={Form} />
         <Route path="/SignIn" component={FormLogin} />
         <Route path="/user-profile" component={UserProfile} />

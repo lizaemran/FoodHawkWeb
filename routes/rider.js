@@ -77,6 +77,36 @@ router.post('/', async(req,res) => {
     rider.token = token;
     res.send(rider);
 });
+
+//resend verification link
+router.post('/resend', async(req,res) => {
+    let user = await Rider.findOne({email: req.body.email});
+    if(!user){
+        return res.status(400).send("RIDER NOT FOUND");
+    }
+    let otp = utility.randomNumber(4);
+    user.confirmOTP = otp;
+    await user.save();
+    var mailOptions = {
+    from: '180984@students.au.edu.pk',
+    to: req.body.email,
+    subject: 'Please verify your account on Food Hawk',
+    template: 'verifyEmailTemplate',
+    context: {
+        verifylink: 'http://localhost:3000/rider/verifyConfirm/' + otp,
+    }
+    };
+    transporter.sendMail(mailOptions, function(error, info){
+    if (error) {
+    console.log(error);
+    res.send(error);
+    } else {
+    console.log('Email sent: ' + info.response);
+    res.send({message: "Message Sent"});
+    }
+    });
+});
+
 router.get('/', riderAuth, async(req, res)=> {
     let rider = await Rider.findOne({_id: req.rider._id});
     if (!rider) return res.status(404).send("RIDER NOT FOUND");

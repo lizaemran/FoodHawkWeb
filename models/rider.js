@@ -30,6 +30,14 @@ const riderSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
+    resetOTP: {
+        type: Number,
+        required: false
+    },
+    isReset: {
+        type: Boolean,
+        default: false
+    },
     status: {
         type: String,
         default: "inactive"
