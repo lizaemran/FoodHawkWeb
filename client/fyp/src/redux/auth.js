@@ -887,6 +887,7 @@ const AuthSlice = createSlice({
                 user_type: 'Restaurant',
                 orders: action?.payload?.restaurant?.orders,
                 isConfirmed : action?.payload?.restaurant?.isConfirmed,
+                gallery : action?.payload?.restaurant?.gallery,
 
             }
         },

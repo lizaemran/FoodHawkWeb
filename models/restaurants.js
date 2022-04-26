@@ -60,6 +60,12 @@ const restaurantSchema = new mongoose.Schema({
             ref: "Booking"
         }
     ],
+    gallery : [
+        {
+            type: String,
+            required: false
+        }
+    ],
     location: {
         type: String,
         required: true

@@ -397,22 +397,14 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
                    {gallery && 
                     <div className='py-3'>
                         {/* <Container> */}
-                        <p className='fs-5 poppins'>4 photos</p>
+                        <p className='fs-5 poppins'>{gallery.length}</p>
                         <Row className='flex-wrap' style={{}}>
-                        <Col xl={4} lg={4} md={6} sm={12} xs={12}>
-                        <Image src={coke} className='mb-4' alt='res-img' style={{height:'300px', width:'100%', objectFit:'cover'}}/>
+                        {restaurant?.gallery?.map((g, index) => 
+                        (<Col xl={4} lg={4} md={6} sm={12} xs={12} key={index}>
+                        <Image src={g} className='mb-4' alt='res-img' style={{height:'300px', width:'100%', objectFit:'cover'}}/>
                         </Col>
-                        <Col xl={4} lg={4} md={6} sm={12} xs={12}>
-                        <Image src={cookies} className='mb-4' alt='res-img-1' style={{height:'300px',width:'100%', objectFit:'cover' }}/>
-                        </Col >
-                        <Col xl={4} lg={4} md={6} sm={12} xs={12}>
-                        <Image src={coke} className='mb-4' alt='res-img' style={{height:'300px',width:'100%', objectFit:'cover'}}/>
-                        </Col>
-                        <Col xl={4} lg={4} md={6} sm={12} xs={12}>
-                        <Image src={coke} className='mb-4' alt='res-img' style={{height:'300px', width:'100%', objectFit:'cover'}}/>
-                        </Col>
-                        {/* <Image src={cookies} className='mb-4' alt='res-img-1' style={{height:'300px',width:'100%', objectFit:'cover' }}/>
-                        <Image src={coke} className='mb-4' alt='res-img' style={{height:'300px',width:'100%', objectFit:'cover'}}/> */}
+                        ))}
+                        
                         </Row>
                         {/* </Container> */}
                    </div>}

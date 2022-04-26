@@ -2,12 +2,12 @@ import React, {useState,useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {getRestaurantDashboardAsync, logoutUser, patchOverviewAsync, resendVerifyRestaurantAsync} from '../redux/auth';
 import { useLocation } from 'react-router-dom';
-import { Col, Container, Form, Image, Row, Table } from 'react-bootstrap';
+import { Button, Col, Container, Form, Image, Row, Table } from 'react-bootstrap';
 import {AiOutlineLogout} from 'react-icons/ai';
 import FormPopUp from '../components/FormPopUp';
 import UpdateStatus from '../components/UpdateStatus';
 import AddProduct from '../components/AddProduct';
-import {getOrderDetailAsync, } from '../redux/Slice';
+import {getOrderDetailAsync, getRestaurantImagesAsync, uploadImageAsync, } from '../redux/Slice';
 import {AiOutlineEdit, AiOutlineWarning} from 'react-icons/ai';
 import UpdateProduct from '../components/UpdateProduct';
 import { ToastContainer, toast } from 'react-toastify';
@@ -17,6 +17,9 @@ const RestaurantDashboard = ({pId, setPId,isEditP, setIsEditP}) => {
     const dispatch = useDispatch();
     const [isEditStatus, setIsEditStatus] = useState(false);
     const [isAdd, setIsAdd] = useState(false);
+    const [fileInputState, setFileInputState] = useState('');
+    const [selectedFile, setSelectedFile] = useState('');
+    const [previewSource, setPreviewSource] = useState('');
     const [overView, setOverView] = useState('');
     const d = new Date();
     const month = d.toLocaleString('default', { month: 'long' });
@@ -35,8 +38,10 @@ const RestaurantDashboard = ({pId, setPId,isEditP, setIsEditP}) => {
     const email = useSelector((state) => state?.auth?.email);
     const orders = useSelector((state) => state?.auth?.orders);
     const current_overview = useSelector((state) => state?.auth?.overview);
+    const gallery = useSelector((state) => state?.auth?.gallery);
     useEffect(()=> {
         dispatch(getRestaurantDashboardAsync(username))
+        // dispatch(getRestaurantImagesAsync());
     }, []) //have to re-render on status change
     // useEffect(()=> {
     //     for(let i = 0; i < orders?.length; i++){
@@ -62,7 +67,36 @@ const RestaurantDashboard = ({pId, setPId,isEditP, setIsEditP}) => {
         dispatch(logoutUser());
     }
     // const order_detail = useSelector((state) => state?.restaurants?.order_detail);
+    const previewFile = (file) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onloadend = () => {
+            setPreviewSource(reader.result);
+        }
+    }
+    
+    const handleFileInputChange = (e) => {
+        const file = e.target.files[0];
+        previewFile(file);
+    }
 
+    const handleSubmitFile = (e) => {
+        e.preventDefault();
+        if(!previewSource) return;
+        // const reader = new FileReader();
+        // reader.readAsDataURL(selectedFile);
+        uploadImage(previewSource);
+    }
+
+    const uploadImage = async(base64EncodedImage) => {
+        dispatch(uploadImageAsync({restaurant_id: r_id, data: base64EncodedImage}));
+        setPreviewSource('');
+
+    }
+
+    const loadImages = async(imageId) => {
+        // console.log(imageId)
+    }
     return (
         <div className='bg-secondary' >
             <ToastContainer />
@@ -98,9 +132,44 @@ const RestaurantDashboard = ({pId, setPId,isEditP, setIsEditP}) => {
                 <Container className=''>
                     <div className='p-3 text-white d-flex flex-column justify-content-end align-items-center' style={{backgroundColor:'rgba(0, 0, 0, 0.5)', borderRadius:'20px', backdropFilter:'blur(2px)'}}>
                       <p>Let customers know about your restaurant. Add some overview about your cuisines and other specialities.</p>
-                      <Form.Control as="textarea" className='w-100' placeholder='Our restaurnt is ... We have spacialities are... We are busy during... Our best dishes...' value={overView} onChange={(e) => setOverView(e.target.value)} />
+                      <Form.Control as="textarea" className='w-75' placeholder='Our restaurnt is ... We have spacialities are... We are busy during... Our best dishes...' value={overView} onChange={(e) => setOverView(e.target.value)} />
                       <p className='py-1 px-2 text-center text-white rounded-3 w-25 my-2' onClick={() => dispatch(patchOverviewAsync({id: r_id, overview : overView }))} style={{backgroundColor:'#ef5023', marginBottom:'0px', cursor:'pointer'}} >Set Overview</p>
                       {current_overview !== undefined && <p>Current Overview: <i>{current_overview}</i></p>}
+                    </div>
+                </Container>
+        
+            </section>
+
+            
+            <section>
+                <Container className='mt-3'>
+                    <div className='p-3 text-white d-flex flex-column justify-content-end align-items-center' style={{backgroundColor:'rgba(0, 0, 0, 0.5)', borderRadius:'20px', backdropFilter:'blur(2px)'}}>
+                      <p>Add images to your gallery.</p>
+                      <div className='w-25'><Form.Control id='images' type='file' className='form-input' value={fileInputState} onChange={handleFileInputChange} name='image' accept="image/png, image/jpeg" />
+                      <Button onClick={handleSubmitFile} className='py-1 px-2 text-center text-white rounded-3 w-100 my-2' style={{backgroundColor:'#ef5023', marginBottom:'0px', cursor:'pointer', border:'1px solid #ef5023'}} >Upload</Button>
+                      </div>
+                      
+                          {previewSource && 
+                          <div className='p-3' style={{backgroundColor:'rgba(255, 255, 255, 0.5)', borderRadius:'20px', backdropFilter:'blur(2px)'}}>
+                              <img src={previewSource} className='' style={{height:'300px'}} alt='chosen' />
+                          </div>
+                          }
+                           <div className='d-flex flex-column justify-content-center align-items-center'>
+                            <h4>Gallery</h4>
+                            <div className='d-flex flex-wrap'>
+                            {gallery?.slice(0,3).map((image, index) => {
+                                return(
+                                    <div key={index} className='p-1 m-1'>
+                                        <img src={image} className='' style={{height:'300px'}} alt='chosen' />
+                                    </div>
+                                )
+                            })}
+                            </div>
+                        </div>
+                      </div>
+                     
+                    <div>
+                      
                     </div>
                 </Container>
         

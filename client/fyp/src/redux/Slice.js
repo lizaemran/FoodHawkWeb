@@ -1,5 +1,37 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
+
+export const uploadImageAsync = createAsyncThunk('restaurant/uploadImageAsync',
+async(payload) => {
+    const response = await fetch('http://localhost:7000/api/file/upload/', {
+        method: "POST",
+        headers: {
+            "Content-Type": 'application/json',
+        },
+        body: JSON.stringify({
+            data: payload.data,
+            restaurant_id: payload.restaurant_id
+        })
+    });
+    if(response.ok){
+        const data = await response.json();
+        toast.success("Image Uploaded Successfully");
+        return {data};
+    }
+    else{
+        toast.error("Error uploading image");
+    }
+});
+
+export const getRestaurantImagesAsync = createAsyncThunk('restaurants/getRestaurantImagesAsync' , 
+async() => {
+    const response = await fetch('http://localhost:7000/api/file/images/');
+    if(response.ok){
+        const gallery = await response.json();
+        return {gallery};
+    } 
+});
+
 export const getRestaurantsAsync = createAsyncThunk('restaurants/getRestaurantsAsync' , 
 async() => {
     const response = await fetch('http://localhost:7000/api/restaurant');
@@ -240,6 +272,15 @@ const Slice = createSlice({
     // ],
 
     extraReducers: {
+        [uploadImageAsync.fulfilled]: (state, action) => {
+            console.log(action.payload);
+        },
+        [getRestaurantImagesAsync.fulfilled]: (state,action) => {
+            console.log("Fetched restaurant Images successfully.");
+            return {...state, restaurantImages: action.payload.gallery};
+            
+
+        },
         [getRestaurantsAsync.fulfilled]: (state,action) => {
             console.log("Fetched restaurants successfully.");
             return {

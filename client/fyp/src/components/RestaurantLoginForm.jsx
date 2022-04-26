@@ -48,6 +48,7 @@ const RestaurantLoginForm = () => {
                  onChange={(e) => setPasswordd(e.target.value)} />
                 </Form.Label>
                 <a onClick={submitForm} className='mt-2 text-center text-white text-decoration-none py-2 px-3' style={{backgroundColor:'#ef5023', borderRadius:'5px', cursor:'pointer'}}>Login</a>
+                <a href='/restaurant-register' className='mt-2'>Not a member yet? Register Now</a>
             </Form>
         </div>
     )

@@ -159,6 +159,7 @@ const RestaurantSignUpForm = () => {
                  style={{border:'none', borderRadius:'5px'}}/>
                 </Form.Label>
                 <a onClick={submitForm} className='mt-2 text-center text-white text-decoration-none py-2 px-3' style={{backgroundColor:'#ef5023', borderRadius:'5px', cursor:'pointer'}}>Register</a>
+                <a href='/restaurant-login' className='mt-2'>Already a Member? Sign in</a>
             </Form>
         </div>
     )
