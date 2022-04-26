@@ -1,3 +1,4 @@
+// require("dotenv").config();
 const express = require('express');
 const mongoose = require('mongoose');
 const restaurant = require('./routes/restaurant');
@@ -8,6 +9,7 @@ const auth = require('./routes/auth');
 const rider = require('./routes/rider');
 const order = require('./routes/order');
 const rating = require('./routes/rating');
+// const file = require("./routes/file");
 const orderRating = require('./routes/orderRating');
 const cors = require('cors')
 const app = express();
@@ -23,8 +25,14 @@ app.use('/api/rider', rider);
 app.use('/api/order', order);
 app.use('/api/rating', rating);
 app.use('/api/orderRating', orderRating);
+// app.use("/api/file", file);
 
-mongoose.connect('mongodb+srv://liza:lizfiz1@foodhawk.uitlt.mongodb.net/data?retryWrites=true&w=majority')
+const connectionParams= {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+}
+mongoose.connect('mongodb+srv://liza:lizfiz1@foodhawk.uitlt.mongodb.net/data?retryWrites=true&w=majority', connectionParams)
     .then(()=>{console.log('Connected')})
     .catch(
         () => {

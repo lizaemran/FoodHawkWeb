@@ -102,10 +102,42 @@ router.post('/', async(req,res) => {
     restaurant.token = token;
     res.send(restaurant);
 });
+
+//resend verification link
+router.post('/resend', async(req,res) => {
+    let user = await Restaurant.findOne({email: req.body.email});
+    if(!user){
+        return res.status(400).send("RESTAURANT NOT FOUND");
+    }
+    let otp = utility.randomNumber(4);
+    user.confirmOTP = otp;
+    await user.save();
+    var mailOptions = {
+    from: '180984@students.au.edu.pk',
+    to: req.body.email,
+    subject: 'Please verify your account on Food Hawk',
+    template: 'verifyEmailTemplate',
+    context: {
+        verifylink: 'http://localhost:3000/restaurant/verifyConfirm/' + otp,
+    }
+    };
+    transporter.sendMail(mailOptions, function(error, info){
+    if (error) {
+    console.log(error);
+    res.send(error);
+    } else {
+    console.log('Email sent: ' + info.response);
+    res.send({message: "Message Sent"});
+    }
+    });
+});
+
+
 router.put('/:id', async(req, res) => {
    let restaurant;
     try { restaurant = await Restaurant.findByIdAndUpdate({_id:req.params.id},{
         name : req.body.name,
+
         image: req.body.image,
         location: req.body.location,
         rating: req.body.rating,

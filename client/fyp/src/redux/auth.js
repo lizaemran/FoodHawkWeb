@@ -55,6 +55,210 @@ async(payload) => {
     }
 });
 
+export const resendVerifyUserAsync = createAsyncThunk('auth/resendVerifyUserAsync',
+async(payload) => {
+    const response = await fetch('http://localhost:7000/api/user/resend', {
+        method: "POST",
+        headers: {
+            "Content-Type": 'application/json',
+        },
+        body: JSON.stringify({
+            email : payload.email,
+        })
+    });
+    if(response.ok){
+        const message = await response.json();
+        // console.log(token);
+        return {message};
+    }
+    else{
+        var error = true;
+        return {error};
+    }
+});
+
+
+
+export const resendVerifyRiderAsync = createAsyncThunk('auth/resendVerifyRiderAsync',
+async(payload) => {
+    const response = await fetch('http://localhost:7000/api/rider/resend', {
+        method: "POST",
+        headers: {
+            "Content-Type": 'application/json',
+        },
+        body: JSON.stringify({
+            email : payload.email,
+        })
+    });
+    if(response.ok){
+        const message = await response.json();
+        // console.log(token);
+        return {message};
+    }
+    else{
+        var error = true;
+        return {error};
+    }
+});
+
+export const resendVerifyRestaurantAsync = createAsyncThunk('auth/resendVerifyRestaurantAsync',
+async(payload) => {
+    const response = await fetch('http://localhost:7000/api/restaurant/resend', {
+        method: "POST",
+        headers: {
+            "Content-Type": 'application/json',
+        },
+        body: JSON.stringify({
+            email : payload.email,
+        })
+    });
+    if(response.ok){
+        const message = await response.json();
+        // console.log(token);
+        return {message};
+    }
+    else{
+        var error = true;
+        return {error};
+    }
+});
+
+export const forgetPasswordUserAsync = createAsyncThunk('auth/forgetPasswordUserAsync',
+async(payload) => {
+    const response = await fetch('http://localhost:7000/api/auth/user/forgetPassword', {
+        method: "POST",
+        headers: {
+            "Content-Type": 'application/json',
+        },
+        body: JSON.stringify({
+            email : payload.email,
+        })
+    });
+    if(response.ok){
+        const message = await response.json();
+        // console.log(token);
+        return {message};
+    }
+    else{
+        var error = true;
+        return {error};
+    }
+});
+
+export const forgetPasswordRiderAsync = createAsyncThunk('auth/forgetPasswordRiderAsync',
+async(payload) => {
+    const response = await fetch('http://localhost:7000/api/auth/rider/forgetPassword', {
+        method: "POST",
+        headers: {
+            "Content-Type": 'application/json',
+        },
+        body: JSON.stringify({
+            email : payload.email,
+        })
+    });
+    if(response.ok){
+        const message = await response.json();
+        // console.log(token);
+        return {message};
+    }
+    else{
+        var error = true;
+        return {error};
+    }
+});
+
+export const forgetPasswordRestaurantAsync = createAsyncThunk('auth/forgetPasswordRestaurantAsync',
+async(payload) => {
+    const response = await fetch('http://localhost:7000/api/auth/restaurant/forgetPassword', {
+        method: "POST",
+        headers: {
+            "Content-Type": 'application/json',
+        },
+        body: JSON.stringify({
+            email : payload.email,
+        })
+    });
+    if(response.ok){
+        const message = await response.json();
+        // console.log(token);
+        return {message};
+    }
+    else{
+        var error = true;
+        return {error};
+    }
+});
+
+export const resetPasswordUserAsync = createAsyncThunk('auth/resetPasswordUserAsync',
+async(payload) => {
+    const response = await fetch('http://localhost:7000/api/auth/user/resetPassword', {
+        method: "POST",
+        headers: {
+            "Content-Type": 'application/json',
+        },
+        body: JSON.stringify({
+            otp : payload.otp,
+            password : payload.password,
+        })
+    });
+    if(response.ok){
+        const message = await response.json();
+        console.log(message);
+        return {message};
+    }
+    else{
+        var error = true;
+        console.log(error);
+        return {error};
+    }
+});
+
+export const resetPasswordRiderAsync = createAsyncThunk('auth/resetPasswordRiderAsync',
+async(payload) => {
+    const response = await fetch('http://localhost:7000/api/auth/rider/resetPassword', {
+        method: "POST",
+        headers: {
+            "Content-Type": 'application/json',
+        },
+        body: JSON.stringify({
+            otp : payload.otp,
+            password : payload.password,
+        })
+    });
+    if(response.ok){
+        const message = await response.json();
+        // console.log(token);
+        return {message};
+    }
+    else{
+        var error = true;
+        return {error};
+    }
+});
+
+export const resetPasswordRestaurantAsync = createAsyncThunk('auth/resetPasswordRestaurantAsync',
+async(payload) => {
+    const response = await fetch('http://localhost:7000/api/auth/restaurant/resetPassword', {
+        method: "POST",
+        headers: {
+            "Content-Type": 'application/json',
+        },
+        body: JSON.stringify({
+            otp : payload.otp,
+            password : payload.password,
+        })
+    });
+    if(response.ok){
+        const message = await response.json();
+        // console.log(token);
+        return {message};
+    }
+    else{
+        var error = true;
+        return {error};
+    }
+});
+
 export const loginUserAsync = createAsyncThunk('auth/loginUserAsync',
 async(payload) => {
     const response = await fetch('http://localhost:7000/api/auth/user', {
@@ -407,6 +611,139 @@ const AuthSlice = createSlice({
             }
             return {
                 ...state,
+            }
+        },
+        [resendVerifyUserAsync.fulfilled]: (state,action) => {
+            if(action?.payload?.error){
+                toast.error("Invalid OTP", {
+                    position: "top-right",
+                    autoClose: 5000,
+                });
+            }
+            else{
+                toast("Verification email sent successfully.", {
+                    position: "top-right",
+                    autoClose: 5000,
+                });
+            }
+        },
+        [resendVerifyRiderAsync.fulfilled]: (state,action) => {
+            if(action?.payload?.error){
+                toast.error("Invalid OTP", {
+                    position: "top-right",
+                    autoClose: 5000,
+                });
+            }
+            else{
+                toast("Verification email sent successfully.", {
+                    position: "top-right",
+                    autoClose: 5000,
+                });
+            }
+        },
+        [resendVerifyRestaurantAsync.fulfilled]: (state,action) => {
+            if(action?.payload?.error){
+                toast.error("Invalid OTP", {
+                    position: "top-right",
+                    autoClose: 5000,
+                });
+            }
+            else{
+                toast("Verification email sent successfully.", {
+                    position: "top-right",
+                    autoClose: 5000,
+                });
+            }
+        },
+        [forgetPasswordUserAsync.fulfilled]: (state,action) => {
+            if(action?.payload?.error){
+                toast.error("Invalid Email", {
+                    position: "top-right",
+                    autoClose: 5000,
+                });
+            }
+            else{
+                toast("Reset password email sent successfully.", {
+                    position: "top-right",
+                    autoClose: 5000,
+                });
+            }
+        },
+        [forgetPasswordRiderAsync.fulfilled]: (state,action) => {
+            if(action?.payload?.error){
+                toast.error("Invalid Email", {
+                    position: "top-right",
+                    autoClose: 5000,
+                });
+            }
+            else{
+                toast("Reset password email sent successfully.", {
+                    position: "top-right",
+                    autoClose: 5000,
+                });
+            }
+        },
+        [forgetPasswordRestaurantAsync.fulfilled]: (state,action) => {
+            if(action?.payload?.error){
+                toast.error("Invalid Email", {
+                    position: "top-right",
+                    autoClose: 5000,
+                });
+            }
+            else{
+                toast("Reset password email sent successfully.", {
+                    position: "top-right",
+                    autoClose: 5000,
+                });
+            }
+        },
+        [resetPasswordRestaurantAsync.fulfilled]: (state,action) => {
+            if(action?.payload?.error){
+                toast.error("Invalid Otp", {
+                    position: "top-right",
+                    autoClose: 5000,
+                });
+            }
+            else{
+                toast("Reset password successfully.", {
+                    position: "top-right",
+                    autoClose: 5000,
+                });
+                window.location.href = '/restaurant-login';
+            }
+        },
+        [resetPasswordRiderAsync.fulfilled]: (state,action) => {
+            if(action?.payload?.error){
+                toast.error("Invalid Otp", {
+                    position: "top-right",
+                    autoClose: 5000,
+                });
+            }
+            else{
+                toast("Reset password successfully.", {
+                    position: "top-right",
+                    autoClose: 5000,
+                });
+                window.location.href = '/rider-login';
+
+            }
+        },
+        [resetPasswordUserAsync.fulfilled]: (state,action) => {
+            console.log(action?.payload?.error, "error");
+
+            if(action?.payload?.error){
+                toast.error("Invalid Otp", {
+                    position: "top-right",
+                    autoClose: 5000,
+                });
+            }
+            else{
+                toast("Reset password successfully.", {
+                    position: "top-right",
+                    autoClose: 5000,
+                });
+                console.log('reset user successful');
+                window.location.href = '/SignIn';
             }
         },
         [verifyRiderAsync.fulfilled]: (state,action) => {
