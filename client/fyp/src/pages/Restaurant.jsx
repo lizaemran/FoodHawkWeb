@@ -5,6 +5,7 @@ import {MdOutlineDirections} from 'react-icons/md';
 import {BsBookmarkPlus, BsShare, BsCheckCircle} from 'react-icons/bs'
 import {ImCancelCircle} from 'react-icons/im';
 import {MdOutlineLocationOn} from 'react-icons/md';
+import {IoIosRestaurant} from 'react-icons/io';	
 import SideNav from '../components/SideNav/SideNav'
 import coke from '../img/BurgerS.jpeg';
 import cookies from '../img/log-in.jpg';
@@ -310,7 +311,13 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
                     </div> */}
                 <Row className='py-1 align-items-center' style={{}}>
                         <Col xl={7} lg={7} md={7} sm={12} xs={12} style={{height:'fit-content'}}>
-                        <Image src={coke} className='' alt='res-img' style={{height:'37.5vh', width:'100%', borderRadius:'10px', objectFit:'cover'}}/>
+                        {restaurant?.gallery.length === 0 ? 
+                        <div className='d-flex justify-content-center align-items-center' style={{backgroundColor:'#e5e5e5',height:'37.5vh', width:'100%', borderRadius:'10px'}}>
+                            <IoIosRestaurant className='' style={{fontSize:'10rem', }} />
+                        </div>
+                        // <Image src={coke} className='' alt='res-img' style={{height:'37.5vh', width:'100%', borderRadius:'10px', objectFit:'cover'}}/> 
+                        : 
+                        <Image src={restaurant?.gallery[0]} className='' alt='res-img' style={{height:'37.5vh', width:'100%', borderRadius:'10px', objectFit:'cover'}}/>}
                         </Col>
                         <Col className=' p-3' xl={5} lg={5} md={5} sm={12} xs={12} style={{borderRadius:'5px', height:'fit-content', backgroundColor:'rgba(0,0,0,0.5)', backdropFilter:'blur(10px)'}}>
                         <p className='mb-2 text-white' style={{margin: '0px' , fontSize:'15px'}}><MdOutlineLocationOn className='fs-4'/> {restaurant?.location}</p>
@@ -359,16 +366,17 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
                         {restaurant?.overview ? (<>
                         {restaurant?.overview}
                         </>) : (
-                            <><h6>Known For</h6>
-                            <p className='' style={{fontSize:'14px'}}>
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum nulla iste maiores optio, vero odit ab aliquid, voluptate necessitatibus similique perferendis. Iste delectus suscipit repudiandae!
-                            </p>
-                            <p style={{fontSize:'14px'}}>
-                                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Libero itaque, <b>molestias officiis fugit</b> modi facere.
-                            </p>
-                            <p style={{fontSize:'14px'}}>
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. In qui esse sint cupiditate quos quod libero perferendis, magnam quis quasi delectus atque, officia nisi beatae aliquam corrupti voluptates, consectetur neque? Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus est tempore nobis nostrum officiis sed natus sit perspiciatis aut alias.
-                            </p></>
+                            <p className='text-muted fs-6 text-center my-3'><i>No overview to show</i></p>
+                            // <><h6>Known For</h6>
+                            // <p className='' style={{fontSize:'14px'}}>
+                            //     Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum nulla iste maiores optio, vero odit ab aliquid, voluptate necessitatibus similique perferendis. Iste delectus suscipit repudiandae!
+                            // </p>
+                            // <p style={{fontSize:'14px'}}>
+                            //     Lorem ipsum dolor sit amet consectetur, adipisicing elit. Libero itaque, <b>molestias officiis fugit</b> modi facere.
+                            // </p>
+                            // <p style={{fontSize:'14px'}}>
+                            //     Lorem ipsum dolor sit amet consectetur adipisicing elit. In qui esse sint cupiditate quos quod libero perferendis, magnam quis quasi delectus atque, officia nisi beatae aliquam corrupti voluptates, consectetur neque? Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus est tempore nobis nostrum officiis sed natus sit perspiciatis aut alias.
+                            // </p></>
                         )}
                         
                    </div>}
@@ -394,10 +402,10 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
                                     )}
                             </Row>
                    </div>}
-                   {gallery && 
-                    <div className='py-3'>
+                   {gallery && <>
+                   {restaurant?.gallery.length === 0 ? <p className='text-muted fs-6 text-center my-3'><i>No images to show</i></p> :  <div className='py-3'>
                         {/* <Container> */}
-                        <p className='fs-5 poppins'>{gallery.length}</p>
+                        <p className='fs-6 poppins'>Total Images: {restaurant?.gallery.length}</p>
                         <Row className='flex-wrap' style={{}}>
                         {restaurant?.gallery?.map((g, index) => 
                         (<Col xl={4} lg={4} md={6} sm={12} xs={12} key={index}>
@@ -407,7 +415,9 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
                         
                         </Row>
                         {/* </Container> */}
-                   </div>}
+                   </div>
+                }</>
+                }
                    { reviews && 
                     <div className='py-3'>
                         {restaurant?.ratingArray.length > 0 ? 
@@ -445,7 +455,7 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
                                     {restaurant?.products.map((r) =>
                                     <Col key={r._id} xl={3} lg={4} md={3} sm={12} xs={12}>
                                         <Col className='bg-light p-2 d-flex flex-column justify-content-between align-items-center w-100 mb-3' style={{borderRadius:'5px'}} xl={4} lg={4} md={4} sm={12} xs={12}>
-                                        <Image src={r.image} style={{height:'auto', width:'10vw', }} />
+                                        <Image src={r.image} style={{height:'20vh', width:'10vw', objectFit:'cover' }} />
                                         <div className='d-flex flex-column justify-content-center align-items-center'>
                                         <p className='fs-5 fw-bold'>{r.name}</p>
                                         {/* <p className='text-center' style={{fontSize:'11px'}}>{r?.description}</p> */}

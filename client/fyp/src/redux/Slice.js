@@ -208,7 +208,7 @@ async(payload) => {
             image: payload.image,
             location: payload.location,
             phone: payload.phone,
-            rating: payload.rating
+            rating: payload.rating,
         })
     });
 
@@ -274,6 +274,7 @@ const Slice = createSlice({
     extraReducers: {
         [uploadImageAsync.fulfilled]: (state, action) => {
             console.log(action.payload);
+            
         },
         [getRestaurantImagesAsync.fulfilled]: (state,action) => {
             console.log("Fetched restaurant Images successfully.");

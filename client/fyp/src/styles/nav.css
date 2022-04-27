@@ -23,12 +23,23 @@ input[type="text"] {
 input[type="text"] {
   outline: none;
 }
+input[type="password"] {
+  width: 40vw;
+  font-size: 1rem;
+  padding: 0.4rem 1rem;
+  border: solid 0.1rem #EF5023;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+}
+input[type="password"] {
+  outline: none;
+}
 .select {
   outline: none;
   width: 40vw;
   font-size: 1.8rem;
   padding: 0.4rem 1.5rem;
-  border: solid 0.3rem#EF476F;
+  border: solid 2px #EF476F;
   margin-top: 5vh;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
   border-radius: 50px;
@@ -321,6 +332,7 @@ width:100%;
     right: 2%!important;
     bottom: 5%!important;
   }
+  
   .mainbox {
     height: 88vh!important;
   }
@@ -427,22 +439,21 @@ flex-wrap: wrap;
 }
 
 #btn-submit {
-  background-color: #EF5023;
+  background-color: #EF5023!important;
   border: none;
   color: white;
   font-size: 2.3rem;
   border-radius: 10px;
-  padding: 1rem 3rem;
-  left: 30%;
-  margin-top: 3%;
-  margin-bottom: 20px !important;
+  padding: 0.5rem 3rem;
+  margin: 10px 0px;
+  
 }
 .r-card:hover {
   box-shadow: -1px 15px 10px -15px rgba(0, 0, 0, 0.55);
 }
 .admin-button {
   position: absolute;
-  top: -14%;
+  top: -20%;
   right: 0px;
   display: none;
 }
@@ -454,28 +465,30 @@ flex-wrap: wrap;
   letter-spacing: 0.2rem;
 }
 .admin-button a:nth-child(1) {
-  background: rgb(194, 141, 91);
+  background: rgb(194, 141, 91,0.85);
+  border-top-left-radius: 10px;
 }
 .admin-button a:nth-child(2) {
-  background: rgb(223, 139, 14);
+  background: rgb(223, 139, 14,0.85);
 }
 .admin-button a:nth-child(3) {
-  background: rgba(201, 116, 6, 0.932);
+  background: rgba(201, 116, 6, 0.85);
   border-top-right-radius: 10px;
 }
 .admin-button a:hover {
-  filter: brightness(0.9);
+  filter: brightness(0.8);
 }
 .r-card:hover .admin-button {
   display: block;
 }
+
 #addRestaurant {
   position: absolute;
   display: flex;
   justify-content: center;
   align-items: center;
   top: 9%;
-  left: 52.5%;
+  left: 50%;
   font-size: 1.25rem;
   background: #EF5023;
   color: white;

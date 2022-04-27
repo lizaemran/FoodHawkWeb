@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const router = express.Router();
 const {cloudinary} = require('../cloudinary');
 const { Restaurant } = require("../models/restaurants");
-
+//restaurant gallery
 router.post('/upload', async (req, res) => {
     try{
         var fileStr = req.body.data;

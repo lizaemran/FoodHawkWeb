@@ -3,6 +3,9 @@ const mongoose = require('mongoose');
 const {Product} = require('../models/product');
 const router = express.Router();
 const {Restaurant} = require('../models/restaurants');
+const {cloudinary} = require('../cloudinary');
+
+
 router.get('/', async (req,res) => {
     const products = await Product.find();
     if (!products) return res.status(404).send("PRODUCT NOT FOUND");
@@ -14,11 +17,15 @@ router.get('/:id', async (req,res) => {
     res.send(products);
 });
 router.post('/:r_id', async(req,res) => {
+    const uploadedResponse = await cloudinary.uploader.upload(req.body.image, { 
+        upload_preset: 'dev_setups',
+    });
+    let uploaded_image = uploadedResponse.url;
     let product = new Product({
         restaurant_id: req.params.r_id,
         name : req.body.name,
         price: req.body.price,
-        image: req.body.image,
+        image: uploaded_image,
         description: req.body.description,
         discount: req.body.discount,
         category: req.body.category
@@ -30,11 +37,15 @@ router.post('/:r_id', async(req,res) => {
     res.send(product);
 });
 router.put('/:id', async(req, res) => {
+    const uploadedResponse = await cloudinary.uploader.upload(req.body.image, { 
+        upload_preset: 'dev_setups',
+    });
+    let uploaded_image = uploadedResponse.url;
    let products;
     try { products = await Product.findByIdAndUpdate({_id:req.params.id},{
         name : req.body.name,
         price: req.body.price,
-        image: req.body.image,
+        image: uploaded_image,
         discount: req.body.discount,
         description : req.body.description,
         category: req.body.category

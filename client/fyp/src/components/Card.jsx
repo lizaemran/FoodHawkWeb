@@ -40,7 +40,7 @@ const Card = ({id, username, image, stars, name, location, setRId, setPId, setIs
                     <Link to={`/restaurant/${username}`}><Image onClick={restaurantDetailHandler} className="p-image" src={image} style={{borderRadius:'50%', marginLeft:'50px'}} alt="restaurant"/></Link>
                 </Col>
                 <Col className="col-10">
-                {userType === 'admin' && <div className="admin-button">
+                {userType === 'admin' && <div className="admin-button shadow">
                 <a onClick={()=> {setIsEditStatus(true)}}>Status</a>  
                 <a onClick={()=> {setIsAdd(true)}}>Add</a>
                 <a onClick={()=> {setIsEdit(true)}}>Edit</a>

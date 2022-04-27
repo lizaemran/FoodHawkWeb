@@ -28,7 +28,7 @@ const RiderDetails = () => {
             <Col xl={11} lg={11} md={11} sm={12} xs={12}>
            <Container className='p-4 mt-3'>
                <h5 className="">Rider Details</h5>
-               {deliveredOrders.length > 0 ? 
+               {deliveredOrders?.length > 0 ? 
                         (<div>
                         <Table striped bordered hover responsive>
                     <thead className='text-dark' >
@@ -95,7 +95,7 @@ const RiderDetails = () => {
                         </div>) : 
                         (<div className='d-flex flex-column justify-content-center align-items-center' style={{height: '260px', width: '100%', }}>
                             <AiOutlineLoading3Quarters className='fs-1 mb-5 rotation' />
-                            <p className='text-white text-center'>Completed Orders...</p>
+                            <p className='text-black text-center'>Completed Orders...</p>
                         </div>)
                         }
             </Container>

@@ -4,7 +4,7 @@
     height: fit-content!important;
     overflow-y: hidden;
     top: 10%;
-    right: 10%;
+    right: 30%;
     z-index: 69;
     background: #f7f6f600;
     border-radius: 10px;
@@ -21,11 +21,11 @@
 }
 .form-pop-up button{
     font-size: 1rem!important;
-    background: rgba(11, 70, 199, 0.932)!important;
+    background: #EF5023!important;
     
 }
 .pop-up-title{
-    background: rgba(11, 70, 199, 0.932);
+    background: black;
     display: flex;
     justify-content: space-between;
     padding: 10px 10px;
@@ -45,11 +45,11 @@
     padding: 0px 10px 0px 10px;
     overflow-y: scroll !important;
     height: 90%;
-    border: 3px solid rgba(11, 70, 199, 0.932);
+    border: 1px solid #e5e5e5;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
-    background-color: #f2f2f2!important;
-    box-shadow: 0px 0px 20px rgba(0,0,0,0.3);
+    background-color: rgba(255, 255, 255, 0.6)!important;
+    backdrop-filter: blur(10px);
 
 }
 .form-image{

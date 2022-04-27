@@ -9,6 +9,8 @@ const nodemailer = require('nodemailer');
 const utility = require("../utility");
 const hbs = require('nodemailer-express-handlebars')
 const path = require('path')
+const {cloudinary} = require('../cloudinary');
+
 
 //nodemailer
 var transporter = nodemailer.createTransport({
@@ -64,13 +66,17 @@ router.post('/', async(req,res) => {
     }
     const salt = await bcrypt.genSalt(10);
     let pass = await bcrypt.hash(req.body.password, salt);
+    const uploadedResponse = await cloudinary.uploader.upload(req.body.image, { 
+        upload_preset: 'dev_setups',
+    });
+    let uploaded_image = uploadedResponse.url;
     let otp = utility.randomNumber(4);
      restaurant = new Restaurant({
         username: req.body.username,
         password: pass,
         email: req.body.email,
         name : req.body.name,
-        image: req.body.image,
+        image: uploaded_image,
         location: req.body.location,
         lat: req.body.lat,
         lng: req.body.lng,
@@ -135,10 +141,13 @@ router.post('/resend', async(req,res) => {
 
 router.put('/:id', async(req, res) => {
    let restaurant;
+   const uploadedResponse = await cloudinary.uploader.upload(req.body.image, { 
+    upload_preset: 'dev_setups',
+    });
+    let uploaded_image = uploadedResponse.url;
     try { restaurant = await Restaurant.findByIdAndUpdate({_id:req.params.id},{
         name : req.body.name,
-
-        image: req.body.image,
+        image: uploaded_image,
         location: req.body.location,
         rating: req.body.rating,
         status: false,

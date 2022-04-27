@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { ToastContainer } from "react-toastify";
 import SideNav from "../components/SideNav/SideNav";
-import {GrMail} from 'react-icons/gr';
+import {AiFillMail} from 'react-icons/ai';
 import { useDispatch,useSelector } from "react-redux";
 import { sendMessageAsync } from "../redux/user";
 import * as yup from 'yup';
@@ -43,7 +43,7 @@ const UserContact = () => {
             <Col xl={11} lg={11} md={11} sm={12} xs={12} className=''>
             <ToastContainer />
            <Container className='p-4 d-flex flex-column justify-content-center align-items-center bg-light' >
-               <h4 className="p-2"><GrMail className="fs-3" style={{marginRight:'10px'}} />Contact Us</h4>
+               <h4 className="p-2"><AiFillMail className="fs-3" style={{marginRight:'10px'}} />Contact Us</h4>
                <div className="w-100">
                <Form.Label> From  </Form.Label>
                <Form.Control type='text' className="mb-3 bg-light" value={auth?.email} disabled={true} style={{cursor:'no-drop'}} />
@@ -64,7 +64,7 @@ const UserContact = () => {
                </div>
                
                <Button onClick={sendMessageHandler} className="mt-2 px-5" style={{backgroundColor:'#ef5023', border:'1px solid #ef5023' }}>
-                  <GrMail className="fs-3 text-white" style={{marginRight:'10px'}} /> Send Message
+                  <AiFillMail className="fs-3 text-white" style={{marginRight:'10px'}} /> Send Message
                </Button>
            </Container>
             </Col>

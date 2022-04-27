@@ -155,8 +155,11 @@ const Account = () => {
                            <td>
                                {u.rating}
                            </td>
-                           <td>
-                               {u.status === true ? <span className='text-white p-1 rounded-3' style={{backgroundColor:'#25d366'}}>Active</span> : <span>Closed</span>} 
+                           <td className='d-flex justify-content-center align-items-center'>
+                               {u.status === true ? 
+                               <span className='p-1 rounded-3' style={{backgroundColor:'rgb(37, 211, 102,0.2)', color:'rgb(37, 211, 102)'}}>Open</span>
+                                : 
+                                <span className='p-1 rounded-3' style={{backgroundColor:'rgb(227, 56, 0,0.2)', color:'rgb(227, 56, 0)'}}>Closed</span>} 
                            </td>
                            <td>
                                {u.products?.length}
