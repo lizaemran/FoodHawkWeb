@@ -1,13 +1,15 @@
 import React, {useState} from 'react'
-import { Form } from 'react-bootstrap'
+import { Button, Container, Form, Modal } from 'react-bootstrap';
 import * as yup from 'yup';
 import {toast} from 'react-toastify';
 import { useDispatch } from 'react-redux';
 import 'react-toastify/dist/ReactToastify.css';
-import { loginRestaurantAsync } from '../redux/auth';
-const RestaurantLoginForm = () => {
+import {forgetPasswordRestaurantAsync, loginRestaurantAsync } from '../redux/auth';
+const RestaurantLoginForm = ({noRedirection, setModalShowLogin, setModalShowSignUp}) => {
     const [username, setUserName] = useState('');
     const [passwordd, setPasswordd] = useState('');
+    const [email, setEmail] = useState('');
+    const [modalShow, setModalShow] = useState(false);
     const dispatch = useDispatch();
     let schemaSignIn = yup.object().shape({
         username: yup.string().required('Please enter username'),
@@ -20,7 +22,7 @@ const RestaurantLoginForm = () => {
             .then(function (valid) {
                dispatch(loginRestaurantAsync({
                    username: username,
-                   password: passwordd
+                   password: passwordd,
                }))
                 setUserName("");
                 setPasswordd("");
@@ -28,6 +30,47 @@ const RestaurantLoginForm = () => {
               toast.error(e.errors[0].toString());
             });
       }
+      const forgetPasswordHandler = (e) => {
+        e.preventDefault();
+        dispatch(forgetPasswordRestaurantAsync({
+          email: email,
+        }))
+        setModalShow(false);
+      }
+      
+        function MyVerticallyCenteredModal(props) {
+          return (
+            <Modal
+              {...props}
+              size="md"
+              aria-labelledby="contained-modal-title-vcenter"
+              centered
+            >
+              <Modal.Header closeButton>
+                <Modal.Title id="contained-modal-title-vcenter">
+                  Forgot Password
+                </Modal.Title>
+              </Modal.Header>
+              <Modal.Body className='d-flex flex-column justify-content-center align-items-center'>
+                <h5 className=''>Enter Your Email</h5>
+                <input
+                    className='w-50 mb-1 input2 py-3 rounded-3  text-muted bg-light  '
+                    type='text'
+                    name='email'
+                    placeholder='Enter your email'
+                    style={{fontSize:'14px'}}
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                  
+              </Modal.Body>
+              <Modal.Footer>
+                <Button onClick={forgetPasswordHandler} style={{backgroundColor:'#ef5023', border:'1px solid #ef5023'}}>Submit</Button>
+              </Modal.Footer>
+            </Modal>
+          );
+        }
+         
 
     return (
         <div>
@@ -47,6 +90,11 @@ const RestaurantLoginForm = () => {
                  placeholder="•••••"
                  onChange={(e) => setPasswordd(e.target.value)} />
                 </Form.Label>
+                <a className='' onClick={() => setModalShow(true)} style={{fontSize:'12px', cursor:'pointer'}}>Forgot Password?</a>
+                <MyVerticallyCenteredModal
+            show={modalShow}
+            onHide={() => setModalShow(false)}
+          />
                 <a onClick={submitForm} className='mt-2 text-center text-white text-decoration-none py-2 px-3' style={{backgroundColor:'#ef5023', borderRadius:'5px', cursor:'pointer'}}>Login</a>
                 <a href='/restaurant-register' className='mt-2'>Not a member yet? Register Now</a>
             </Form>
