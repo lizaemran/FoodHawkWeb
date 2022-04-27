@@ -107,7 +107,7 @@ const AddRestaurant = () => {
 				placeholder='Add Username...'
 				value={username}
 				onChange={(event) => setUsername(event.target.value)}
-			>
+			> 
 			</input>
 			<label className='sr-only'>Password</label>
 			<input
