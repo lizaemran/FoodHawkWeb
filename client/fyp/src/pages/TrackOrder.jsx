@@ -1,18 +1,20 @@
 import React, {useState} from 'react'
-import Footer from '../UserSide/components/common/Footer/Footer';
-import NavBar from '../UserSide/components/common/nav/NavBar';
+// import Footer from '../UserSide/components/common/Footer/Footer';
+// import NavBar from '../UserSide/components/common/nav/NavBar';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import RiderLoginForm from '../components/RiderLoginForm';
+import {GrRestaurant} from 'react-icons/gr';
 import {MdSportsMotorsports} from 'react-icons/md';
+// import RiderLoginForm from '../components/RiderLoginForm';
 import {IoReceipt} from 'react-icons/io5';
+import {RiMapPinUserFill} from 'react-icons/ri';
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { getOrderAsync, getProductAsync } from '../redux/user';
 import { Col, Row , Container, Image} from 'react-bootstrap';
 import SideNav from '../components/SideNav/SideNav';
-import cooking from '../img/cooking.svg';
+// import cooking from '../img/cooking.svg';
 import ontheway from '../img/ontheway.svg';
 import delivered from '../img/delivered.svg';
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -23,7 +25,7 @@ import jwt_decode from "jwt-decode";
 import { getUserAsync } from '../redux/auth';
 import { getRiderAssign, getRiderByIdAsync } from '../redux/rider';
 import {getRestaurantAsync} from '../redux/Slice';
-import Carousel from 'react-bootstrap/Carousel';
+// import Carousel from 'react-bootstrap/Carousel';
 import Cooking from '../components/Cooking';
 import GoogleMapReact from 'google-map-react';
 import {MdOutlineLocationOn} from 'react-icons/md';
@@ -116,7 +118,7 @@ const TrackOrder = () => {
             <Container className='p-2 mt-3'>
                 <ToastContainer />
                 <Row>
-            <div className='px-4 py-3 mb-3 bg-danger bg-opacity-10 text-white w-25 d-flex justify-content-start align-items-center' style={{borderRadius:"10px"}}>
+            <div className='px-4 py-3 mb-3 text-white w-25 d-flex justify-content-start align-items-center' style={{borderRadius:"10px", backgroundColor:'#EF5023'}}>
                         <p className='fs-4' style={{marginBottom:'0px'}}>Hello, {auth.firstName || auth.username}</p>
                     </div>
                     <h4>Track Your Order...</h4>
@@ -137,17 +139,17 @@ const TrackOrder = () => {
                                       // onGoogleApiLoaded={({ map, maps }) => apiIsLoaded(map, maps, points)}
 
                                   >
-                                      <MdOutlineLocationOn className='fs-1 text-dark' style={{transform:'translateY(-50%)'}}
+                                      <RiMapPinUserFill className='fs-1 text-dark' style={{transform:'translateY(-50%)'}}
                                       lat={latValue}
                                       lng={lngValue}
                                       text="My Marker"
                                       />
-                                      <MdOutlineLocationOn className='fs-1 text-warning' style={{transform:'translateY(-50%)', color: '#e843b6'}}
+                                      <GrRestaurant className='fs-1 text-warning' style={{transform:'translateY(-50%)', color: '#e843b6'}}
                                       lat={restaurant?.lat}
                                       lng={restaurant?.lng}
                                       text="My Marker"
                                       />
-                                      <MdOutlineLocationOn className='fs-1' style={{transform:'translateY(-50%)', }}
+                                      <MdSportsMotorsports className='fs-1' style={{transform:'translateY(-50%)', }}
                                       lat={rider?.lat}
                                       lng={rider?.lng}
                                       text="My Marker"
@@ -179,7 +181,7 @@ const TrackOrder = () => {
                             <Col className='' style={{borderLeft:'1px solid rgba(0,0,0,0.2)'}}>
                             <h5 className='text-center'><MdSportsMotorsports className='fs-2' style={{marginRight:'5px'}} /><b>Rider details</b></h5>
                             <h6>Name: {rider.name}</h6>
-                            <h6>Phone: {order.status === 'picked' ? (<a className='text-decoration-none' href={`tel:${rider.phone}`}>{rider.phone}</a>) : (<>{rider.phone}</>)} </h6> 
+                            <h6>Phone: {order.status === 'picked' ? (<a className='text-success' href={`tel:${rider.phone}`}>{rider.phone}</a>) : (<>{rider.phone}</>)} </h6> 
                             </Col>}
                     </Row>
                     </section>

@@ -5,7 +5,7 @@ const UserInfo = () => {
   return (
       <>
       <SideNav/>
-      <Container className="px-5 d-flex flex-column justify-content-center align-items-center">
+      <Container className="p-5 d-flex flex-column justify-content-center align-items-center">
       <h4 className="text-center mb-3">FAQs</h4>
       <Accordion className="w-75">
       <Accordion.Item className="mb-3" eventKey="0">

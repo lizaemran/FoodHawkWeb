@@ -23,7 +23,7 @@ async(payload) => {
     }
 });
 
-export const addOrderRatingAsync = createAsyncThunk('user/addOrderAsync',
+export const addOrderRatingAsync = createAsyncThunk('user/addOrderRatingAsync',
 async(payload) => {
     const response = await fetch(`http://localhost:7000/api/orderRating/${payload.r_id}/${payload.u_id}/${payload.o_id}`, {
         method: "POST",

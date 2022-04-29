@@ -172,7 +172,7 @@ const RiderDashboard = () => {
                                     </div>
                                       <p><span><b>Name: </b></span>{assignedOrder?.restaurant?.name}</p>
                                       <p><span><b>Location: </b></span>{assignedOrder?.restaurant?.location}</p>
-                                      <p><span><b>Contact: </b></span>{assignedOrder?.restaurant?.phone}</p>
+                                      <p><span><b>Contact: </b></span><a className='text-success' href={`tel:${assignedOrder?.restaurant?.phone}`}>{assignedOrder?.restaurant?.phone}</a></p>
                                </div>
                            </td>
                            <td className='' style={{width:'fit-content'}}>
@@ -189,7 +189,7 @@ const RiderDashboard = () => {
                            <td className=''>
                                <div className='d-flex flex-column'>
                                     <p><span><b>Name: </b></span>{assignedOrder?.user?.name}</p>
-                                    <p><span><b>Contact: </b></span>{assignedOrder?.user?.contact}</p>
+                                    <p><span><b>Contact: </b></span><a className='text-success' href={`tel:${assignedOrder?.user?.contact}`}>{assignedOrder?.user?.contact}</a></p>
                                     <p><span><b>Address: </b></span>{assignedOrder?.user?.address}</p> 
                                </div>
                            </td>

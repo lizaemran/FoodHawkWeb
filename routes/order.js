@@ -33,6 +33,7 @@ router.get('/assign/:id', async(req,res) => {
     if (!order) return res.status(404).send("ORDER NOT FOUND");
     if (order.rider_id) return res.status(400).send("ORDER ALREADY ASSIGNED");
     let restaurant = await Restaurant.findById({_id:order.restaurant_id});
+    console.log(restaurant.lat);
     let riders = await Rider.find({status: "available"});
     if (riders.length === 0) return res.status(404).send("NO RIDER AVAILABLE");
     let riderWithDistance = [];

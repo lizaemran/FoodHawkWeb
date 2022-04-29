@@ -5,6 +5,10 @@
   background-color: #ef5023;
   border-radius: 15px;
 }
+::-webkit-scrollbar-thumb:hover {
+  background-color: #ba3b18;
+  border-radius: 15px;
+}
 body {
   overflow-x: hidden;
 }

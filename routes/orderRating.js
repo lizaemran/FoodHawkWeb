@@ -22,13 +22,47 @@ router.post('/:r_id/:u_id/:o_id', async(req,res) => {
         description: req.body.description
     });
     orderRating.user_name = user.firstname;
-    await orderRating.save();
     restaurant.ratingOArray.push(orderRating);
-    restaurant.ratingO = restaurant.ratingOArray.reduce((a,b) => a + b.stars, 0)/restaurant.ratingOArray.length;
-    restaurant.rating = (restaurant.ratingR + restaurant.ratingO) / (restaurant.ratingArray.length + restaurant.ratingOArray.length);
-    restaurant = await restaurant.save();
-    order.ratingOrder = orderRating;
-    order = await order.save();
+    //get all values of stars in orderRating model from database
+    if(restaurant.ratingOArray.length > 1){
+    let starsArray = [];
+    let orderRatingsArray = await OrderRating.find({});
+    for(let i = 0; i < orderRatingsArray.length; i++){
+        starsArray.push(orderRatingsArray[i].stars);
+    }
+    starsArray.push(req.body.stars); //append new value of star to starsArray
+    console.log(starsArray);
+    //calculate average of starsArray
+    let sum = 0;
+    for(let i = 0; i < starsArray.length; i++){
+        sum += starsArray[i];
+    }
+    let average = Math.floor(sum/starsArray.length);
+    console.log(average);
+    restaurant.ratingO = average;
+    }
+    else{
+        restaurant.ratingO = req.body.stars;   
+    }
+    // console.log('restaurant.ratingOArray', restaurant.ratingOArray);
+    // var rat_o;
+    // console.log('orderRating.stars', restaurant.ratingOArray);
+    // if(restaurant.ratingOArray.length > 1){
+    //  rat_o = Number((restaurant.ratingOArray.reduce((a,b) => a + b.stars, 0))/restaurant.ratingOArray.length);
+    //  console.log('restaurant.ratin',rat_o);
+    // }
+    // else{
+    //  rat_o = Number(restaurant.ratingOArray[0].stars);
+    //  console.log('restaurant.ratinelse',rat_o);
+    // }
+    // restaurant.ratingO = parseInt(rat_o);
+    restaurant.rating = Math.floor((restaurant.ratingR + restaurant.ratingO) / (restaurant.ratingArray.length + restaurant.ratingOArray.length));
+    console.log('restaurant.rating',restaurant.rating);
+    await restaurant.save();
+    await orderRating.save(); 
+    order.ratingOrder = orderRating; 
+    console.log('order.ratingOrder',order.ratingOrder);
+    await order.save(); 
     res.send(orderRating);
 });
 

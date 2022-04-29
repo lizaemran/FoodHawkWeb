@@ -69,7 +69,7 @@ const Cart = ({search, setSearch}) => {
                 <Col>
                 <Container>
                 <Nav search={search} setSearch={setSearch} />
-                <h5 className="text-center p-5">Cart</h5>
+                <h3 className="text-center p-5">Cart</h3>
             <div className="row align-items-center text-center h-100">
                     <div className="col image">
 
