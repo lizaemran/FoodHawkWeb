@@ -110,9 +110,9 @@ const RiderLoginForm = () => {
           />
         </Form.Label>
         <a
-          className=""
+          className="text-white"
           onClick={() => setModalShow(true)}
-          style={{ fontSize: "12px", cursor: "pointer" }}
+          style={{ fontSize: "14px", cursor: "pointer" }}
         >
           Forgot Password?
         </a>

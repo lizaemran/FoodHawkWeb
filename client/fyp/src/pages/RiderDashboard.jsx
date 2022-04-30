@@ -16,6 +16,10 @@ const RiderDashboard = () => {
     const dispatch = useDispatch();
     const logOut = (e) => {
         e.preventDefault();
+        dispatch(patchRiderStatusAsync({
+            id: rider?.id,
+            status: 'inactive'
+        }));
         dispatch(logoutUser());
     }
     const rider = useSelector((state) => state?.auth);
@@ -80,9 +84,11 @@ const RiderDashboard = () => {
     }
     return (
         <div className='rider__register__bg' >
-             {rider?.isConfirmed === false && <div className="alert alert-danger mb-1 text-center" role="alert">
+             {rider?.isConfirmed === false && <div className="alert alert-danger mb-1 text-center text-danger" role="alert">
                <AiOutlineWarning className='fs-5' /> Confirm Your Email to Change Status <a className='border border-1 border-danger text-decoration-none text-danger rounded-3 p-1 shadow-sm' style={{cursor:'pointer'}} onClick={()=> dispatch(resendVerifyRiderAsync({email:rider.email}))}>Resend</a>
                </div>}
+               {riderdetails?.status === 'inactive' && <div className="alert alert-warning mb-1 text-center text-warning" role="alert">
+               <AiOutlineWarning className='fs-5 text-warning' />Change Your Status to get Orders </div>}
             <Container className='p-3'>
                 <Row className='mb-2 ' style={{backgroundColor:'rgba(0, 0, 0, 0.4)', borderRadius:'20px', backdropFilter:'blur(15px)'}}>
                     <Col className='d-flex justify-content-between align-items-center py-3 px-5 text-white' >

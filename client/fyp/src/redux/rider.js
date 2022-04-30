@@ -83,16 +83,24 @@ async(payload) => {
 
 export const getRiderAssign = createAsyncThunk('rider/getRiderAssign' , 
         async(payload) => {
-            const response = await fetch(`http://localhost:7000/api/order/assign/${payload.id}`);
-            if(response.ok){
-                const rider = await response.json();
+            try{
+                const response = await fetch(`http://localhost:7000/api/order/assign/${payload.id}`);
+                const rider =  await response.json();
                 // console.log(rider);
                 return {rider};
             }
-            else{
+            catch(err){
+                // console.log(err);
                 var error = true;
-                return {error};
+                return {error, err};
             }
+            // if(response.ok){
+            //     
+            // }
+            // else{
+            //     console.log(response);
+                
+            // }
         });
 export const getAssignedOrder = createAsyncThunk('rider/getAssignedOrder' ,
         async(payload) => {
@@ -151,8 +159,9 @@ const RiderSlice = createSlice({
             }
         },
         [getRiderAssign.fulfilled]: (state,action) => {
-            if(action?.payload?.error){
-                toast.error("Finding a rider for you. Please wait.");
+            // console.log(action.payload.rider);
+            if(action?.payload.rider?.message !== '' && action?.payload.rider?.message !== undefined){
+                toast.warn(action?.payload.rider?.message);
                 return {...state , assignedRider: {}};
             }
             else{

@@ -30,12 +30,13 @@ router.post('/:r_id/:u_id', async(req,res) => {
 });
 router.get('/assign/:id', async(req,res) => {
     let order = await Order.findById({_id:req.params.id});
-    if (!order) return res.status(404).send("ORDER NOT FOUND");
-    if (order.rider_id) return res.status(400).send("ORDER ALREADY ASSIGNED");
+    if (!order) return res.status(404).send({message: "ORDER NOT FOUND"});
+    if (order.rider_id && order.status === 'picked') return res.status(400).send({message: "ORDER ALREADY PICKED"});
+    if (order.rider_id && order.status === 'delivered') return res.status(400).send({message: "ORDER ALREADY DELIVERED"});
     let restaurant = await Restaurant.findById({_id:order.restaurant_id});
     console.log(restaurant.lat);
     let riders = await Rider.find({status: "available"});
-    if (riders.length === 0) return res.status(404).send("NO RIDER AVAILABLE");
+    if (riders.length === 0) return res.status(404).send({message: "NO RIDER AVAILABLE"});
     let riderWithDistance = [];
       for(let i=0; i<riders.length; i++)
     {

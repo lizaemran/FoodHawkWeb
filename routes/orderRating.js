@@ -56,7 +56,12 @@ router.post('/:r_id/:u_id/:o_id', async(req,res) => {
     //  console.log('restaurant.ratinelse',rat_o);
     // }
     // restaurant.ratingO = parseInt(rat_o);
-    restaurant.rating = Math.floor((restaurant.ratingR + restaurant.ratingO) / (restaurant.ratingArray.length + restaurant.ratingOArray.length));
+    if(restaurant.ratingR > 0){
+    restaurant.rating = Math.ceil((restaurant.ratingR + restaurant.ratingO) / (restaurant.ratingArray.length + restaurant.ratingOArray.length));
+    }
+    else{
+    restaurant.rating = restaurant.ratingO;
+    }
     console.log('restaurant.rating',restaurant.rating);
     await restaurant.save();
     await orderRating.save(); 

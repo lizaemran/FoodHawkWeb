@@ -77,10 +77,9 @@ const Home = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
         }
         dispatch(getAllOrdersForUserAsync(id));
         if(allOrders?.length > 0 ){
-            alert('You have orders to review');
             for(let i = 0; i < allOrders.length; i++){
                 if(allOrders[i].status === "delivered" && allOrders[i].ratingOrder === undefined ){
-                    
+                    alert('You have orders to review');
                     setOrderToReview(allOrders[i]);
                     setModalShow(true);
                 }

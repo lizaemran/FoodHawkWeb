@@ -240,6 +240,8 @@ router.post('/rider', async(req,res) => {
     if(!pass){
         return res.status(400).send("INVALID USERNAME OR PASSWORD");
     }
+    rider.status = "available";
+    await rider.save();
     const token = rider.generateAuthToken();
     res.send({token: token});
 });

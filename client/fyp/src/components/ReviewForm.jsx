@@ -64,6 +64,7 @@ const ReviewForm = ({setModalShow, orderToReview}) => {
                 name='rating'
                 starDimension='40px'
                 starSpacing='3px'
+                style={{border:'1px solid #e5e5e5'}}
               />
               </div>
               <p>
