@@ -179,7 +179,7 @@ const RiderSlice = createSlice({
         },
         [patchRiderStatusAsync.fulfilled]: (state,action) => {
             console.log("Updated Rider successfully.");
-            return {...state, rider: {...state.rider, status : action.payload.rider?.statusS}};
+            return {...state, rider: {...state.rider, status : action.payload.rider?.status}};
         }
 
     },

@@ -233,6 +233,7 @@ router.post('/admin', async(req,res) => {
 
 router.post('/rider', async(req,res) => {
     let rider = await Rider.findOne({username: req.body.username});
+    console.log('Rider logging in');
     if(!rider){
         return res.status(400).send("INVALID USERNAME OR PASSWORD");
     }
