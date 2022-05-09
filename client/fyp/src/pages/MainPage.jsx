@@ -7,6 +7,8 @@ import { Container, Row, Col,  } from 'react-bootstrap';
 // import { Confirmation } from '../UserSide/components/common/Cards/Confirmation';
 // import pizzas from '../UserSide/components/common/Cards/data.json';
 // import Carousel from "react-grid-carousel";
+// import allPositiveTweets from '../data/positive_tweets.json';
+// import allNegativeTweets from '../data/negative_tweets.json'
 import { Swiper, SwiperSlide } from "swiper/react";
 import 'swiper/swiper-bundle.min.css'
 import 'swiper/swiper.min.css'
@@ -17,7 +19,9 @@ import Feedback from '../UserSide/components/common/CustomerFeedback/Feedback';
 import { getRestaurantsAsync, getTop5RestaurantsAsync } from '../redux/Slice';
 import Banner from '../components/Banner';
 import FAQs from '../components/FAQs';
+
 const MainPage = () => {
+
   const renderStars = (stars) => {
     let rating = [];
          for(let i=1; i<=5; i++){

@@ -61,6 +61,14 @@ async(payload) => {
 
 });
 
+export const getRestaurantWithClassificationAsync = createAsyncThunk('admin/getRestaurantWithClassificationAsync' , 
+async(payload) => {
+    const response = await fetch(`http://localhost:7000/api/admin/restaurant/${payload.id}`);
+    if(response.ok){
+        const restaurant = await response.json();
+        return {restaurant};
+    }
+});
 
 const AdminSlice = createSlice({
     name: "admin",
@@ -101,6 +109,13 @@ const AdminSlice = createSlice({
             return{
                 ...state,
                 orders: action?.payload?.orders,
+            }
+        },
+        [getRestaurantWithClassificationAsync.fulfilled]: (state,action) => {
+            console.log("Got Restaurant with Classification successfully.");
+            return{
+                ...state,
+                restaurant_details: action?.payload?.restaurant,
             }
         },
     }

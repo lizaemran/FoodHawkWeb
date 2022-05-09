@@ -39,6 +39,10 @@ const orderSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "OrderRating" 
         },
+    classification:{
+        type:String,
+        required:true
+    }
 })
 
 const Order = mongoose.model('Order',orderSchema)

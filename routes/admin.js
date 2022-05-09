@@ -8,6 +8,54 @@ const { User } = require('../models/user');
 const { Rider } = require('../models/rider');
 const { Order } = require('../models/order');
 const { Restaurant, validateR } = require('../models/restaurants');
+var BayesClassifier = require('bayes-classifier')
+var classifier = new BayesClassifier()
+ 
+var positiveDocuments = [
+  `I love tacos.`,
+  `Dude, that burrito was epic!`,
+  `Holy cow, these nachos are so good and tasty.`,
+  `I am drooling over the awesome bean and cheese quesadillas.`
+]
+ 
+var negativeDocuments = [
+  `Gross, worst taco ever.`,
+  `The buritos gave me horrible diarrhea.`,
+  `I'm going to puke if I eat another bad nacho.`,
+  `I'd rather die than eat those nasty enchiladas.`
+]
+ 
+classifier.addDocuments(positiveDocuments, `positive`)
+classifier.addDocuments(negativeDocuments, `negative`)
+ 
+classifier.train()
+ 
+// console.log(classifier.classify(`I love food`)) // "positive"
+
+router.get('/reviewclassification', async(req,res) => {
+    let reviews = await Order.find({}).populate("ratingOrder");
+    for(let i = 0; i < reviews.length; i++){
+        let review = reviews[i];
+        let classification = classifier.classify(review.ratingOrder.description);
+        review.classification = classification;
+        await review.save();
+    }
+    res.send(reviews);
+})
+
+router.get('/restaurant/:id', async (req,res) => {
+    let reviews = await Order.find({}).populate("ratingOrder");
+    for(let i = 0; i < reviews.length; i++){
+        let review = reviews[i];
+        let classification = classifier.classify(review.ratingOrder.description);
+        review.classification = classification;
+        await review.save();
+    }
+    const restaurant = await Restaurant.findById({"_id":req.params.id}).populate("products").populate("ratingArray").populate("ratingOArray").populate("orders");
+    if (!restaurant) return res.status(404).send("RESTAURANT NOT FOUND");
+    res.send(restaurant);
+});
+
 router.post('/', async(req,res) => {
     const {error} = validate(req.body);
     if(error) return res.status(400).send(error.details[0].message);

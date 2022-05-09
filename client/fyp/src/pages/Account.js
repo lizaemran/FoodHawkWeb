@@ -1,19 +1,178 @@
 import React, {useState, useEffect} from 'react'
-import { Col, Container, Row, Table, Image, Button } from 'react-bootstrap'
+import { Col, Container, Row, Table, Image, Button, Modal } from 'react-bootstrap'
 import SideNav from '../components/SideNav/SideNav'
 import {Link} from 'react-router-dom';
-import Footer from '../UserSide/components/common/Footer/Footer'
+// import Footer from '../UserSide/components/common/Footer/Footer'
 import { useSelector } from 'react-redux';
 import {BiRestaurant} from 'react-icons/bi';
 import {FiUsers} from 'react-icons/fi';
 import {GiCash, GiNotebook, GiFullMotorcycleHelmet} from 'react-icons/gi';
-import {GrNote} from 'react-icons/gr';
+import {Chart as ChartJS,CategoryScale,LinearScale,PointElement,LineElement,Title,Tooltip,Legend,} from 'chart.js';
+import { Line } from 'react-chartjs-2';
+// import {GrNote} from 'react-icons/gr';
 import { useDispatch } from 'react-redux';
-import { getAllOrdersAsync, getAllRidersAsync, getAllUsersAsync } from '../redux/admin';
+import { getAllOrdersAsync, getAllRidersAsync, getAllUsersAsync, getRestaurantWithClassificationAsync } from '../redux/admin';
 import jwt_decode from "jwt-decode";
 import { getAllOrdersForUserAsync } from '../redux/user';
 import { getRestaurantsAsync } from '../redux/Slice';
+ChartJS.register(CategoryScale,LinearScale,PointElement,LineElement,Title,Tooltip,Legend);
+
 const Account = () => {
+    const restaurant_details = useSelector((state)=> state?.admin?.restaurant_details);
+
+    const getOrCreateTooltip = (chart) => {
+        let tooltipEl = chart.canvas.parentNode.querySelector('div');
+      
+        if (!tooltipEl) {
+          tooltipEl = document.createElement('div');
+          tooltipEl.style.background = 'rgba(0, 0, 0, 0.7)';
+          tooltipEl.style.borderRadius = '3px';
+          tooltipEl.style.color = 'white';
+          tooltipEl.style.opacity = 1;
+          tooltipEl.style.pointerEvents = 'none';
+          tooltipEl.style.position = 'absolute';
+          tooltipEl.style.transform = 'translate(-50%, 0)';
+          tooltipEl.style.transition = 'all .1s ease';
+      
+          const table = document.createElement('table');
+          table.style.margin = '0px';
+      
+          tooltipEl.appendChild(table);
+          chart.canvas.parentNode.appendChild(tooltipEl);
+        }
+      
+        return tooltipEl;
+      };
+      
+      const externalTooltipHandler = (context) => {
+        // Tooltip Element
+        const {chart, tooltip} = context;
+        const tooltipEl = getOrCreateTooltip(chart);
+      
+        // Hide if no tooltip
+        if (tooltip.opacity === 0) {
+          tooltipEl.style.opacity = 0;
+          return;
+        }
+      
+        // Set Text
+        if (tooltip.body) {
+          const titleLines = tooltip.title || [];
+          const bodyLines = tooltip.body.map(b => b.lines);
+      
+          const tableHead = document.createElement('thead');
+      
+          titleLines.forEach(title => {
+            const tr = document.createElement('tr');
+            tr.style.borderWidth = 0;
+      
+            const th = document.createElement('th');
+            th.style.borderWidth = 0;
+            const text = document.createTextNode(title);
+      
+            th.appendChild(text);
+            tr.appendChild(th);
+            tableHead.appendChild(tr);
+          });
+      
+          const tableBody = document.createElement('tbody');
+          bodyLines.forEach((body, i) => {
+            const colors = tooltip.labelColors[i];
+      
+            const span = document.createElement('span');
+            span.style.background = colors.backgroundColor;
+            span.style.borderColor = colors.borderColor;
+            span.style.borderWidth = '2px';
+            span.style.marginRight = '10px';
+            span.style.height = '10px';
+            span.style.width = '10px';
+            span.style.display = 'inline-block';
+      
+            const tr = document.createElement('tr');
+            tr.style.backgroundColor = 'inherit';
+            tr.style.borderWidth = 0;
+      
+            const td = document.createElement('td');
+            td.style.borderWidth = 0;
+      
+            const text = document.createTextNode(body);
+      
+            td.appendChild(span);
+            td.appendChild(text);
+            tr.appendChild(td);
+            tableBody.appendChild(tr);
+          });
+      
+          const tableRoot = tooltipEl.querySelector('table');
+      
+          // Remove old children
+          while (tableRoot.firstChild) {
+            tableRoot.firstChild.remove();
+          }
+      
+          // Add new children
+          tableRoot.appendChild(tableHead);
+          tableRoot.appendChild(tableBody);
+        }
+      
+        const {offsetLeft: positionX, offsetTop: positionY} = chart.canvas;
+      
+        // Display, position, and set styles for font
+        tooltipEl.style.opacity = 1;
+        tooltipEl.style.left = positionX + tooltip.caretX + 'px';
+        tooltipEl.style.top = positionY + tooltip.caretY + 'px';
+        tooltipEl.style.font = tooltip.options.bodyFont.string;
+        tooltipEl.style.padding = tooltip.options.padding + 'px ' + tooltip.options.padding + 'px';
+      };
+     const options = {
+        responsive: true,
+        options: {
+            animation: true,  
+        },
+        plugins: {
+          legend: {
+            position: 'top',
+          },
+          title: {
+            display: false,
+            text: '',
+          },
+          tooltip: {
+            enabled: false,
+            position: 'nearest',
+            external: externalTooltipHandler
+          }
+        },
+      };
+      const labels = ['Positive', 'Negative']; 
+      var positiveClassified = restaurant_details?.orders?.reduce((acc, curr) => {
+        if(curr?.classification == 'positive'){
+            return acc + 1;
+        }
+        else{
+            return acc;
+        }
+    }, 0);
+    var negativeClassified = restaurant_details?.orders?.reduce((acc, curr) => {
+        if(curr?.classification == 'negative'){
+            return acc + 1;
+        }
+        else{
+            return acc;
+        }
+    }, 0);
+      const data = {
+        labels,
+        datasets: [
+          {
+            label: '',
+            data: [positiveClassified, negativeClassified ],
+            borderColor: '#39B54A',
+            backgroundColor: '#a8d4ae',
+          },
+        ],
+      };
+    const [modalShow, setModalShow] = useState(false);
     const token = useSelector((state)=> state.auth.token);
     const auth = useSelector((state) => state.auth);
     const restaurants = useSelector((state)=> state.restaurants.restaurants);
@@ -42,6 +201,30 @@ const Account = () => {
         }
     }, [dispatch])
     const allOrders = useSelector((state)=> state?.user?.allOrders);
+    function MyVerticallyCenteredModal(props) {
+        return (
+          <Modal
+            {...props}
+            size="lg"
+            aria-labelledby="contained-modal-title-vcenter"
+            centered
+          >
+            <Modal.Header closeButton>
+              <Modal.Title id="contained-modal-title-vcenter">
+                {restaurant_details?.username}
+              </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <h4>Reviews Analysis</h4>
+              <Line options={options} data={data} />
+            </Modal.Body>
+            <Modal.Footer>
+              <Button onClick={props.onHide}>Close</Button>
+            </Modal.Footer>
+          </Modal>
+        );
+      }
+      
     return (
         <>
         <div>
@@ -146,8 +329,8 @@ const Account = () => {
                            <td>
                                 {index + 1}
                            </td>
-                           <td>
-                               {u?.name}
+                           <td >
+                               <span onClick={() => {dispatch(getRestaurantWithClassificationAsync({id: u._id})); setModalShow(true);}} style={{cursor: 'pointer'}}>{u?.name}</span>
                            </td>
                            <td>
                                {u.location}
@@ -333,6 +516,10 @@ const Account = () => {
            </Col>
         </Row>
            </div>
+           <MyVerticallyCenteredModal
+        show={modalShow}
+        onHide={() => setModalShow(false)}
+      />
         </>
     )
 }

@@ -26,6 +26,8 @@ const orderRatingSchema = new mongoose.Schema({
         type:String,
         required:true
     },
+  
+
 })
 const OrderRating = mongoose.model('OrderRating',orderRatingSchema)
 exports.OrderRating = OrderRating;
