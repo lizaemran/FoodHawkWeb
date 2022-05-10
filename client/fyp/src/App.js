@@ -28,7 +28,8 @@ import AboutUs from "./pages/AboutUs";
 import VerifyEmail from "./pages/VerifyEmail";
 import UserInfo from "./components/UserInfo";
 import FAQs from "./components/FAQs";
-import Faqs from './pages/Faqs';
+import Faqs from "./pages/Faqs";
+import Recommendationsystem from "./pages/Recommendationsystem";
 import ResetPassword from "./pages/ResetPassword";
 function App() {
   const [pId, setPId] = useState("");
@@ -45,7 +46,10 @@ function App() {
         <Route path="/restaurant/verifyConfirm/:otp" component={VerifyEmail} />
         <Route path="/user/forgotPassword/:otp" component={ResetPassword} />
         <Route path="/rider/forgotPassword/:otp" component={ResetPassword} />
-        <Route path="/restaurant/forgotPassword/:otp" component={ResetPassword} />
+        <Route
+          path="/restaurant/forgotPassword/:otp"
+          component={ResetPassword}
+        />
         <Route path="/SignUp" component={Form} />
         <Route path="/SignIn" component={FormLogin} />
         <Route path="/user-profile" component={UserProfile} />
@@ -112,6 +116,11 @@ function App() {
         <Route exact path="/rider-register" component={RiderSignUp} />
         <Route exact path="/rider-login" component={RiderLogin} />
         <Route exact path="/rider-dashboard/" component={RiderDashboard} />
+        <Route
+          exact
+          path="/recommendationsystem"
+          component={Recommendationsystem}
+        />
       </Switch>
     </div>
   );

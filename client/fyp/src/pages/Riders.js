@@ -23,7 +23,7 @@ const Riders = () => {
             <Col xl={11} lg={11} md={11} sm={12} xs={12}>
            <Container className='p-4'>
                <div className='px-4 py-3 mb-3 text-white w-25 d-flex justify-content-start align-items-center' style={{backgroundColor:'rgb(239, 80, 35)',borderRadius:"5px"}}>
-                    <p className='fs-4' style={{marginBottom:'0px'}}>Hello, {auth.firstName || auth.username}</p>
+                    <p className='fs-5' style={{marginBottom:'0px'}}>Hello, {auth.firstName || auth.username}</p>
                </div>
                <h5>Riders</h5>
                <div className=' d-flex flex-wrap' >

@@ -93,7 +93,7 @@ const RiderDashboard = () => {
                 <Row className='mb-2 ' style={{backgroundColor:'rgba(0, 0, 0, 0.4)', borderRadius:'20px', backdropFilter:'blur(15px)'}}>
                     <Col className='d-flex justify-content-between align-items-center py-3 px-5 text-white' >
                         <div>
-                        <p className=''>Hello, <span><b>{rider.name}</b></span></p>
+                        <p className='fs-5'>Hello, <span><b>{rider.name}</b></span></p>
                         <p>{date}</p>
                         <p>{time}</p>
                         </div>

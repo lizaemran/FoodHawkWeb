@@ -5,6 +5,7 @@ import reportWebVitals from './reportWebVitals';
 import Store from '../src/redux/Store';
 import {Provider} from 'react-redux';
 import {BrowserRouter} from "react-router-dom";
+
 Store.subscribe(()=>{
 	localStorage.setItem('reduxState', JSON.stringify(Store.getState()))
   })
@@ -31,6 +32,7 @@ ReactDOM.render(
 		</Provider>
 	</React.StrictMode>
 	</BrowserRouter>,
+	
   document.getElementById('root')
 
 );

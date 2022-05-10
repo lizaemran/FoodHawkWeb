@@ -119,7 +119,7 @@ const TrackOrder = () => {
                 <ToastContainer />
                 <Row>
             <div className='px-4 py-3 mb-3 text-white w-25 d-flex justify-content-start align-items-center' style={{borderRadius:"10px", backgroundColor:'#EF5023'}}>
-                        <p className='fs-4' style={{marginBottom:'0px'}}>Hello, {auth.firstName || auth.username}</p>
+                        <p className='fs-5' style={{marginBottom:'0px'}}>Hello, {auth.firstName || auth.username}</p>
                     </div>
                     <h4>Track Your Order...</h4>
                     </Row>
