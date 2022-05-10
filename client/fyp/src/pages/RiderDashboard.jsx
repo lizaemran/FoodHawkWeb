@@ -84,22 +84,22 @@ const RiderDashboard = () => {
     }
     return (
         <div className='rider__register__bg' >
-             {rider?.isConfirmed === false && <div className="alert alert-danger mb-1 text-center text-danger" role="alert">
+             {rider?.isConfirmed === false && <div className="alert alert-danger mb-1 text-center text-danger" role="alert" style={{fontSize:'12px'}}>
                <AiOutlineWarning className='fs-5' /> Confirm Your Email to Change Status <a className='border border-1 border-danger text-decoration-none text-danger rounded-3 p-1 shadow-sm' style={{cursor:'pointer'}} onClick={()=> dispatch(resendVerifyRiderAsync({email:rider.email}))}>Resend</a>
                </div>}
-               {riderdetails?.status === 'inactive' && <div className="alert alert-warning mb-1 text-center text-warning" role="alert">
+               {riderdetails?.status === 'inactive' && <div className="alert alert-warning mb-1 text-center text-warning" role="alert" style={{fontSize:'12px'}}>
                <AiOutlineWarning className='fs-5 text-warning' />Change Your Status to get Orders </div>}
             <Container className='p-3'>
                 <Row className='mb-2 ' style={{backgroundColor:'rgba(0, 0, 0, 0.4)', borderRadius:'20px', backdropFilter:'blur(15px)'}}>
                     <Col className='d-flex justify-content-between align-items-center py-3 px-5 text-white' >
-                        <div>
-                        <p className='fs-5'>Hello, <span><b>{rider.name}</b></span></p>
+                        <div style={{fontSize:'14px'}}>
+                        <p className='fs-6'>Hello, <span><b>{rider.name}</b></span></p>
                         <p>{date}</p>
                         <p>{time}</p>
                         </div>
                         <FaUserCircle className='' style={{fontSize:'6rem'}} />
                         <div className='d-flex flex-column my-auto'>
-                        <div class="form-check form-switch toggle-status mt-4">
+                        <div class="form-check form-switch toggle-status mt-4" style={{fontSize:'14px'}} >
                         {rider?.isConfirmed === true && <><input
                             type='checkbox'
                             className='form-check-input'
@@ -108,9 +108,9 @@ const RiderDashboard = () => {
                             onChange={(e)=> {setStatusValue(!statusValue); onSubmit(e); } }
                         >
                         </input>
-                        <h6 className='text-capitalize'>{riderdetails?.status ? riderdetails?.status : 'Updating'}</h6></>}
+                        <h6 className='text-capitalize text-center'>{riderdetails?.status ? riderdetails?.status : 'Updating'}</h6></>}
                         </div>
-                        <div className='mt-1 mb-2'>
+                        <div className='mt-1 mb-2 ' style={{fontSize:'14px'}}>
                             <AiOutlineLogout className='fs-3 bg-light p-1' onClick={logOut} style={{borderRadius:'50%', cursor:'pointer',}}/>
                         <span style={{marginLeft:'20px'}}>Logout</span>
                         </div>
@@ -120,9 +120,9 @@ const RiderDashboard = () => {
                 </Row>  
                 <Row>
                 <Col className=' p-3' xl={12} lg={12} md={12} sm={12} xs={12} style={{ height:'fit-content', backgroundColor:'rgba(0, 0, 0, 0.4)', borderRadius:'20px', backdropFilter:'blur(15px)'}}>
-                        <h3 className='py-2 text-center text-white' >
+                        <h6 className='py-2 text-center text-white' >
                             Current Location
-                        </h3>
+                        </h6>
                         {/* AIzaSyAyt8jyJ3uk_s1p6e6qtvI50OmLq8e4z0w */}
                         {/* <Image src={map} className='' alt='res-map' style={{height:'37.5vh', width:'100%', borderRadius:'10px', objectFit:'cover'}}/> */}
                         {(lat && lng) ? 
@@ -150,12 +150,12 @@ const RiderDashboard = () => {
                 </Row>
                 <Row className='my-2' style={{backgroundColor:'rgba(0, 0, 0, 0.4)', borderRadius:'20px', backdropFilter:'blur(15px)'}}>
                     <Col className='d-flex flex-column justify-content-center align-items-center text-white'>
-                        <h3 className='py-2'>
+                        <h6 className='py-2'>
                             Active Orders
-                        </h3>
+                        </h6>
                         {assignedOrder?.restaurant ? 
                         (<div>
-                        <Table striped bordered hover responsive>
+                        <Table striped bordered hover responsive style={{fontSize:'12px'}}>
                     <thead className='text-white' >
                         <tr>
                         <th>#</th>
@@ -239,7 +239,7 @@ const RiderDashboard = () => {
                         </h3>
                         {deliveredOrders?.length > 0 ? 
                         (<div>
-                        <Table striped bordered hover responsive>
+                        <Table striped bordered hover responsive style={{fontSize:'12px'}}>
                     <thead className='text-white' >
                         <tr>
                         <th>#</th>

@@ -119,7 +119,7 @@ const RestaurantDashboard = ({ pId, setPId, isEditP, setIsEditP }) => {
     <div className="bg-secondary">
       <ToastContainer />
       {isConfirmed === false && (
-        <div className="alert alert-danger mb-1 text-center" role="alert">
+        <div className="alert alert-danger mb-1 text-center" style={{fontSize:'12px'}} role="alert">
           <AiOutlineWarning className="fs-5" /> Confirm Your Email to Add
           Products{" "}
           <a
@@ -143,8 +143,8 @@ const RestaurantDashboard = ({ pId, setPId, isEditP, setIsEditP }) => {
               backdropFilter: "blur(20px)",
             }}
           >
-            <Col className="d-flex flex-column p-3 text-white">
-              <p className="fs-5">
+            <Col className="d-flex flex-column p-3 text-white" style={{fontSize:'12px'}}>
+              <p className="fs-6">
                 Hello, <b>{name}</b>
               </p>
               <p>
@@ -206,7 +206,7 @@ const RestaurantDashboard = ({ pId, setPId, isEditP, setIsEditP }) => {
               backdropFilter: "blur(2px)",
             }}
           >
-            <p>
+            <p style={{fontSize:'12px'}}>
               Let customers know about your restaurant. Add some overview about
               your cuisines and other specialities.
             </p>
@@ -226,12 +226,13 @@ const RestaurantDashboard = ({ pId, setPId, isEditP, setIsEditP }) => {
                 backgroundColor: "#ef5023",
                 marginBottom: "0px",
                 cursor: "pointer",
+                fontSize: "12px",
               }}
             >
               Set Overview
             </p>
             {current_overview !== undefined && (
-              <p>
+              <p style={{fontSize:'12px'}}>
                 Current Overview: <i>{current_overview}</i>
               </p>
             )}
@@ -249,7 +250,7 @@ const RestaurantDashboard = ({ pId, setPId, isEditP, setIsEditP }) => {
               backdropFilter: "blur(2px)",
             }}
           >
-            <p>Add images to your gallery.</p>
+            <p style={{fontSize:'12px'}}>Add images to your gallery.</p>
             <div className="w-25">
               <Form.Control
                 id="images"
@@ -268,6 +269,7 @@ const RestaurantDashboard = ({ pId, setPId, isEditP, setIsEditP }) => {
                   marginBottom: "0px",
                   cursor: "pointer",
                   border: "1px solid #ef5023",
+                  fontSize: "12px",
                 }}
               >
                 Upload
@@ -291,16 +293,17 @@ const RestaurantDashboard = ({ pId, setPId, isEditP, setIsEditP }) => {
                 />
               </div>
             )}
-            <div className="d-flex flex-column justify-content-center align-items-center">
-              <h4>Gallery</h4>
-              <div className="d-flex flex-wrap">
-                {gallery?.slice(0, 3).map((image, index) => {
+            <div className="my-3 d-flex flex-column justify-content-center align-items-center shadow bg-dark py-2 px-4 rounded-3">
+              <h6>Gallery</h6>
+              <h6>Total: {gallery?.length} Images</h6>
+              <div className="d-flex flex-wrap ">
+                {gallery?.slice(0, 4).map((image, index) => {
                   return (
                     <div key={index} className="p-1 m-1">
                       <img
                         src={image}
                         className=""
-                        style={{ height: "300px" }}
+                        style={{ height: "125px" }}
                         alt="chosen"
                       />
                     </div>
@@ -346,7 +349,7 @@ const RestaurantDashboard = ({ pId, setPId, isEditP, setIsEditP }) => {
             </Col>
 
             <Row>
-              <Table striped bordered hover responsive>
+              <Table striped bordered hover responsive style={{fontSize:'12px'}}>
                 <thead className="text-white">
                   <tr>
                     <th>#</th>
@@ -413,7 +416,7 @@ const RestaurantDashboard = ({ pId, setPId, isEditP, setIsEditP }) => {
             <p>
               Orders: <b>{orders?.length}</b>{" "}
             </p>
-            <Table striped bordered hover responsive>
+            <Table striped bordered hover responsive style={{fontSize:'12px'}}>
               <thead className="text-white">
                 <tr>
                   <th>#</th>

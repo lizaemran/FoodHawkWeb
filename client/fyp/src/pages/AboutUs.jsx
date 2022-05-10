@@ -41,14 +41,14 @@ const AboutUs = () => {
         <h4>Explore over popular meal chart</h4>
         <p style={{marginBottom:'0px'}}>Choosing your next meal has never been this easy.</p>
         <p>With the most popular meals at the top of the chart, ordering is going to be so much fun.</p>
-        <div className="row">
-        <div className="about-us-divs text-white p-5 d-flex justify-content-center align-items-center rounded " style={{background:"#EF5023", height:"200px",width:"355px", margin:"2px"}}
+        <div className="row d-flex justify-content-around align-items-center">
+        <div className="about-us-divs text-white p-5 d-flex justify-content-center align-items-center rounded text-center" style={{background:"#EF5023", height:"150px",width:"275px", margin:"2px"}}
           ><h2>Popular Meals</h2></div>
-        <div className="about-us-divs text-white p-5  d-flex justify-content-center align-items-center rounded " style={{background:"#EF5023", height:"200px",width:"355px", margin:"2px"}}
+        <div className="about-us-divs text-white p-5  d-flex justify-content-center align-items-center rounded text-center" style={{background:"#EF5023", height:"150px",width:"275px", margin:"2px"}}
           ><h2>Book Table</h2></div>
-          <div className="about-us-divs text-white p-5 d-flex justify-content-center align-items-center rounded" style={{background:"#EF5023", height:"200px",width:"355px", margin:"2px"}}
+          <div className="about-us-divs text-white p-5 d-flex justify-content-center align-items-center rounded text-center"  style={{background:"#EF5023", height:"150px",width:"275px", margin:"2px"}}
           ><h2>Fast Delivery</h2></div>
-            <div className="about-us-divs text-white p-5  d-flex justify-content-center align-items-center rounded " style={{background:"#EF5023", height:"200px",width:"355px", margin:"2px"}}
+            <div className="about-us-divs text-white p-5  d-flex justify-content-center align-items-center rounded text-center" style={{background:"#EF5023", height:"150px",width:"275px", margin:"2px"}}
           ><h2>Search</h2></div>
           </div>
           

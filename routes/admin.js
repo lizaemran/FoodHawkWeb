@@ -8,21 +8,71 @@ const { User } = require('../models/user');
 const { Rider } = require('../models/rider');
 const { Order } = require('../models/order');
 const { Restaurant, validateR } = require('../models/restaurants');
+// var positive_tweets = require('../positive_tweets');
+// var negative_tweets = require('../negative_tweets.json');
 var BayesClassifier = require('bayes-classifier')
 var classifier = new BayesClassifier()
- 
+
+// var positiveData = positive_tweets.map(tweet => {
+//     return {
+//         text: tweet.text,
+//     }
+// }
+// )
+// console.log(positiveData);
+
+// var negativeData = negative_tweets.map(tweet => {
+//     return {
+//         text: tweet.text,
+//     }
+// }
+// )
+
 var positiveDocuments = [
   `I love tacos.`,
   `Dude, that burrito was epic!`,
   `Holy cow, these nachos are so good and tasty.`,
-  `I am drooling over the awesome bean and cheese quesadillas.`
+  `I am drooling over the awesome bean and cheese quesadillas.`,
+  `#FollowFriday @France_Inte @PKuchly57 @Milipol_Paris for being top engaged members in my community this week :)`, 
+  `@Lamb2ja Hey James! How odd :/ Please call our Contact Centre on 02392441234 and we will be able to assist you :) Many thanks!`,
+  `It was very yummy and fast`,
+  `Best Food over`,
+  `The order was fast`,
+  `The food was good`,
+  `Order was delivered right on time`,
+  `The food was fresh`,
+  `The food was tasty`,
+  `The food was delicious`,
+  `The food was awesome`,
+  `The food was amazing`,
+  `The food was great`,
 ]
  
 var negativeDocuments = [
   `Gross, worst taco ever.`,
   `The buritos gave me horrible diarrhea.`,
   `I'm going to puke if I eat another bad nacho.`,
-  `I'd rather die than eat those nasty enchiladas.`
+  `I'd rather die than eat those nasty enchiladas.`,
+   `I'm not going to eat another bad nacho.`,
+   `Bad food ever`,
+   `I hate this order`,
+   `I hate this food`,
+   `Order was very late`,
+   `I am pretty disappointed`,
+   `I am disappinted`,
+    `The rider was rude, angry`,
+    `The food was cold`,
+    `The food was stale`,
+    `Too many cabbages`,
+    `The food was overcooked`,
+    `The food was undercooked`,
+    `The rider was late`,
+    `The rider was rude`,
+    `The rider was angry`,
+    `The rider was rude, angry`,
+    `The order was not in time`
+
+
 ]
  
 classifier.addDocuments(positiveDocuments, `positive`)
@@ -30,7 +80,7 @@ classifier.addDocuments(negativeDocuments, `negative`)
  
 classifier.train()
  
-// console.log(classifier.classify(`I love food`)) // "positive"
+console.log(classifier.classify(`kill`)) // "positive"
 
 router.get('/reviewclassification', async(req,res) => {
     let reviews = await Order.find({}).populate("ratingOrder");

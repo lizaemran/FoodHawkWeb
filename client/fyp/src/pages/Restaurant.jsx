@@ -317,7 +317,7 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
                         </div>
                         // <Image src={coke} className='' alt='res-img' style={{height:'37.5vh', width:'100%', borderRadius:'10px', objectFit:'cover'}}/> 
                         : 
-                        <Image src={restaurant?.gallery[0]} className='' alt='res-img' style={{height:'37.5vh', width:'100%', borderRadius:'10px', objectFit:'cover'}}/>}
+                        <Image src={restaurant?.gallery[0]} className='' alt='res-img' style={{height:'44vh', width:'100%', borderRadius:'10px', objectFit:'cover'}}/>}
                         </Col>
                         <Col className=' p-3' xl={5} lg={5} md={5} sm={12} xs={12} style={{borderRadius:'5px', height:'fit-content', backgroundColor:'rgba(0,0,0,0.5)', backdropFilter:'blur(10px)'}}>
                         <p className='mb-2 text-white' style={{margin: '0px' , fontSize:'15px'}}><MdOutlineLocationOn className='fs-4'/> {restaurant?.location}</p>
@@ -388,7 +388,7 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
                                         <Col className='bg-light p-2 d-flex flex-column justify-content-between align-items-center w-100 mb-3' style={{borderRadius:'15px'}} xl={4} lg={4} md={4} sm={12} xs={12}>
                                             <Row>
                                                 <Col  xl={6} lg={6} md={6} sm={12} xs={12}>
-                                                    <Image  src={r.image} style={{height:'auto', width:'100%', }} />
+                                                    <Image  src={r.image} style={{height:'px',  objectFit:'cover' }} />
                                                 </Col>
                                                 <Col  xl={6} lg={6} md={6} sm={12} xs={12} className='d-flex flex-column justify-content-center align-items-center'>
                                                     <p className=''>{r.name}</p>

@@ -10,7 +10,7 @@ const Recommendationsystem = ({ userType }) => {
     <div>
       {userType === "user" && (
         <>
-          <h1>Recommended for you </h1>
+          <h3>Recommended for you </h3>
           <p>based on your past order with us</p>
         </>
       )}

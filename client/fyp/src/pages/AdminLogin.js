@@ -38,33 +38,35 @@ const AdminLogin = () => {
            <div className='bg-dark '>
            <Container className='p-5 d-flex justify-content-center align-items-center '>
            <Form  className='p-5 rounded-3' noValidate onSubmit={onSubmit} style={{border:'1px solid white'}}>
-          <h1 className='text-white'>
+          <h3 className='text-white'>
             Log In...
-          </h1>
+          </h3>
           <div className='d-flex flex-column'>
-            <label className='text-white'>Username</label>
+            <label className='text-white' style={{fontSize:'12px'}}>Username</label>
             <input
-              className='w-100 mb-3 input1 fs-6 rounded-3 mt-0 border-0 text-muted bg-light'
+              className='w-100 mb-3 input1  rounded-3 mt-0 border-0 text-muted bg-light'
               type='text'
               name='username'
               placeholder='Enter your username'
               value={userName}
               onChange={(event) => setUserName(event.target.value)}
+              style={{fontSize:'12px'}}
             />
           </div>
           <div className='d-flex flex-column'>
-            <label className='text-white'>Password</label>
+            <label className='text-white' style={{fontSize:'12px'}}>Password</label>
             <input
-              className='w-100 mb-3 p-3 input1 fs-6 rounded-3 mt-0 border-0 text-muted bg-light'
+              className='w-100 mb-3 p-3 input1 rounded-3 mt-0 border-0 text-muted bg-light'
               type='password'
               name='password'
               placeholder='Enter your password'
               value={password}
               onChange={(event) => setPassword(event.target.value)}
+              style={{fontSize:'12px'}}
             />
           </div>
          
-          <Button type="submit" className='py-2 px-5 fs-6 form-btn' style={{background:"#EF5023", border:"none"}}>
+          <Button type="submit" className='py-2 px-5 form-btn' style={{background:"#EF5023", border:"none",fontSize:'12px'}}>
             Login
           </Button>
           {/* <span className='text-white '>

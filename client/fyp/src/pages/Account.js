@@ -449,7 +449,7 @@ const Account = () => {
                   <Row>
                     {isUser && (
                       <Col>
-                        <Table striped bordered hover responsive>
+                        <Table striped bordered hover responsive style={{fontSize:'12px'}}>
                           <thead>
                             <tr>
                               <th>#</th>
@@ -477,7 +477,7 @@ const Account = () => {
                     )}
                     {isRestaurant && (
                       <Col>
-                        <Table striped bordered hover responsive>
+                        <Table striped bordered hover responsive style={{fontSize:'12px'}}>
                           <thead>
                             <tr>
                               <th>#</th>
@@ -486,24 +486,15 @@ const Account = () => {
                               <th>Rating</th>
                               <th>Status</th>
                               <th>Products</th>
+                              <th>Reviews Analysis</th>
                             </tr>
                           </thead>
-                          <tbody>
+                          <tbody >
                             {restaurants.map((u, index) => (
-                              <tr>
+                              <tr >
                                 <td>{index + 1}</td>
                                 <td>
-                                  <span
-                                    onClick={() => {
-                                      dispatch(
-                                        getRestaurantWithClassificationAsync({
-                                          id: u._id,
-                                        })
-                                      );
-                                      setModalShow(true);
-                                    }}
-                                    style={{ cursor: "pointer" }}
-                                  >
+                                  <span>
                                     {u?.name}
                                   </span>
                                 </td>
@@ -534,6 +525,21 @@ const Account = () => {
                                   )}
                                 </td>
                                 <td>{u.products?.length}</td>
+                                <td 
+                                className="bg-light"
+                                 onClick={() => {
+                                      dispatch(
+                                        getRestaurantWithClassificationAsync({
+                                          id: u._id,
+                                        })
+                                      );
+                                      setModalShow(true);
+                                    }}
+                                    style={{ cursor: "pointer" }}>
+                                      <span className='rounded-3 text-white bg-info py-2 px-3 d-flex justify-content-center align-items-center '>
+                                        View
+                                        </span>
+                                        </td>
                               </tr>
                             ))}
                           </tbody>
@@ -557,7 +563,7 @@ const Account = () => {
                   )}
                   {isOrder && (
                     <Col>
-                      <Table striped bordered hover responsive>
+                      <Table striped bordered hover responsive style={{fontSize:'12px'}}>
                         <thead>
                           <tr>
                             <th>#</th>
@@ -625,7 +631,7 @@ const Account = () => {
                   {isRider && (
                     <Row>
                       <Col>
-                        <Table striped bordered hover responsive>
+                        <Table striped bordered hover responsive style={{fontSize:'12px'}}>
                           <thead>
                             <tr>
                               <th>#</th>
@@ -656,7 +662,7 @@ const Account = () => {
                 <Row className="py-5">
                   <h3>Orders</h3>
                   <Col>
-                    <Table striped bordered hover responsive>
+                    <Table striped bordered hover responsive style={{fontSize:'12px'}}>
                       <thead>
                         <tr>
                           <th>#</th>
