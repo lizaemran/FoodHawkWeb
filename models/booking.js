@@ -1,9 +1,5 @@
 const mongoose = require('mongoose');
 const bookingSchema = new mongoose.Schema({
-    booking_id:{
-        type:String,
-        required:true
-    },
     restaurant_id:{
         type:String,
         required:true 
@@ -32,6 +28,14 @@ const bookingSchema = new mongoose.Schema({
     },
     time: {
         type:String,
+        required:true
+    },
+    dateOfBooking: {
+        type:Date,  
+        required:true
+    },
+    total_price: {
+        type:Number,    
         required:true
     }
 

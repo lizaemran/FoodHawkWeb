@@ -99,6 +99,32 @@ async(payload) => {
     }
 });
 
+export const placeBookingAsync = createAsyncThunk('user/placeBookingAsync',
+async(payload) => {
+    const response = await fetch(`http://localhost:7000/api/booking/${payload.r_id}/${payload.u_id}`, {
+        method: "POST",
+        headers: {
+            "Content-Type": 'application/json',
+        },
+        body: JSON.stringify({
+            name: payload.name,
+            contact: payload.contact,
+            products: payload.products,
+            total_price: payload.total_price,
+            dateOfBooking: payload.dateOfBooking,
+            no_of_people: payload.persons,
+            time: payload.time,
+        })
+    });
+    if(response.ok){
+        const booking = await response.json();
+        return {booking};
+    }
+    else {
+        toast.error('Booking failed');
+    }
+});
+
 const UserSlice = createSlice({
     name: "user",
     initialState: 
@@ -142,6 +168,10 @@ const UserSlice = createSlice({
         [sendMessageAsync.fulfilled]: (state,action) => {
             console.log("Message Sent successfully.");
             toast.success("Message Sent Successfully.");
+        },
+        [placeBookingAsync.fulfilled]: (state,action) => {
+            console.log("Booking Placed successfully.");
+            toast.success("Booking Placed Successfully.");
         },
     }
        

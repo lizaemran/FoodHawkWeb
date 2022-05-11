@@ -83,3 +83,21 @@
     font-size: 2rem!important;
     color: rgb(92, 83, 83);
   }
+  .react-time-picker__inputGroup{
+    display: flex!important;
+  }
+  .react-time-picker{
+      background-color: #f8f7f7!important;
+      padding: 3px!important;
+      border-radius: 5px!important;   
+  }
+  .react-time-picker__inputGroup__input:invalid{
+    background: rgba(255, 0, 0, 0.718)!important;
+  }
+  /* .react-time-picker__inputGroup__input{
+    min-width: 0.66em!important;
+
+  }
+  .react-time-picker__inputGroup__amPm{
+      margin-left: 1px!important;
+  } */

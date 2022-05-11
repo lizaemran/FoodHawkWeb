@@ -10,12 +10,16 @@ router.post('/:r_id/:u_id', async(req,res) => {
     let booking = new Booking({
         restaurant_id: req.params.r_id,
         user_id: req.params.u_id,
-        products: req.body.products,
         name: req.body.name,	
         contact: req.body.contact,
-        no_of_people: req.body.no_of_people.date,
+        no_of_people: req.body.no_of_people,
         time: req.body.time,
+        total_price: req.body.total_price,
+        dateOfBooking: req.body.dateOfBooking
     });
+    for(let i = 0; i < req.body.products.length; i++){
+        booking.products.push(req.body.products[i].id);
+    }
     await booking.save();
     let user = await User.findById({_id:req.params.u_id});
     user.bookings.push(booking._id);

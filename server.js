@@ -12,6 +12,8 @@ const order = require('./routes/order');
 const rating = require('./routes/rating');
 const file = require("./routes/file");
 const orderRating = require('./routes/orderRating');
+const striperoutes = require('./routes/stripe-route');
+const booking = require('./routes/booking');
 const cors = require('cors')
 const app = express();
 
@@ -29,7 +31,11 @@ app.use('/api/rider', rider);
 app.use('/api/order', order);
 app.use('/api/rating', rating);
 app.use('/api/orderRating', orderRating);
+app.use('/api/stripe', striperoutes);
+app.use('/api/booking', booking);
 // app.all('*', (req, res) => res.send('That route does not exist!'));
+
+
 
 const connectionParams= {
     useNewUrlParser: true,

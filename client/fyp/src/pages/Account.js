@@ -1,13 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  Col,
-  Container,
-  Row,
-  Table,
-  Image,
-  Button,
-  Modal,
-} from "react-bootstrap";
+import {Col,Container,Row,Table,Image,Button,Modal} from "react-bootstrap";
 import SideNav from "../components/SideNav/SideNav";
 import { Link } from "react-router-dom";
 // import Footer from '../UserSide/components/common/Footer/Footer'
@@ -15,37 +7,17 @@ import { useSelector } from "react-redux";
 import { BiRestaurant } from "react-icons/bi";
 import { FiUsers } from "react-icons/fi";
 import { GiCash, GiNotebook, GiFullMotorcycleHelmet } from "react-icons/gi";
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-} from "chart.js";
+import {Chart as ChartJS,CategoryScale,LinearScale,PointElement,LineElement,Title,Tooltip,Legend,} from "chart.js";
 import { Line } from "react-chartjs-2";
 // import {GrNote} from 'react-icons/gr';
+import {IoIosRestaurant} from 'react-icons/io';
+import {IoReceipt} from 'react-icons/io5';
 import { useDispatch } from "react-redux";
-import {
-  getAllOrdersAsync,
-  getAllRidersAsync,
-  getAllUsersAsync,
-  getRestaurantWithClassificationAsync,
-} from "../redux/admin";
+import {getAllOrdersAsync,getAllRidersAsync,getAllUsersAsync,getRestaurantWithClassificationAsync,} from "../redux/admin";
 import jwt_decode from "jwt-decode";
 import { getAllOrdersForUserAsync } from "../redux/user";
 import { getRestaurantsAsync } from "../redux/Slice";
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend
-);
+ChartJS.register(CategoryScale,LinearScale,PointElement,LineElement,Title,Tooltip,Legend);
 
 const Account = () => {
   const restaurant_details = useSelector(
@@ -215,6 +187,8 @@ const Account = () => {
   const [isRider, setIsRider] = useState(false);
   const [isOrder, setIsOrder] = useState(false);
   const [isSales, setIsSales] = useState(false);
+  const [isUserOrders, setIsUserOrders] = useState(true);
+  const [isBookings, setIsBookings] = useState(false);
   const dispatch = useDispatch();
   var decoded = jwt_decode(token);
   useEffect(() => {
@@ -230,6 +204,7 @@ const Account = () => {
     }
   }, [dispatch]);
   const allOrders = useSelector((state) => state?.user?.allOrders);
+  const allBookings = useSelector((state) => state?.auth?.bookings);
   function MyVerticallyCenteredModal(props) {
     return (
       <Modal
@@ -493,7 +468,7 @@ const Account = () => {
                             {restaurants.map((u, index) => (
                               <tr >
                                 <td>{index + 1}</td>
-                                <td>
+                                <td>/
                                   <span>
                                     {u?.name}
                                   </span>
@@ -659,7 +634,74 @@ const Account = () => {
                 </>
               )}
               {decoded.isUser == true && (
-                <Row className="py-5">
+                <>
+                <div className="d-flex justify-content-center align-items-center">
+                  <div className="bg-light shadow-sm p-3 rounded-3" 
+                  onClick={() => {setIsUserOrders(true); setIsBookings(false)}}
+                  style={{ cursor:'pointer'}}> 
+                    <IoReceipt className="fs-1" />
+                    <span className="px-2">Orders</span>
+                  </div>
+                  <div className="bg-light shadow-sm p-3 rounded-3"
+                  onClick={() => {setIsBookings(true); setIsUserOrders(false);}}
+                   style={{marginLeft:'10px', cursor:'pointer'}}>
+                  <IoIosRestaurant className="fs-1" />
+                  <span className="px-2">Bookings</span>
+                  </div>
+                </div>
+                {isBookings && 
+                <Row className="pt-3 pb-5">
+                   <Col>
+                      <Table striped bordered hover responsive style={{fontSize:'12px'}}>
+                        <thead>
+                          <tr>
+                            <th>#</th>
+                            <th>Products</th>
+                            <th>User</th>
+                            <th>Restaurant</th>
+                            <th>Persons</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Total</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {allBookings?.map((u, index) => (
+                            <tr>
+                              <td>{index + 1}</td>
+                              <td>
+                                {u?.products?.map((p, index) => (
+                                  <div key={index}>
+                                    {/* <Image
+                                      src={p.image}
+                                      style={{ width: "40px", height: "auto" }}
+                                    />{" "}
+                                    {p.name}
+                                    <span className="mx-2">
+                                      <b>{p.price}</b>
+                                    </span>{" "} */}
+                                    {p}
+                                    {index < p.length && <span> , </span>}
+                                  </div>
+                                ))}
+                              </td>
+                              <td>{u?.user_id}</td>
+                              <td>{u.restaurant_id}</td>
+                              <td>
+                                {u?.no_of_people}
+                              </td>
+                              <td>{u?.dateOfBooking}</td>
+                              <td>{u?.time}</td>
+                              <td>
+                                {u?.total_price}
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </Table>
+                    </Col>
+                </Row>}
+                {isUserOrders && <Row className="pt-3 pb-5">
                   <h3>Orders</h3>
                   <Col>
                     <Table striped bordered hover responsive style={{fontSize:'12px'}}>
@@ -738,7 +780,8 @@ const Account = () => {
                       </tbody>
                     </Table>
                   </Col>
-                </Row>
+                </Row>}
+                </>
               )}
             </Container>
           </Col>

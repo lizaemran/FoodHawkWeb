@@ -114,7 +114,20 @@ const restaurantSchema = new mongoose.Schema({
     status: {
         type: Boolean,
         required: false
+    },
+    openTime : {
+        type: String,
+        required: false
+    },
+    closeTime : {
+        type: String,
+        required: false
+    },
+    enableBooking: {
+        type: Boolean,
+        required: false
     }
+
 })
 restaurantSchema.methods.generateAuthToken = function(){
     const token = jwt.sign({_id: this._id, isRestaurant: true},"key");

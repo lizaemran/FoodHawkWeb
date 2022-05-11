@@ -131,7 +131,7 @@ router.put('/:id', userAuth, async(req, res) => {
  });
 
 router.get('/', userAuth, async(req, res)=> {
-    let user = await User.findOne({_id: req.user._id});
+    let user = await User.findOne({_id: req.user._id}).select('-password').select('-__v').populate('bookings');
     if (!user) return res.status(404).send("USER NOT FOUND");
     res.send(user);
 });

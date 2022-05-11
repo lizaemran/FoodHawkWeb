@@ -80,7 +80,7 @@ classifier.addDocuments(negativeDocuments, `negative`)
  
 classifier.train()
  
-console.log(classifier.classify(`kill`)) // "positive"
+// console.log(classifier.classify(`kill`)) // "positive"
 
 router.get('/reviewclassification', async(req,res) => {
     let reviews = await Order.find({}).populate("ratingOrder");

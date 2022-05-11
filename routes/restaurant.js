@@ -186,6 +186,46 @@ router.patch('/overview/:id', async(req,res) => {
     }
 });
 
+router.patch('/open-time/:id', async(req,res) => {
+    let restaurant;
+    try { restaurant = await Restaurant.findOne({_id:req.params.id});
+        restaurant.openTime = req.body.openTime
+    await restaurant.save();
+    res.send(restaurant);
+}
+    catch{
+        if (!restaurant) return res.status(404).send("RESTAURANT WITH ID NOT FOUND");
+    }
+});
+
+router.patch('/close-time/:id', async(req,res) => {
+    let restaurant;
+    try { restaurant = await Restaurant.findOne({_id:req.params.id});
+        restaurant.closeTime = req.body.closeTime
+    await restaurant.save();
+    res.send(restaurant);
+}
+    catch{
+        if (!restaurant) return res.status(404).send("RESTAURANT WITH ID NOT FOUND");
+    }
+});
+
+router.patch('/enable-booking/:id', async(req,res) => {
+    let restaurant;
+    try { restaurant = await Restaurant.findOne({_id:req.params.id});
+        if(req.body.enableBooking == true){
+            restaurant.enableBooking = true;
+        }
+        else{
+            restaurant.enableBooking = false;
+        }
+    await restaurant.save();
+    res.send(restaurant);
+}
+    catch{
+        if (!restaurant) return res.status(404).send("RESTAURANT WITH ID NOT FOUND");
+    }
+});
 
 router.get('/order/:id', restaurantAuth, async (req,res) => {
     const order = await Order.findById({"_id":req.params.id});

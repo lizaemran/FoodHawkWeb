@@ -536,6 +536,62 @@ async(payload) => {
     }
 });
 
+export const patchEnableBookingAsync = createAsyncThunk('auth/patchEnableBookingAsync',
+async(payload) => {
+    const response = await fetch(`http://localhost:7000/api/restaurant/enable-booking/${payload.id}`, {
+        method: 'PATCH',
+        headers: {
+            "Content-Type": 'application/json',
+        },
+        body: JSON.stringify({enableBooking: payload.enableBooking})
+    });
+    if(response.ok){
+        const restaurant = await response.json();
+        return {restaurant};
+    }
+    else{
+        var error = true;
+        return {error};
+    }
+});
+
+export const patchOpenTimeAsync = createAsyncThunk('auth/patchOpenTimeAsync',
+async(payload) => {
+    const response = await fetch(`http://localhost:7000/api/restaurant/open-time/${payload.id}`, {
+        method: 'PATCH',
+        headers: {
+            "Content-Type": 'application/json',
+        },
+        body: JSON.stringify({openTime: payload.openTime})
+    });
+    if(response.ok){
+        const restaurant = await response.json();
+        return {restaurant};
+    }
+    else{
+        var error = true;
+        return {error};
+    }
+});
+
+export const patchCloseTimeAsync = createAsyncThunk('auth/patchCloseTimeAsync',
+async(payload) => {
+    const response = await fetch(`http://localhost:7000/api/restaurant/close-time/${payload.id}`, {
+        method: 'PATCH',
+        headers: {
+            "Content-Type": 'application/json',
+        },
+        body: JSON.stringify({closeTime: payload.closeTime})
+    });
+    if(response.ok){
+        const restaurant = await response.json();
+        return {restaurant};
+    }
+    else{
+        var error = true;
+        return {error};
+    }
+});
 
 
 const AuthSlice = createSlice({
@@ -866,6 +922,9 @@ const AuthSlice = createSlice({
                 rating: action?.payload?.data?.restaurant?.rating,
                 status: action?.payload?.data?.restaurant?.status,
                 overview: action?.payload?.data?.restaurant?.overview,
+                openTime: action?.payload?.data?.restaurant?.openTime,
+                closeTime: action?.payload?.data?.restaurant?.closeTime,
+                enableBooking: action?.payload?.data?.restaurant?.enableBooking,
                 user_type: 'Restaurant'
             }
         }
@@ -909,6 +968,7 @@ const AuthSlice = createSlice({
                 address: action?.payload?.user?.address,
                 user_type: action?.payload?.user?.user_type,
                 isConfirmed : action?.payload?.user?.isConfirmed,
+                bookings : action?.payload?.user?.bookings,
             }
         },
         [updateUserAsync.fulfilled] : (state, action) => {
@@ -944,6 +1004,18 @@ const AuthSlice = createSlice({
                 isConfirmed : action?.payload?.rider?.isConfirmed,
 
             }
+        },
+        [patchEnableBookingAsync.fulfilled]: (state, action) => {
+            console.log("Posted enable booking successfully.");
+            return{...state, enableBooking: action?.payload?.restaurant?.enableBooking}
+        },
+        [patchCloseTimeAsync.fulfilled]: (state, action) => {
+            console.log("Posted close time successfully.");
+            return{...state, closeTime: action?.payload?.restaurant?.closeTime}
+        },
+        [patchOpenTimeAsync.fulfilled]: (state, action) => {
+            console.log("Posted open time successfully.");
+            return{...state, openTime: action?.payload?.restaurant?.openTime}
         },
 
     }

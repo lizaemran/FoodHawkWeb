@@ -30,6 +30,10 @@ import GoogleMapReact from 'google-map-react';
 import { addBookingItems, clearBooking, deleteBooking } from '../redux/BookingSlice';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import StripPayment from '../components/StripePayment';
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+const stripePromise = loadStripe(`pk_test_51KajdHH2gfWAYqRr4hu7kV8ReG7mWZysOuBZnhP2srhZPz7srE3YZQALfltCI6lRDuxjOwadW4OTnLsulz9kEhJd003DAk82Z6`);
 const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
     const [bookingModalShow, setBookingModalShow] = useState(false);
     const {bookingItems, totalB} = useSelector((state)=> state?.booking);
@@ -47,6 +51,11 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
     const [lngValue, setLngValue] = useState('');
     const [book, setBook] = useState(false);
     const [booking, setBooking] = useState(false);
+    const [name, setName] = useState('');
+    const [contact, setContact] = useState('');
+    const [time, onChange] = useState('10:00');
+    const [persons, setPersons] = useState('');
+    const [dateOfBooking, setDateOfBooking] = useState('');
     const token = useSelector(state => state.auth.token);
     const firstName = useSelector((state) => state.auth.username);
     const restaurant = useSelector((state) => state.restaurants.restaurant);
@@ -54,6 +63,7 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
     const user = useSelector((state) => state.auth.user);
     const u_id = useSelector((state) => state.auth?.id);
     const ratingOArray = useSelector((state) => state.restaurants.restaurant?.ratingOArray);
+    const enableBooking = useSelector((state) => state.restaurants?.restaurant?.enableBooking);
     const noRedirection = true;
     const dispatch = useDispatch();
     const selectBookingMenu = (r) => {
@@ -357,9 +367,9 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
                 <div className={!orderOnline ? 'res-tab' : 'res-tab-active'} onClick={() => {setOverview(false); setMenu(false); setGallery(false); setReviews(false); setOrderOnline(true); setBook(false);}} style={{marginRight:'10px', cursor:'pointer'}}>
                     Order Online
                 </div>
-                <div className={!book ? 'res-tab' : 'res-tab-active'} onClick={() => {setModalShowLogin(true); setOverview(false); setMenu(false); setGallery(false); setReviews(false); setOrderOnline(false); setBook(true);}} style={{cursor:'pointer'}}>
+                {(enableBooking && enableBooking !== 'undefined') && <div className={!book ? 'res-tab' : 'res-tab-active'} onClick={() => {setModalShowLogin(true); setOverview(false); setMenu(false); setGallery(false); setReviews(false); setOrderOnline(false); setBook(true);}} style={{cursor:'pointer'}}>
                     Book A Table
-                </div>
+                </div>}
                 </div>
                {overview && 
                     <div className='py-3'>
@@ -546,15 +556,39 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
                                  <p className='fs-6'>Items: {totalB}</p>   
                             </div>}
                              {totalB > 0 && 
-                             <div className='d-flex justify-content-end align-items-center'>
-                                <p className='fs-6'>Total: PKR {bookingItems?.reduce((acc, cur) => (Number(acc) + Number(cur.countItems * cur.price)), Number(0))}</p>                                     
+                             <div className='d-flex flex-column justify-content-end align-items-end'>
+                                <p className='fs-6'>Total: PKR {bookingItems?.reduce((acc, cur) => (Number(acc) + Number(cur.countItems * cur.price)), Number(0))}</p>          
+                                <Elements stripe={stripePromise}>
+                                   <StripPayment
+                                   name={name} 
+                                   setName={setName} 
+                                   contact={contact} 
+                                   setContact={setContact}
+                                   time={time} 
+                                   persons={persons} setPersons={setPersons}
+                                   dateOfBooking={dateOfBooking} 
+                                   setDateOfBooking={setDateOfBooking} 
+                                   products = {bookingItems}
+                                   total_price={bookingItems?.reduce((acc, cur) => (Number(acc) + Number(cur.countItems * cur.price)), Number(0))}
+                                   r_id = {restaurant._id}
+                                   u_id = {u_id}                                   
+                                />  
+                                </Elements>                         
                             </div>}
                              </Col>
                              </Row>
                              </>
 
                         ) : (
-                            <BookTableForm setOrderOnline={setOrderOnline} setBook={setBook} setBookingModalShow={setBookingModalShow} />
+                            <BookTableForm  name={name} 
+                            setName={setName} 
+                            contact={contact} 
+                            setContact={setContact}
+                            time={time} onChange={onChange}
+                            persons={persons} setPersons={setPersons}
+                            dateOfBooking={dateOfBooking} 
+                            setDateOfBooking={setDateOfBooking} 
+                            setOrderOnline={setOrderOnline} setBook={setBook} setBookingModalShow={setBookingModalShow} />
                         )}
                    </div>}
                 </div>

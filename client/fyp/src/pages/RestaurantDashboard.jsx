@@ -1,21 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import Switch from "react-switch";
 import {
   getRestaurantDashboardAsync,
   logoutUser,
+  patchCloseTimeAsync,
+  patchEnableBookingAsync,
+  patchOpenTimeAsync,
   patchOverviewAsync,
   resendVerifyRestaurantAsync,
 } from "../redux/auth";
 import { useLocation } from "react-router-dom";
-import {
-  Button,
-  Col,
-  Container,
-  Form,
-  Image,
-  Row,
-  Table,
-} from "react-bootstrap";
+import {Button, Col, Container, Form,Image,Row,Table,} from "react-bootstrap";
 import { AiOutlineLogout } from "react-icons/ai";
 import FormPopUp from "../components/FormPopUp";
 import UpdateStatus from "../components/UpdateStatus";
@@ -25,6 +21,7 @@ import {
   getRestaurantImagesAsync,
   uploadImageAsync,
 } from "../redux/Slice";
+import {MdUpdate} from "react-icons/md";
 import { AiOutlineEdit, AiOutlineWarning } from "react-icons/ai";
 import UpdateProduct from "../components/UpdateProduct";
 import { ToastContainer, toast } from "react-toastify";
@@ -38,6 +35,10 @@ const RestaurantDashboard = ({ pId, setPId, isEditP, setIsEditP }) => {
   const [selectedFile, setSelectedFile] = useState("");
   const [previewSource, setPreviewSource] = useState("");
   const [overView, setOverView] = useState("");
+  const [openHours, setOpenHours] = useState("");
+  const [closeHours, setCloseHours] = useState("");
+  const [openMinutes, setOpenMinutes] = useState("");
+  const [closeMinutes, setCloseMinutes] = useState("");
   const d = new Date();
   const month = d.toLocaleString("default", { month: "long" });
   const date = d.getDate() + " " + month + ", " + d.getFullYear();
@@ -57,6 +58,9 @@ const RestaurantDashboard = ({ pId, setPId, isEditP, setIsEditP }) => {
   const orders = useSelector((state) => state?.auth?.orders);
   const current_overview = useSelector((state) => state?.auth?.overview);
   const gallery = useSelector((state) => state?.auth?.gallery);
+  const openTime = useSelector((state) => state?.auth?.openTime);
+  const closeTime = useSelector((state) => state?.auth?.closeTime);
+  const [bookingCheck, setBookingCheck] = useState(false);
   useEffect(() => {
     dispatch(getRestaurantDashboardAsync(username));
     // dispatch(getRestaurantImagesAsync());
@@ -137,12 +141,7 @@ const RestaurantDashboard = ({ pId, setPId, isEditP, setIsEditP }) => {
         <Container className="p-3">
           <Row
             className=""
-            style={{
-              backgroundColor: "rgba(0, 0, 0, 0.5)",
-              borderRadius: "20px",
-              backdropFilter: "blur(20px)",
-            }}
-          >
+            style={{backgroundColor: "rgba(0, 0, 0, 0.5)",borderRadius: "20px",backdropFilter: "blur(20px)",}}>
             <Col className="d-flex flex-column p-3 text-white" style={{fontSize:'12px'}}>
               <p className="fs-6">
                 Hello, <b>{name}</b>
@@ -173,6 +172,26 @@ const RestaurantDashboard = ({ pId, setPId, isEditP, setIsEditP }) => {
                   <AiOutlineEdit className="text-white fs-6" />
                 </span>
               </p>
+              <p className="d-flex justify-content-start align-items-center" style={{marginBottom:'0px'}}>Open: 
+              <Form.Control onChange={(e) => setOpenHours(e.target.value)} type='Number' placeholder='9' max='23' min='1' className="mx-1" style={{width:'70px', height:'30px'}} /> 
+              <Form.Control onChange={(e) => setOpenMinutes(e.target.value)} type='Number' placeholder='00' max='23' min='1' className="mx-1" style={{width:'70px', height:'30px'}} /> 
+                <MdUpdate className='fs-4' onClick={(e) => {dispatch(patchOpenTimeAsync({
+                  id: r_id,
+                  openTime : openHours + ":" + openMinutes,
+                }))}} style={{cursor:'pointer'}} />
+                </p>
+                <span className='text-warning mt-1' style={{fontSize:'10px'}}>
+                24h format(time to start getting booking from)</span>
+                <p className="d-flex justify-content-start align-items-center mt-1"  style={{marginBottom:'0px'}}>Close: 
+              <Form.Control onChange={(e) => setCloseHours(e.target.value)} type='Number' placeholder='20' max='23' min='1' className="mx-1" style={{width:'70px', height:'30px'}} /> 
+              <Form.Control onChange={(e) => setCloseMinutes(e.target.value)} type='Number' placeholder='00' max='23' min='1' className="mx-1" style={{width:'70px', height:'30px'}} /> 
+                <MdUpdate className='fs-4' onClick={(e) => {dispatch(patchCloseTimeAsync({
+                  id: r_id,
+                  closeTime : closeHours + ":" + closeMinutes,
+                }))}} style={{cursor:'pointer'}}  />
+                </p>
+                <span className='text-warning mt-1' style={{fontSize:'10px'}}>
+                24h format(time to stop getting booking from)</span>
             </Col>
             <Col className="d-flex  justify-content-center align-items-center">
               <Image src={img} className="w-25 h-auto" />
@@ -185,11 +204,20 @@ const RestaurantDashboard = ({ pId, setPId, isEditP, setIsEditP }) => {
                   onClick={logOut}
                   style={{ borderRadius: "50%", cursor: "pointer" }}
                 />
+                <label className="d-flex flex-column justify-content-center align-items-center mt-5">
+                  <span className="text-white" style={{fontSize:'10px'}}>Enable Booking</span>
+                  <Switch checked={bookingCheck} onChange={(e) => {setBookingCheck(!bookingCheck); 
+                    dispatch(patchEnableBookingAsync({
+                      id: r_id,
+                      enableBooking : !bookingCheck,
+                    }))}}  />
+                </label>
               </div>
+
             </Col>
           </Row>
         </Container>
-        {isEditStatus && (
+        {isEditStatus && (!
           <FormPopUp title="Update Status" setIsOpen={setIsEditStatus}>
             <UpdateStatus rId={r_id} status={status} />
           </FormPopUp>
