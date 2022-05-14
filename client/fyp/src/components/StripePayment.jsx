@@ -4,7 +4,8 @@ import {
     CardExpiryElement,
     CardCvcElement, 
     useStripe, 
-    useElements
+    useElements,
+    PaymentElement
   } from "@stripe/react-stripe-js";
 import axios from 'axios';
 import { Button, Form } from 'react-bootstrap';
@@ -77,7 +78,7 @@ return (
         <Form className=''>
             <Form.Label style={{fontSize:'14px'}}>Card Number*</Form.Label>
             <div style={{borderBottom:'1px solid #25D366'}}>
-            <CardNumberElement value='4242 4242 4242 4242' />
+            <CardNumberElement  />
             </div>
             <Form.Label style={{fontSize:'14px'}}>Expiry*</Form.Label>
             <div style={{borderBottom:'1px solid #25D366'}}>

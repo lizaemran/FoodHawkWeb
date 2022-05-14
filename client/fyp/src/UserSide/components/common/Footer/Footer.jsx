@@ -90,7 +90,7 @@ function Footer() {
             style={{}}
           >
             <a className="text-decoration-none text-dark" href="/">
-              Place Order
+              Rider Mobile App
             </a>
           </Col>
           <Col

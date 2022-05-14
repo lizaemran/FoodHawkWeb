@@ -7,8 +7,8 @@ import { useSelector } from "react-redux";
 import { BiRestaurant } from "react-icons/bi";
 import { FiUsers } from "react-icons/fi";
 import { GiCash, GiNotebook, GiFullMotorcycleHelmet } from "react-icons/gi";
-import {Chart as ChartJS,CategoryScale,LinearScale,PointElement,LineElement,Title,Tooltip,Legend,} from "chart.js";
-import { Line } from "react-chartjs-2";
+import {Chart as ChartJS,CategoryScale,LinearScale,PointElement,LineElement,Title,Tooltip,Legend,BarElement, BarController} from "chart.js";
+import { Bar } from "react-chartjs-2";
 // import {GrNote} from 'react-icons/gr';
 import {IoIosRestaurant} from 'react-icons/io';
 import {IoReceipt} from 'react-icons/io5';
@@ -17,7 +17,7 @@ import {getAllOrdersAsync,getAllRidersAsync,getAllUsersAsync,getRestaurantWithCl
 import jwt_decode from "jwt-decode";
 import { getAllOrdersForUserAsync } from "../redux/user";
 import { getRestaurantsAsync } from "../redux/Slice";
-ChartJS.register(CategoryScale,LinearScale,PointElement,LineElement,Title,Tooltip,Legend);
+ChartJS.register(CategoryScale,LinearScale,PointElement,LineElement,BarElement, BarController,Title,Tooltip,Legend);
 
 const Account = () => {
   const restaurant_details = useSelector(
@@ -130,25 +130,35 @@ const Account = () => {
       tooltip.options.padding + "px " + tooltip.options.padding + "px";
   };
   const options = {
-    responsive: true,
-    options: {
-      animation: true,
+    indexAxis: 'y',
+    elements: {
+      bar: {
+        borderWidth: 2,
+      },
     },
+    responsive: true,
+    scales: {
+      yAxis: {
+        min: 0,
+        max: 20,
+      },
+      xAxis: {
+        min: 0,
+        max: 20,
+    },
+  },
     plugins: {
       legend: {
-        position: "top",
+        position: 'right',
       },
       title: {
-        display: false,
-        text: "",
+        display: true,
+        text: 'Reviews Analysis of Restaurant',
       },
-      tooltip: {
-        enabled: false,
-        position: "nearest",
-        external: externalTooltipHandler,
-      },
-    },
+      
+  },
   };
+  
   const labels = ["Positive", "Negative"];
   var positiveClassified = restaurant_details?.orders?.reduce((acc, curr) => {
     if (curr?.classification == "positive") {
@@ -168,12 +178,26 @@ const Account = () => {
     labels,
     datasets: [
       {
-        label: "",
-        data: [positiveClassified, negativeClassified],
-        borderColor: "#39B54A",
-        backgroundColor: "#a8d4ae",
+        label: 'Positive',
+        data: [0,positiveClassified],
+        borderColor: 'rgb(255, 99, 132)',
+        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+      },
+      {
+        label: 'Negative',
+        data: [0,negativeClassified],
+        borderColor: 'rgb(53, 162, 235)',
+        backgroundColor: 'rgba(53, 162, 235, 0.5)',
       },
     ],
+    // datasets: [
+    //   {
+    //     label: "",
+    //     data: [positiveClassified, negativeClassified],
+    //     borderColor: "#39B54A",
+    //     backgroundColor: "#a8d4ae",
+    //   },
+    // ],
   };
   const [modalShow, setModalShow] = useState(false);
   const token = useSelector((state) => state.auth.token);
@@ -220,15 +244,15 @@ const Account = () => {
         </Modal.Header>
         <Modal.Body>
           <h4>Reviews Analysis</h4>
-          <Line options={options} data={data} />
+          {positiveClassified !== 'undefined' && <Bar options={options} data={data} />}
         </Modal.Body>
         <Modal.Footer>
-          <Button onClick={props.onHide}>Close</Button>
+          <Button style={{backgroundColor:'#ef5023', border:'1px solid #ef5023'}} onClick={props.onHide}>Close</Button>
         </Modal.Footer>
       </Modal>
     );
   }
-
+console.log(positiveClassified);
   return (
     <>
       <div>
@@ -468,7 +492,7 @@ const Account = () => {
                             {restaurants.map((u, index) => (
                               <tr >
                                 <td>{index + 1}</td>
-                                <td>/
+                                <td>
                                   <span>
                                     {u?.name}
                                   </span>

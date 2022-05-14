@@ -1,6 +1,5 @@
 // require("dotenv").config();
 const express = require('express');
-const {spawn} = require('child_process');
 const mongoose = require('mongoose');
 const restaurant = require('./routes/restaurant');
 const product = require('./routes/product');
@@ -35,15 +34,13 @@ app.use('/api/stripe', striperoutes);
 app.use('/api/booking', booking);
 // app.all('*', (req, res) => res.send('That route does not exist!'));
 
-
-
 const connectionParams= {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
 }
 mongoose.connect('mongodb+srv://liza:lizfiz1@foodhawk.uitlt.mongodb.net/data?retryWrites=true&w=majority', connectionParams)
-    .then(()=>{console.log('Connected')})
+    .then(()=>{console.log('Connected' )})
     .catch(
         () => {
             console.log("Not Connected");

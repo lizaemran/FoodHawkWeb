@@ -15,10 +15,7 @@ router.post('/upload', async (req, res) => {
         restaurant.gallery.push(uploadedResponse.url);
         restaurant.save();
         res.json({message : 'yay'});
-        // console.log(fileStr);
-
     }catch(error){
-        // console.log(error);
         res.status(500).json({error: 'Something went wrong'});    }
 })
 
