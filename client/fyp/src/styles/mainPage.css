@@ -182,6 +182,42 @@ color: black!important;
       transform:translateX(0%) translateY(0%) rotate(0deg);
   }
 }
+#mobile{
+  animation: mobileAnim 3s ease-in-out infinite;
+
+}
+@keyframes mobileAnim {
+  0% {
+      transform:scale(0.9);
+  }
+  50% {
+      transform:scale(1);
+  }
+  100% {
+      transform:scale(0.9);
+  }
+}
+#getmobile{
+  animation: getmobileAnim 3s ease-in-out infinite;
+
+}
+@keyframes getmobileAnim {
+  0% {
+      transform:rotateZ(0deg) scale(0.9);
+  }
+  25% {
+      transform:rotateZ(1deg) scale(1);
+  }
+  50% {
+    transform:rotateZ(0deg) scale(0.9);
+}
+75% {
+  transform:rotateZ(-1deg) scale(1);
+}
+  100% {
+      transform:rotateZ(0deg) scale(0.9);
+  }
+}
 .accordion-button::after{
   color: #EF5124!important;
 }

@@ -89,7 +89,7 @@ function Footer() {
             className="d-flex justify-content-center align-items-center fs-6"
             style={{}}
           >
-            <a className="text-decoration-none text-dark" href="/">
+            <a className="text-decoration-none text-dark" href="http://localhost:19006/" target="_blank">
               Rider Mobile App
             </a>
           </Col>

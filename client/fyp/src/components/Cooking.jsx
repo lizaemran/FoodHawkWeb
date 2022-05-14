@@ -59,8 +59,7 @@ const Cooking = () => {
         </defs>
         </svg>
         
-        
-
+    
         
         
     )}

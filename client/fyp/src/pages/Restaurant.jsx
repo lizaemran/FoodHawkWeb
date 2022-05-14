@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import { Breadcrumb, Button, Col, Container, Image, Row, Modal, Form, } from 'react-bootstrap'
-import {AiOutlineStar, AiOutlineClose} from 'react-icons/ai';
+import {AiOutlineStar, AiOutlineClose, AiOutlineCloseCircle} from 'react-icons/ai';
 import {MdOutlineDirections} from 'react-icons/md';
 import {BsBookmarkPlus, BsShare, BsCheckCircle} from 'react-icons/bs'
 import {ImCancelCircle} from 'react-icons/im';
@@ -10,6 +10,7 @@ import SideNav from '../components/SideNav/SideNav'
 import coke from '../img/BurgerS.jpeg';
 import cookies from '../img/log-in.jpg';
 import map from '../img/googlemaps.jfif';
+import Fade from 'react-reveal/Fade';
 import BookTableForm from '../components/BookTableForm';
 import PopUpDetail from '../components/PopUpDetail';
 import { useDispatch, useSelector } from 'react-redux';
@@ -45,6 +46,7 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
     const [overview, setOverview] = useState(true);
     const [menu, setMenu] = useState(false);
     const [gallery, setGallery] = useState(false);
+    const [selectedpic, setSelectedPic] = useState('');
     const [reviews, setReviews] = useState(false); 
     const [orderOnline, setOrderOnline] = useState(false);
     const [latValue, setLatValue] = useState('');
@@ -211,6 +213,7 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
       }
       const [modalShowLogin, setModalShowLogin] = useState(false);
       const [modalShowSignUp, setModalShowSignUp] = useState(false);
+      const [modalGallery, setModalGallery] = useState(false);
       function MyVerticallyCenteredModal2(props) {
           return (
             <Modal
@@ -238,6 +241,22 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
             </Modal>
           );
         }
+        function MyVerticallyCenteredModal3(props) {
+            return (
+              <Modal
+                {...props}
+                size="lg"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+              >
+                <Modal.Body>
+                <Image src={selectedpic} className='mb-2' alt='res-img' style={{height:'auto', width:'100%', objectFit:'cover'}}/>
+                <Button className='w-100' onClick={() => {setSelectedPic(''); setModalGallery(false);}} style={{backgroundColor:'#ef5023', border: '1px solid #ef5023'}}><AiOutlineCloseCircle className='fs-5 text-white'  /> Close</Button>
+                </Modal.Body>
+              </Modal>
+            );
+          }
+          
     return (
         <div>
             <ToastContainer />
@@ -259,6 +278,42 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
                 </Breadcrumb.Item>
                 <Breadcrumb.Item active style={{fontSize:'14px'}}>{restaurant?.name}</Breadcrumb.Item>
                 </Breadcrumb>
+                
+                {/* <div className='position-relative '> */}
+                    {/* <div className='position-absolute res__img__map__div' style={{width:'100%', height:'300px', zIndex:'-1'}}>
+
+                    </div> */}
+                <Row className='py-1 align-items-center' style={{}}>
+                        <Col xl={7} lg={7} md={7} sm={12} xs={12} style={{height:'fit-content'}}>
+                        {restaurant?.gallery.length === 0 ? 
+                        <div className='d-flex justify-content-center align-items-center' style={{backgroundColor:'#e5e5e5',height:'37.5vh', width:'100%', borderRadius:'10px'}}>
+                            <IoIosRestaurant className='' style={{fontSize:'10rem', }} />
+                        </div>
+                        // <Image src={coke} className='' alt='res-img' style={{height:'37.5vh', width:'100%', borderRadius:'10px', objectFit:'cover'}}/> 
+                        : 
+                        <Image src={restaurant?.gallery[0]} className='' alt='res-img' style={{height:'44vh', width:'100%', borderRadius:'10px', objectFit:'cover'}}/>}
+                        </Col>
+                        <Col className=' p-3' xl={5} lg={5} md={5} sm={12} xs={12} style={{borderRadius:'5px', height:'fit-content', backgroundColor:'rgba(0,0,0,0.5)', backdropFilter:'blur(10px)'}}>
+                        <p className='mb-2 text-white' style={{margin: '0px' , fontSize:'15px'}}><MdOutlineLocationOn className='fs-4'/> {restaurant?.location}</p>
+                        {/* <Image src={map} className='' alt='res-map' style={{height:'37.5vh', width:'100%', borderRadius:'10px', objectFit:'cover'}}/> */}
+                        {(restaurant?.lat && restaurant?.lng) && 
+                                  <div style={{ height: '200px', width: '100%', }}>
+                                  <GoogleMapReact
+                                      bootstrapURLKeys={{ key: "AIzaSyAOWEsA7XNwmoFasiw9hlAewldBeEJB8-o" }}
+                                      defaultCenter={defaultProps.center}
+                                      defaultZoom={defaultProps.zoom}
+                                  >
+                                      <MdOutlineLocationOn className='fs-4'
+                                      lat={restaurant?.lat}
+                                      lng={restaurant?.lng}
+                                      text="My Marker"
+                                      />
+                                  </GoogleMapReact>
+                                  </div>
+                        }
+              
+                        </Col>
+                </Row>
                 <Row className=''>
                     <Col className='my-auto'>
                     <div className='d-flex justify-content-start align-items-center'>
@@ -315,41 +370,6 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
                     <TwitterIcon size={32} round={true} />
                 </TwitterShareButton>
                 </section>
-                {/* <div className='position-relative '> */}
-                    {/* <div className='position-absolute res__img__map__div' style={{width:'100%', height:'300px', zIndex:'-1'}}>
-
-                    </div> */}
-                <Row className='py-1 align-items-center' style={{}}>
-                        <Col xl={7} lg={7} md={7} sm={12} xs={12} style={{height:'fit-content'}}>
-                        {restaurant?.gallery.length === 0 ? 
-                        <div className='d-flex justify-content-center align-items-center' style={{backgroundColor:'#e5e5e5',height:'37.5vh', width:'100%', borderRadius:'10px'}}>
-                            <IoIosRestaurant className='' style={{fontSize:'10rem', }} />
-                        </div>
-                        // <Image src={coke} className='' alt='res-img' style={{height:'37.5vh', width:'100%', borderRadius:'10px', objectFit:'cover'}}/> 
-                        : 
-                        <Image src={restaurant?.gallery[0]} className='' alt='res-img' style={{height:'44vh', width:'100%', borderRadius:'10px', objectFit:'cover'}}/>}
-                        </Col>
-                        <Col className=' p-3' xl={5} lg={5} md={5} sm={12} xs={12} style={{borderRadius:'5px', height:'fit-content', backgroundColor:'rgba(0,0,0,0.5)', backdropFilter:'blur(10px)'}}>
-                        <p className='mb-2 text-white' style={{margin: '0px' , fontSize:'15px'}}><MdOutlineLocationOn className='fs-4'/> {restaurant?.location}</p>
-                        {/* <Image src={map} className='' alt='res-map' style={{height:'37.5vh', width:'100%', borderRadius:'10px', objectFit:'cover'}}/> */}
-                        {(restaurant?.lat && restaurant?.lng) && 
-                                  <div style={{ height: '200px', width: '100%', }}>
-                                  <GoogleMapReact
-                                      bootstrapURLKeys={{ key: "AIzaSyAOWEsA7XNwmoFasiw9hlAewldBeEJB8-o" }}
-                                      defaultCenter={defaultProps.center}
-                                      defaultZoom={defaultProps.zoom}
-                                  >
-                                      <MdOutlineLocationOn className='fs-4'
-                                      lat={restaurant?.lat}
-                                      lng={restaurant?.lng}
-                                      text="My Marker"
-                                      />
-                                  </GoogleMapReact>
-                                  </div>
-                        }
-              
-                        </Col>
-                </Row>
                 {/* </div> */}
                 <div className='d-flex res-tab-menu mt-4'>
                 <div className={!overview ? 'res-tab' : 'res-tab-active'} onClick={() => {setOverview(true); setMenu(false); setGallery(false); setReviews(false); setOrderOnline(false); setBook(false);}} style={{marginRight:'10px', cursor:'pointer'}}>
@@ -359,7 +379,7 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
                     Menu
                 </div>
                 <div className={!gallery ? 'res-tab' : 'res-tab-active'}onClick={() => {setOverview(false); setMenu(false); setGallery(true); setReviews(false); setOrderOnline(false); setBook(false);}} style={{marginRight:'10px', cursor:'pointer'}}>
-                   Gallery
+                   Gallery({restaurant?.gallery.length})
                 </div>
                 <div className={!reviews ? 'res-tab' : 'res-tab-active'} onClick={() => { setOverview(false); setMenu(false); setGallery(false); setReviews(true); setOrderOnline(false); setBook(false);}}  style={{marginRight:'10px', cursor:'pointer'}}>
                     Reviews
@@ -372,7 +392,8 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
                 </div>}
                 </div>
                {overview && 
-                    <div className='py-3'>
+                    <Fade bottom>
+                        <div className='py-3'>
                         {restaurant?.overview ? (<>
                         {restaurant?.overview}
                         </>) : (
@@ -389,21 +410,24 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
                             // </p></>
                         )}
                         
-                   </div>}
+                   </div>
+                   </Fade>
+                   }
                    {menu && 
                     <div className='py-3'>
+                        <Fade bottom>
                             <Row className='flex-wrap'> 
                                     {restaurant?.products.map((r) =>
                                     <Col key={r._id} xl={3} lg={4} md={3} sm={12} xs={12}>
-                                        <Col className='bg-light p-2 d-flex flex-column justify-content-between align-items-center w-100 mb-3' style={{borderRadius:'15px'}} xl={4} lg={4} md={4} sm={12} xs={12}>
-                                            <Row>
-                                                <Col  xl={6} lg={6} md={6} sm={12} xs={12}>
-                                                    <Image  src={r.image} style={{height:'px',  objectFit:'cover' }} />
+                                        <Col className=' py-2 d-flex  justify-content-between align-items-center w-100 mb-3 ' style={{borderRadius:'5px'}} xl={4} lg={4} md={4} sm={12} xs={12}>
+                                            <Row className='bg-light shadow-sm px-3 pt-1 pb-2'>
+                                                <Col  xl={4} lg={4} md={4} sm={12} xs={12} className='d-flex flex-column justify-content-center align-items-center'>
+                                                    <Image  src={r.image} style={{height:'70px',  objectFit:'cover' }} />
                                                 </Col>
-                                                <Col  xl={6} lg={6} md={6} sm={12} xs={12} className='d-flex flex-column justify-content-center align-items-center'>
-                                                    <p className=''>{r.name}</p>
-                                                    <p style={{fontSize:'14px'}}>{r.category}</p>
-                                                    <p style={{fontSize:'14px'}}><b>PKR {r.price}</b></p>
+                                                <Col  xl={8} lg={8} md={8} sm={12} xs={12} className='d-flex flex-column justify-content-end align-items-center'>
+                                                    <p className='' style={{fontSize:'14px', marginBottom:'0px'}}>{r.name}</p>
+                                                    <p style={{fontSize:'12px', marginBottom:'0px'}}>{r.category}</p>
+                                                    <p style={{fontSize:'12px', marginBottom:'0px'}}><b>PKR {r.price}</b></p>
                                                 </Col>
                                             </Row>
                                         </Col>
@@ -411,15 +435,19 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
                                     </Col>
                                     )}
                             </Row>
+                            </Fade>
                    </div>}
                    {gallery && <>
-                   {restaurant?.gallery.length === 0 ? <p className='text-muted fs-6 text-center my-3'><i>No images to show</i></p> :  <div className='py-3'>
+                   {restaurant?.gallery.length === 0 ? <p className='text-muted fs-6 text-center my-3'><i>No images to show</i></p> :  
+                   <div className='py-3 bg-light px-2'>
                         {/* <Container> */}
-                        <p className='fs-6 poppins'>Total Images: {restaurant?.gallery.length}</p>
-                        <Row className='flex-wrap' style={{}}>
+                        {/* <p className='fs-6 poppins '>Total Images: {restaurant?.gallery.length}</p> */}
+                        <Row className='flex-wrap ' style={{}}>
                         {restaurant?.gallery?.map((g, index) => 
                         (<Col xl={4} lg={4} md={6} sm={12} xs={12} key={index}>
-                        <Image src={g} className='mb-4' alt='res-img' style={{height:'300px', width:'100%', objectFit:'cover'}}/>
+                        <Fade bottom>
+                            <Image onClick={()=> {setSelectedPic(g); setModalGallery(true);}} src={g} className='mb-4 p-1 border border-2 border-muted shadow-sm' alt='res-img' style={{height:'300px', width:'100%', objectFit:'cover', cursor:'pointer'}}/>
+                        </Fade>
                         </Col>
                         ))}
                         
@@ -461,9 +489,12 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
                                 <PopUpDetail key={r._id} id={r._id} image={r.image} name={r.name} price={r.price} discount={r.discount} category={r.category} setPId={setPId} setIsEditP={setIsEditP}/>
                             )}  
                             </>) : (<>
-                            {restaurant?.products.length > 0 ? (<Row className='flex-wrap'> 
+                            {restaurant?.products.length > 0 ? (
+                            <Fade bottom>
+                                <Row className='flex-wrap'> 
                                     {restaurant?.products.map((r) =>
-                                    <Col key={r._id} xl={3} lg={4} md={3} sm={12} xs={12}>
+                                    
+                                        <Col key={r._id} xl={3} lg={4} md={3} sm={12} xs={12}>
                                         <Col className='bg-light p-2 d-flex flex-column justify-content-between align-items-center w-100 mb-3' style={{borderRadius:'5px'}} xl={4} lg={4} md={4} sm={12} xs={12}>
                                         <Image src={r.image} style={{height:'20vh', width:'10vw', objectFit:'cover' }} />
                                         <div className='d-flex flex-column justify-content-center align-items-center'>
@@ -478,7 +509,8 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
                                         </Col>
                                     </Col>
                                     )}
-                                </Row>) : (<div>
+                                </Row>
+                                </Fade>) : (<div>
                                     <p className='fs-6 poppins text-center text-white'>No products yet</p>
                                 </div>)}
                                 
@@ -491,6 +523,7 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
                     <div className='py-3' >
                         {booking ? (
                             <>
+                            <Fade bottom>
                             <Row>
                              <Col>
                                  <Row className='flex-wrap'> 
@@ -547,6 +580,7 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
                                  </Col>
                                  
                                </Row>
+                               
                                  )}
                                 
                                  
@@ -577,6 +611,7 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
                             </div>}
                              </Col>
                              </Row>
+                             </Fade>
                              </>
 
                         ) : (
@@ -599,6 +634,10 @@ const Restaurant = ({pId, setPId, isEditP, setIsEditP, search, setSearch}) => {
                     show={bookingModalShow}
                     onHide={() => setBookingModalShow(false)}
                 />
+        <MyVerticallyCenteredModal3
+        show={modalGallery}
+        onHide={() => setModalGallery(false)}
+      />
         </div>
     )
 }

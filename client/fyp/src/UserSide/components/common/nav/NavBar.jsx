@@ -22,19 +22,19 @@ const NavBar = () => {
             <SearchBar inNav={true} />
           </div>}
             <Link to="/about-us" className="fw-bold text-dark " >
-            <Button variant="" className="NavBtn text-dark">About Us</Button>
+            <Button variant="" className="NavBtn text-dark" style={{fontSize:'14px'}}>About Us</Button>
             </Link>
-            <Link to="#" className="fw-bold text-dark">
-            <Button variant="" className="NavBtn text-dark">Booking</Button>
-            </Link>
+            <a href="http://localhost:19006/" target="_blank" className="fw-bold text-dark text-decoration-none" >
+            <Button variant="" className="NavBtn text-dark" style={{fontSize:'14px'}}>Rider Mobile App</Button>
+            </a>
             <Link to="/contact-us" className="fw-bold text-dark">
-            <Button variant="" className="NavBtn text-dark">Contact Us</Button>
+            <Button variant="" className="NavBtn text-dark" style={{fontSize:'14px'}}>Contact Us</Button>
             </Link>
             <Link to="/SignUp">
-              <Button variant="" className="NavBtn text-dark">Register</Button>
+              <Button variant="" className="NavBtn text-dark" style={{fontSize:'14px'}}>Register</Button>
             </Link>
             <Link to="/SignIn">
-              <Button variant="" className="NavBtn text-dark">Sign in</Button>
+              <Button variant="" className="NavBtn text-dark" style={{fontSize:'13.5px'}}>Sign in</Button>
             </Link>
           </Navbar.Collapse>
           </nav>      

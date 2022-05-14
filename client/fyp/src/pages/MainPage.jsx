@@ -19,6 +19,7 @@ import Feedback from '../UserSide/components/common/CustomerFeedback/Feedback';
 import { getRestaurantsAsync, getTop5RestaurantsAsync } from '../redux/Slice';
 import Banner from '../components/Banner';
 import FAQs from '../components/FAQs';
+import GetMobileApp from '../components/GetMobileApp';
 
 const MainPage = () => {
 
@@ -66,6 +67,7 @@ const top5Restaurants = useSelector((state)=> state.restaurants?.top5Restaurants
                     It's simple: we list your menu and product lists online, help you process orders, pick them up, and deliver them to hungry pandas – in a heartbeat!
                     Interested?<br /><br /> 
                     Let's start our partnership today!</p>} />
+          <GetMobileApp />
           <Banner buttonLink='/' buttonText='Book Now' position='left' heading='Book reservation at your favourite restaurant' para={ <p className="fs-6">Would you like to reserve booking at your favourite restaurant before time?
                     <br /><br />
                     So shall we!
@@ -73,7 +75,7 @@ const top5Restaurants = useSelector((state)=> state.restaurants?.top5Restaurants
                     Interested?<br /><br /> 
                     Let's start!</p>} />
           <FAQs />
-          <Promo />
+          {/* <Promo /> */}
           <Feedback/>
          <Footer/>
          

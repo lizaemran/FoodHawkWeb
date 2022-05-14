@@ -1,5 +1,6 @@
 import React from "react";
 import { Row, Col, Container, Button } from "react-bootstrap";
+import Rotate from 'react-reveal/Rotate';
 const Banner = ({heading, para, position, buttonText, buttonLink}) => {
     return (
         <div className={`${position === 'right' ? 'banner' : 'banner2' } position-relative `} style={{padding:'6rem', height:'60vh', marginTop:'5%', marginBottom:'5%'}}>
@@ -11,9 +12,15 @@ const Banner = ({heading, para, position, buttonText, buttonLink}) => {
                 bottom:'-25px'}}>
                     <h4>{heading}</h4>
                     {para}
+                    {position === 'right' ? <Rotate bottom right>
                     <Button className="py-2 px-4"  style={{float: position, backgroundColor:'#ef5023', border:'none'}}>
                         <a href={buttonLink} className="text-decoration-none text-white">{buttonText}</a>
                     </Button>
+                    </Rotate> : <Rotate bottom left>
+                    <Button className="py-2 px-4"  style={{float: position, backgroundColor:'#ef5023', border:'none'}}>
+                        <a href={buttonLink} className="text-decoration-none text-white">{buttonText}</a>
+                    </Button>
+                    </Rotate>}
                 </Col>
             </Row>
             </Container>
