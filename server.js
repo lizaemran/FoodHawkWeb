@@ -15,6 +15,7 @@ const striperoutes = require('./routes/stripe-route');
 const booking = require('./routes/booking');
 const cors = require('cors')
 const app = express();
+const request = require('request');
 
 // app.use(express.json());
 app.use(cors());
@@ -33,6 +34,12 @@ app.use('/api/orderRating', orderRating);
 app.use('/api/stripe', striperoutes);
 app.use('/api/booking', booking);
 // app.all('*', (req, res) => res.send('That route does not exist!'));
+
+app.post('/chatbot', async(req,res) => {
+        await request.post(`http://127.0.0.1:4000/predict?message=${req.body.message}`, async(error, response, body) => {
+            await res.status(200).send({'reply': response.body});
+     });    
+}) 
 
 const connectionParams= {
     useNewUrlParser: true,

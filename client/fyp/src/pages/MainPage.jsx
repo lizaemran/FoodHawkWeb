@@ -20,6 +20,7 @@ import { getRestaurantsAsync, getTop5RestaurantsAsync } from '../redux/Slice';
 import Banner from '../components/Banner';
 import FAQs from '../components/FAQs';
 import GetMobileApp from '../components/GetMobileApp';
+import Chatbot from '../components/Chatbot';
 
 const MainPage = () => {
 
@@ -43,6 +44,7 @@ const top5Restaurants = useSelector((state)=> state.restaurants?.top5Restaurants
 
     return (
       <div className='bg-light'>
+        <Chatbot />
          <Box/>  
          <section>
         <Container className='pt-5 pb-1'> 
@@ -58,7 +60,7 @@ const top5Restaurants = useSelector((state)=> state.restaurants?.top5Restaurants
                         </SwiperSlide>
                         )) }
         </Swiper>
-                       </Row>  
+          </Row>  
           </Container>
           </section>
           <Banner buttonLink='/restaurant-register' buttonText='Get Started' position='right' heading='List your restaurant on Food Hawk' para={ <p className="fs-6">Would you like millions of new customers to enjoy your amazing food and groceries?

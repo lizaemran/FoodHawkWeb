@@ -17,7 +17,7 @@ function Box() {
     return (
         <div className='curve shadow-lg'>
           <NavBar />
-        <div className=" mainbox d-flex flex-column justify-content-center align-items-center text-white" style={{backgroundColor:'rgba(0,0,0,0.25)', backdropFilter : 'blur(0.5px)',  }}>
+        <div className=" mainbox d-flex flex-column justify-content-center align-items-center text-white" style={{backgroundColor:'rgba(0,0,0,)', }}>
         <Fade left>
           <h1 className=" text-center">Special Food Every Time</h1>
             <h1 className=" text-center">For You!</h1>

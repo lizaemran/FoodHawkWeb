@@ -197,6 +197,21 @@ color: black!important;
       transform:scale(0.9);
   }
 }
+#chat{
+  animation: chatAnim 2.75s ease-in-out infinite;
+
+}
+@keyframes chatAnim {
+  0% {
+      transform:scale(0.98);
+  }
+  50% {
+      transform:scale(1);
+  }
+  100% {
+      transform:scale(0.98);
+  }
+}
 #getmobile{
   animation: getmobileAnim 3s ease-in-out infinite;
 
